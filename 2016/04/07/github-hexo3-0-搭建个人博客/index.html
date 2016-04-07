@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="-hexo," />
 
 
 
@@ -59,15 +59,16 @@
 
 
 
-<meta name="description" content="guinguo的博客,记录生活中的点点滴滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Guinguo's blog">
-<meta property="og:url" content="http://yoursite.com/categories/test/index.html">
+<meta name="description" content="总结github+hexo搭个人博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="github+hexo3.0 搭建个人博客">
+<meta property="og:url" content="http://yoursite.com/2016/04/07/github-hexo3-0-搭建个人博客/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="guinguo的博客,记录生活中的点点滴滴">
+<meta property="og:description" content="总结github+hexo搭个人博客">
+<meta property="og:updated_time" content="2016-04-07T16:01:03.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Guinguo's blog">
-<meta name="twitter:description" content="guinguo的博客,记录生活中的点点滴滴">
+<meta name="twitter:title" content="github+hexo3.0 搭建个人博客">
+<meta name="twitter:description" content="总结github+hexo搭个人博客">
 
 
 
@@ -85,7 +86,7 @@
   };
 </script>
 
-  <title> 分类: test | Guinguo's blog </title>
+  <title> github+hexo3.0 搭建个人博客 | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -116,7 +117,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,47 +245,170 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        test
-        <small>分类</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                github+hexo3.0 搭建个人博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-07T23:51:23+08:00" content="2016-04-07">
+              2016-04-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index">
+                    <span itemprop="name">blog</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/07/github-hexo3-0-搭建个人博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/07/github-hexo3-0-搭建个人博客/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>最新好奇如何搭建个人博客网站，由于之前买过一台vps，本打算自己写页面的，但是想想还是算了吧，毕竟hexo已经有很多酷炫的主题了，之后有空再自己撸。。。</p>
+<p>由于此类教程在网上已经有很多人发布了。我就根据我在搭建环境，配置参数的情况，做一点小总结：</p>
+<h1 id="二、总结："><a href="#二、总结：" class="headerlink" title="二、总结："></a>二、总结：</h1><p>主要用的node.js是4.4.2的，可以自行到官网下载，或点这里</p>
+<p>git的安装–点这里</p>
+<p>hexo3.0</p>
+<p>首先我参考的教程有：</p>
+<p>使用Hexo搭建个人博客(基于hexo3.0) <a href="http://opiece.me/2015/04/09/hexo-guide" target="_blank" rel="external">http://opiece.me/2015/04/09/hexo-guide</a></p>
+<p>使用hexo搭建静态博客<a href="http://www.tuicool.com/articles/ABFn2qU" target="_blank" rel="external">http://www.tuicool.com/articles/ABFn2qU</a></p>
+<p>hexo你的博客 <a href="http://www.tuicool.com/articles/AfQnQjy" target="_blank" rel="external">http://www.tuicool.com/articles/AfQnQjy</a></p>
+<p>NexT 使用文档 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">http://theme-next.iissnan.com/getting-started.html</a></p>
+<p>第三方服务集成 <a href="http://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="external">http://theme-next.iissnan.com/third-party-services.html</a></p>
+<p>有哪些好看的 Hexo 主题？ <a href="http://www.zhihu.com/question/24422335/answer/46357100" target="_blank" rel="external">http://www.zhihu.com/question/24422335/answer/46357100</a></p>
+<h1 id="三、遇到的问题"><a href="#三、遇到的问题" class="headerlink" title="三、遇到的问题"></a>三、遇到的问题</h1><h2 id="1"><a href="#1" class="headerlink" title="1,"></a>1,</h2><p>这些的教程写得非常详细，我是参考他们的教程搭的，然后我在搭的时候，安装hexo老是出问题，是npm install 不了，卸载了重装也是一样，最后发现了一个很无语的原因–npm install 没反应</p>
+<h2 id="2"><a href="#2" class="headerlink" title="2,"></a>2,</h2><p>完成后就可以托管在github上面了，最后可以绑定自己的域名，这里我也遇到了一个坑，因为修改dns后散播需要一段时间，才会有效，1到几个小时不等吧。然后发现我绑定的域名老是404.那些教程都说是</p>
+<p>在repo的根目录下建立一个CNAME的文件里面写上你的顶级域名，不用加www.</p>
+<p>而我发现github上面还是没有CNAME这个文件，原来这个文件是要放在项目根路径的source文件夹里面。这样才不会被hexo清理掉导致没有推到github。</p>
+<p>我绑定的是二级域名www.guinguo.top 所以需要加上www.</p>
+<p>最后只需要在域名后台管理的dns上加一条CNAME记录</p>
+<p>前面填www，然后指向guinguo.github.io（改成你自己的）就行                              </p>
+<p>最后就可以尽情的撸文章了</p>
 
-      <h1 class="post-title">
+      
+    </div>
+    
+    <div>
+      
         
-            <a class="post-title-link" href="/2016/04/05/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+      
+    </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-05T11:16:07+08:00"
-              content="2016-04-05" >
-          04-05
-        </time>
-      </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag">#-hexo</a>
+          
+        </div>
+      
 
-    </header>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/06/hello-hexo/" rel="next" title="hello hexo">
+                <i class="fa fa-chevron-left"></i> hello hexo
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -292,6 +416,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/07/github-hexo3-0-搭建个人博客/"
+           data-title="github+hexo3.0 搭建个人博客" data-url="http://yoursite.com/2016/04/07/github-hexo3-0-搭建个人博客/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -311,8 +443,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -340,7 +481,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -371,6 +512,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、总结："><span class="nav-number">2.</span> <span class="nav-text">二、总结：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">三、遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1"><span class="nav-number">3.1.</span> <span class="nav-text">1,</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2"><span class="nav-number">3.2.</span> <span class="nav-text">2,</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -455,6 +607,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
 
   
 
