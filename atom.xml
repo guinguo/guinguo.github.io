@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Guinguo&#39;s blog</title>
+  <subtitle>Just try it</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2016-04-08T16:14:49.778Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>guinguo</name>
+    <email>guinguo@yahoo.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>github+hexo3.0 搭建个人博客</title>
+    <link href="http://yoursite.com/2016/04/07/github-hexo3-0-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2016/04/07/github-hexo3-0-搭建个人博客/</id>
+    <published>2016-04-07T15:51:23.000Z</published>
+    <updated>2016-04-08T16:14:49.778Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h1&gt;&lt;p&gt;最新好奇如何搭建个人博客网站，由于之前买过一台vps，本打算自己写页面的，但是想想还是算了吧，毕竟hexo已经有很多酷炫的主题了，之后有空再自己撸。。。&lt;/p&gt;
+&lt;p&gt;由于此类教程在网上已经有很多人发布了。我就根据我在搭建环境，配置参数的情况，做一点小总结：&lt;/p&gt;
+&lt;h1 id=&quot;二、总结：&quot;&gt;&lt;a href=&quot;#二、总结：&quot; class=&quot;headerlink&quot; title=&quot;二、总结：&quot;&gt;&lt;/a&gt;二、总结：&lt;/h1&gt;&lt;p&gt;主要用的node.js是4.4.2的，可以自行到官网下载，或点这里&lt;/p&gt;
+&lt;p&gt;git的安装–点这里&lt;/p&gt;
+&lt;p&gt;hexo3.0&lt;/p&gt;
+&lt;p&gt;首先我参考的教程有：&lt;/p&gt;
+&lt;p&gt;使用Hexo搭建个人博客(基于hexo3.0) &lt;a href=&quot;http://opiece.me/2015/04/09/hexo-guide&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://opiece.me/2015/04/09/hexo-guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;使用hexo搭建静态博客&lt;a href=&quot;http://www.tuicool.com/articles/ABFn2qU&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.tuicool.com/articles/ABFn2qU&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;hexo你的博客 &lt;a href=&quot;http://www.tuicool.com/articles/AfQnQjy&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.tuicool.com/articles/AfQnQjy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;NexT 使用文档 &lt;a href=&quot;http://theme-next.iissnan.com/getting-started.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://theme-next.iissnan.com/getting-started.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;第三方服务集成 &lt;a href=&quot;http://theme-next.iissnan.com/third-party-services.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://theme-next.iissnan.com/third-party-services.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;有哪些好看的 Hexo 主题？ &lt;a href=&quot;http://www.zhihu.com/question/24422335/answer/46357100&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.zhihu.com/question/24422335/answer/46357100&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;三、遇到的问题&quot;&gt;&lt;a href=&quot;#三、遇到的问题&quot; class=&quot;headerlink&quot; title=&quot;三、遇到的问题&quot;&gt;&lt;/a&gt;三、遇到的问题&lt;/h1&gt;&lt;h2 id=&quot;1&quot;&gt;&lt;a href=&quot;#1&quot; class=&quot;headerlink&quot; title=&quot;1,&quot;&gt;&lt;/a&gt;1,&lt;/h2&gt;&lt;p&gt;这些的教程写得非常详细，我是参考他们的教程搭的，然后我在搭的时候，安装hexo老是出问题，是npm install 不了，卸载了重装也是一样，最后发现了一个很无语的原因–npm install 没反应&lt;/p&gt;
+&lt;h2 id=&quot;2&quot;&gt;&lt;a href=&quot;#2&quot; class=&quot;headerlink&quot; title=&quot;2,&quot;&gt;&lt;/a&gt;2,&lt;/h2&gt;&lt;p&gt;完成后就可以托管在github上面了，最后可以绑定自己的域名，这里我也遇到了一个坑，因为修改dns后散播需要一段时间，才会有效，1到几个小时不等吧。然后发现我绑定的域名老是404.那些教程都说是&lt;/p&gt;
+&lt;p&gt;在repo的根目录下建立一个CNAME的文件里面写上你的顶级域名，不用加www.&lt;/p&gt;
+&lt;p&gt;而我发现github上面还是没有CNAME这个文件，原来这个文件是要放在项目根路径的source文件夹里面。这样才不会被hexo清理掉导致没有推到github。&lt;/p&gt;
+&lt;p&gt;我绑定的是二级域名www.guinguo.top 所以需要加上www.&lt;/p&gt;
+&lt;p&gt;最后只需要在域名后台管理的dns上加一条CNAME记录&lt;/p&gt;
+&lt;p&gt;前面填www，然后指向guinguo.github.io（改成你自己的）就行                              &lt;/p&gt;
+&lt;p&gt;最后就可以尽情的撸文章了&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      总结github+hexo搭个人博客
+    
+    </summary>
+    
+      <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hello hexo</title>
+    <link href="http://yoursite.com/2016/04/06/hello-hexo/"/>
+    <id>http://yoursite.com/2016/04/06/hello-hexo/</id>
+    <published>2016-04-06T02:02:01.000Z</published>
+    <updated>2016-04-07T15:11:47.354Z</updated>
+    
+    <content type="html">&lt;p&gt;This is my first hexo article,Hello Hexo!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://file29.mafengwo.net/M00/1E/2E/wKgBpVWZLZuASMPGAAjSHNJpoC448.groupinfo.w600.jpeg&quot; alt=&quot;sunshine&quot; title=&quot;sunshine&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;经过这一周…断断续续地配置，基本上可以撸文章了&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;待会写个总结，把参考的文档都列出来~&lt;/p&gt;
+&lt;p&gt;=============================fengexian=============================&lt;/p&gt;
+&lt;h2 id=&quot;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内&quot;&gt;&lt;a href=&quot;#我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内&quot; class=&quot;headerlink&quot; title=&quot;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内^_^&quot;&gt;&lt;/a&gt;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内^_^&lt;/h2&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;This is my first hexo article,Hello Hexo!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://file29.mafengwo.net/M00/1E/2E/wKgBpVWZLZuASMPGAAjSHNJpoC448.groupinfo.w600.jpeg&quot; alt=&quot;sunshine&quot; title=&quot;sunshine&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
+    
+    
+      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+</feed>
