@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-08T16:14:49.778Z</updated>
+  <updated>2016-04-11T16:00:09.984Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,154 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>第六周周结</title>
+    <link href="http://yoursite.com/2016/04/11/%E7%AC%AC%E5%85%AD%E5%91%A8%E5%91%A8%E7%BB%93/"/>
+    <id>http://yoursite.com/2016/04/11/第六周周结/</id>
+    <published>2016-04-11T04:40:48.000Z</published>
+    <updated>2016-04-11T16:00:09.984Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;img src=&quot;/uploads/zijingqiao.jpg&quot; height=&quot;500px&quot; ,=&quot;&quot; width=&quot;450px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;这一周，过得挺快的，毕竟周一是清明假期最后一天，然后第一次计算机网络的实验课也被冲掉了&quot;&gt;&lt;a href=&quot;#这一周，过得挺快的，毕竟周一是清明假期最后一天，然后第一次计算机网络的实验课也被冲掉了&quot; class=&quot;headerlink&quot; title=&quot;这一周，过得挺快的，毕竟周一是清明假期最后一天，然后第一次计算机网络的实验课也被冲掉了&quot;&gt;&lt;/a&gt;这一周，过得挺快的，毕竟周一是清明假期最后一天，然后第一次计算机网络的实验课也被冲掉了&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;好吧进入主题了。&lt;/p&gt;
+&lt;h1 id=&quot;一，课内学习&quot;&gt;&lt;a href=&quot;#一，课内学习&quot; class=&quot;headerlink&quot; title=&quot;一，课内学习&quot;&gt;&lt;/a&gt;一，课内学习&lt;/h1&gt;&lt;p&gt;首先是&lt;strong&gt;汇编&lt;/strong&gt;，要求是把一个16位的二进制数按，eg: BX:0110101100111100&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;二进制&lt;/li&gt;
+&lt;li&gt;四进展&lt;/li&gt;
+&lt;li&gt;八进制&lt;/li&gt;
+&lt;li&gt;十进制&lt;/li&gt;
+&lt;li&gt;十六进制&lt;br&gt;分别显示出来。&lt;br&gt;二进制的：使用ROL循环左移命令，循环移动16次输出&lt;br&gt;然后剩下的我的做法是：&lt;br&gt;四进制，循环八次，初始值为30H，每次第一位如果是1，我就ADD 2，第二位如果是1，我就ADD 1，最后输出，0的话就什么都不加。&lt;br&gt;这样结果就是，1230330&lt;br&gt;八进制要想输出第一位，然后循环5次移动3位，做法类似四进制，十六进制同理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;不过&lt;/strong&gt;&lt;br&gt;老师的做法更简单，直接移位&lt;br&gt;四进制：直接移动2位，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;ROL BX,CL
+MOV DL,BL
+AND DL,3  #保留低2位
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; …循环输出&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;八进制，同样要输出第一位，然后每次移动3位，十六进制就是4位。这样的代码量比较少，也更灵活。&lt;/p&gt;
+&lt;p&gt;十进制有两种做法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;循环5次，先除以10000，输出商，余数继续除以1000，100，10，这样就可以得出结果&lt;/li&gt;
+&lt;li&gt;也是循环五次，每次除以10，余数入栈，商继续除。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后是&lt;strong&gt;计组&lt;/strong&gt;，快速过了一门硬件语言VHDL的语法，老师讲得有点快，基本没记住。。。&lt;br&gt;VHDL语言是一种用于电路设计的高级语言。它在80年代的后期出现。最初是由美国国防部开发出来供美军用来提高设计的可靠性和缩减开发周期的一种使用范围较小的设计语言 。&lt;br&gt;实验课写了个半加器，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;library ieee; //引入库
+use ieee.std_logic_1164.all;//有点像c++
+
+entity fa is //这是这门语言的数据结果，类似一个实体类
+port(a,b,ci : in std_logic; //io变量的定义
+       s,co : out std_logic);
+end fa;
+
+architecture b_fa of fa is //一个使用fa的结构体
+begin
+  s&amp;lt;=a xor b xor ci;// s=a异或b异或ci
+  co&amp;lt;=((a xor b) and ci) or (a and b);//and 是与运算
+end b_fa;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;有点像汇编的写法。。。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;操作系统&lt;/strong&gt;呢，主要教了&lt;em&gt;互斥与同步&lt;/em&gt;。在单处理器多道程序设计系统中，进程被交替执行，表现出一种并发执行的外部特征。这时，有些资源的访问或共享充满了危险，比如两个进程都使用同一个变量，进行读写操作，那么结果不可预料。&lt;/p&gt;
+&lt;p&gt;讲到互斥，就要提到临界区，所谓临界区，可以是一段代码，或者是某些资源，比如说打印机，在一个时刻下，只能有一份文件在打印。其他人要打印就必须排队等待，这里的排队等待就使用了互斥原理，当打印完成后，打印机发出信号，我空闲了，那么下一个人马上去打印，这里就体现了同步。&lt;/p&gt;
+&lt;p&gt;常用的解决并发问题有一个就是&lt;em&gt;信号量&lt;/em&gt;，什么是信号量呢？就那上面的打印栗子讲，这里的信号量可以是打印机是否被使用。有三个步骤。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个二元信号量的初始化，0或者1.&lt;/li&gt;
+&lt;li&gt;semWait操作检查信号量的值，若为0，那么semWait就会受阻。若为1则改变为0，继续执行改进程。&lt;/li&gt;
+&lt;li&gt;semSignal操作检查是否有任何进程在该信号上受阻，有的话，受阻进程就会被唤醒，如果没有进程受阻，那么值就被设为1.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;while(true){
+    semWait(s);
+    /*临界区*/
+    semSignal(s);
+    /*ohter code*/
+}
+    使用信号量的互斥
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;还有一个经典的问题，就是生产者跟消费者的问题，我就不描述，直接给出代码了&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;void producer(){
+     while(true){
+     produce();
+     semWait(s);//等待进入缓冲区
+     append(); //向缓冲区写入
+     semSignal(s);//释放缓冲区
+     semSignal(n); //缓冲区数据+1；
+     }
+}
+
+void consumer(){
+     while(true){
+     semWait(n);//判断缓冲区释放有数据可读
+     semWait(s);//等待进入缓冲区
+     take(); //从缓冲区读出
+     semSignal(s);//释放缓冲区
+     consume();
+     }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;二、课外学习&quot;&gt;&lt;a href=&quot;#二、课外学习&quot; class=&quot;headerlink&quot; title=&quot;二、课外学习&quot;&gt;&lt;/a&gt;二、课外学习&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;HttpClient&lt;/strong&gt;&lt;br&gt;了解了一下&lt;strong&gt;HttpClient&lt;/strong&gt;怎么用，怎么发送请求，处理相应。&lt;br&gt;之所以了解怎么用是因为一门选修课的老师说平时分是根据查看网络平台上的资源次数给分的，我就想可不可以不用手动点击来增加次数，不过既然是计算机专业的学生，怎么不把它交给计算机来做呢？&lt;br&gt;&lt;img src=&quot;/images/acmusume/24.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;可以刷的次数：&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/githubjzgc.jpg&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;本来想自动抓取全部网站的页面，但是很多都是不相关的，所以最后直接拿到这几个的链接，然后循环发送GET请求来刷次数了：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Map params = new HashMap&amp;lt;String, String&amp;gt;(2);
+params.put(&amp;quot;IPT_LOGINUSERNAME&amp;quot;, username);
+params.put(&amp;quot;IPT_LOGINPASSWORD&amp;quot;, password);
+count = 50;
+//创建client
+client = HttpClients.createDefault();
+UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(getParam(params), &amp;quot;UTF-8&amp;quot;);
+HttpPost httpPost = new HttpPost(loginUrl);
+httpPost.setEntity(postEntity);
+System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine());
+   try {
+        //执行post请求
+        HttpResponse httpResponse = client.execute(httpPost);
+        String location = httpResponse.getFirstHeader(&amp;quot;Location&amp;quot;).getValue();
+        if (location != null &amp;amp;&amp;amp; location.startsWith(loginUrl)) {
+        System.err.println(&amp;quot;-----login error&amp;quot;);
+        System.exit(-1);
+         }
+        System.out.println(&amp;quot;登录成功！！！！！！！！！！！！！！！！！！&amp;quot;);
+        printResponse(httpResponse);
+        } catch (Exception e) {
+         e.printStackTrace();
+       }
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;拿到HttpResponse后，可以调用http包里面的EntitUtils工具类进行处理，得到相应的内容。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;String responseString = EntityUtils.toString(entity);
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;结果如下图：&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/githubjzgc1.jpg&quot;&gt;&lt;br&gt;不敢刷太多。。。&lt;br&gt;&lt;img src=&quot;/images/acmusume/48.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;关于如何爬取到所有页面，我是从根页面开始，拿到response后解析html标签，把a标签的href用正则拿出来，判断是否为绝对地址，不是的话就自己加上相应的前缀地址。&lt;br&gt;这样递归调用。&lt;br&gt;但是这样的话就有可能死循环了，我用了计数，如果达到某个数就break掉。&lt;br&gt;之后就可以对这些url进行操作的~&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;开始看&lt;em&gt;《深入理解Java虚拟机》 第二版&lt;/em&gt; 这本书。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第一章讲了Java的发展史，java虚拟机的发展史，才知道原来有那么多版本的虚拟机，而且不同公司也发行自己的虚拟机。有sun公司的，IBM公司的，还有微软的。。。&lt;br&gt;后面讲到自己编译jdk，编译的是OpenJDK，我打算在虚拟机里面的CentOs系统下跟着书上操作一遍。&lt;/p&gt;
+&lt;p&gt; ps:今天知道UC的面试结果被rejected了…有点可惜，感觉不难的面试呀，都不知道为什么就被拒绝了，难道因为我才大二吗？&lt;br&gt;&lt;img src=&quot;/images/acmusume/31.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      对这一周进行总结
+    
+    </summary>
+    
+      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="汇编" scheme="http://yoursite.com/tags/%E6%B1%87%E7%BC%96/"/>
+    
+      <category term="HttpClient" scheme="http://yoursite.com/tags/HttpClient/"/>
+    
+      <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>github+hexo3.0 搭建个人博客</title>
     <link href="http://yoursite.com/2016/04/07/github-hexo3-0-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <id>http://yoursite.com/2016/04/07/github-hexo3-0-搭建个人博客/</id>
     <published>2016-04-07T15:51:23.000Z</published>
-    <updated>2016-04-08T16:14:49.778Z</updated>
+    <updated>2016-04-11T05:05:41.855Z</updated>
     
     <content type="html">&lt;h1 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h1&gt;&lt;p&gt;最新好奇如何搭建个人博客网站，由于之前买过一台vps，本打算自己写页面的，但是想想还是算了吧，毕竟hexo已经有很多酷炫的主题了，之后有空再自己撸。。。&lt;/p&gt;
 &lt;p&gt;由于此类教程在网上已经有很多人发布了。我就根据我在搭建环境，配置参数的情况，做一点小总结：&lt;/p&gt;
@@ -80,9 +223,9 @@
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
-    
       <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   
