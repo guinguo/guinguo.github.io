@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-13T04:19:48.235Z</updated>
+  <updated>2016-04-18T04:29:29.099Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>第七周小结</title>
+    <link href="http://yoursite.com/2016/04/17/%E7%AC%AC%E4%B8%83%E5%91%A8%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2016/04/17/第七周小结/</id>
+    <published>2016-04-17T15:21:49.000Z</published>
+    <updated>2016-04-18T04:29:29.099Z</updated>
+    
+    <content type="html">&lt;p&gt;这一周好闷热啊啊啊，也是助班师兄师姐&lt;strong&gt;美美的卓盈师姐跟漂亮的月军师姐&lt;/strong&gt;，还有&lt;strong&gt;&lt;del&gt; 喝酒就脸红 &lt;/del&gt;的秀鹏师兄&lt;/strong&gt;拍毕业照的一周，今晚的毕业聚餐喝了不少啤酒呢，我说我啊&lt;br&gt;&lt;img src=&quot;/images/acmusume/17.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;然后刚才突然下了一阵大暴雨(/_=  衣服都来不及收了。。。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;课内学习&quot;&gt;&lt;a href=&quot;#课内学习&quot; class=&quot;headerlink&quot; title=&quot;课内学习&quot;&gt;&lt;/a&gt;课内学习&lt;/h1&gt;&lt;p&gt;&lt;/p&gt;&lt;h2&gt;汇编&lt;/h2&gt;&lt;br&gt;主要学了输入功能:&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;INT21H的1号功能：    输入一个字符并保存在AL里面&lt;br&gt;10号功能：    输入一个最长255的字符串，他会自动保存在定义好的缓存区里&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;并且学了几个数求平均数，主要考虑有无符号，并且有无溢出。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;有无符号可以用AND 运算检查最高位是否为1，是的话就是负数&lt;br&gt;溢出则扩充位数，可以使用CWD，自动把AX 扩充到DX+AX&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;还有十六进制写入&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;主要判断输入的字符有效性，30-39H直接，41-46H之间，61-66H之间，因为A到F跟a到f。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;跟字符串处理指令：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MOVSB(W):一次处理一个字节(字)；&lt;br&gt;CMPSB:一次比较一个字节;&lt;br&gt;SCAS:串赋值，把AL或AX赋值到DS:SI字符串的位置上；&lt;br&gt;LODSB:加载字符：DS:SI ==&amp;gt; AL,AX;&lt;br&gt;STOSB:DS:SI ==&amp;gt; AL,AX ==&amp;gt; ES:DI&lt;br&gt;REP:重复命令，用于赋值串之类的；&lt;br&gt;REPE：重复比较，用于判断字符串相等不；&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;这几个还没用过，感觉挺强大的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;&lt;h2&gt;计网&amp;amp;计组&lt;/h2&gt;&lt;br&gt;主要复习了上次的内容，还有讲实验课要注意些什么。&lt;del&gt; 实验都好水 &lt;/del&gt;&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;p&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;课外学习&quot;&gt;&lt;a href=&quot;#课外学习&quot; class=&quot;headerlink&quot; title=&quot;课外学习&quot;&gt;&lt;/a&gt;课外学习&lt;/h1&gt;&lt;p&gt;&lt;/p&gt;&lt;h2&gt;编译openJDK.&lt;/h2&gt;&lt;br&gt;环境是自己之前学Linux虚拟机装的CentOS7系统。&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;操作系统    CentOS Linux release 7.1.1503 (Core)
+gcc version 4.8.2 20140120 
+openJdk版本    openjdk-7u40
+BoottrapJDK   jdk-6u45
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下载openjdk7&lt;/li&gt;
+&lt;li&gt;下载openjdk6–BoostrapJDK&lt;/li&gt;
+&lt;li&gt;安装编译时的依赖&lt;/li&gt;
+&lt;li&gt;make&lt;br&gt;下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，&lt;br&gt;看了书上的教程才检查通过的。&lt;br&gt;吃完饭回来发现出错了。。。编了那么久，居然错了。。。&lt;blockquote&gt;
+&lt;p&gt;Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可&lt;br&gt;Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties&lt;br&gt;把2006改掉就可以了&lt;/p&gt;
+&lt;p&gt;还在编，估计今晚不用关机了(/_=&lt;/p&gt;
+&lt;p&gt;今晚班聚喝了酒，有点不舒服，睡啦睡啦&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      小小吐槽一下吧0 0
+    
+    </summary>
+    
+      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="毕业聚会" scheme="http://yoursite.com/tags/%E6%AF%95%E4%B8%9A%E8%81%9A%E4%BC%9A/"/>
+    
+      <category term="编译openJDK" scheme="http://yoursite.com/tags/%E7%BC%96%E8%AF%91openJDK/"/>
+    
+  </entry>
   
   <entry>
     <title>第六周周结</title>
