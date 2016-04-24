@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-18T04:29:29.099Z</updated>
+  <updated>2016-04-24T16:00:00.087Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,129 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dtd基础入门</title>
+    <link href="http://yoursite.com/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
+    <id>http://yoursite.com/2016/04/24/dtd入门/</id>
+    <published>2016-04-24T10:54:04.000Z</published>
+    <updated>2016-04-24T16:00:00.087Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;二、How-to-use-it&quot;&gt;&lt;a href=&quot;#二、How-to-use-it&quot; class=&quot;headerlink&quot; title=&quot;二、How to use it&quot;&gt;&lt;/a&gt;二、How to use it&lt;/h2&gt;&lt;p&gt;直接举一个栗子，比如现在我定义了一个Person对象，&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;person&amp;gt;
+    &amp;lt;id&amp;gt;&amp;lt;/id&amp;gt;
+    &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
+    &amp;lt;password&amp;gt;&amp;lt;/password&amp;gt;
+    &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
+&amp;lt;/person&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;对应的dtd类型定义如下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE persons [
+&amp;lt;!ELEMENT persons (person+)&amp;gt;
+&amp;lt;!ELEMENT person (id,name,password,age)&amp;gt;
+&amp;lt;!ELEMENT person id ID #REQUIRED&amp;gt;
+&amp;lt;!ELEMENT id (#PCDATA)&amp;gt;
+&amp;lt;!ELEMENT name (#PCDATA)&amp;gt;
+&amp;lt;!ELEMENT password (#PCDATA)&amp;gt;
+&amp;lt;!ELEMENT age (#PCDATA)&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;其中persons 是根元素，每个元素都要说明，persons中有person就如第二行，+号表示1次或者多次，跟正则语法一样&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用修饰符，(正则)，?表示0次或者1次，*表示0次或者多次，+号表示1次或者动词，默认表示1次&lt;br&gt;其中person中，逗号的属性是必须按照顺序写的，即引用了次dtd的xml的person节点的name节点不能出现在id节点前&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以把id设置为属性&lt;br&gt;声明属性,使用下列语法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;lt;!ATTLIST 元素名称 属性名称 属性类型 默认值&amp;gt;&lt;br&gt;&amp;lt;!ATTLIST person id ID #REQUIRED&amp;gt;&lt;br&gt;&lt;strong&gt;其中类型有&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;类型                 描述 
+CDATA        值为字符数据 (character data) 
+(en1|en2|..) 此值是枚举列表中的一个值 
+ID           值为唯一的 id 
+IDREF        值为另外一个元素的 id 
+IDREFS       值为其他 id 的列表 
+NMTOKEN      值为合法的 XML 名称 
+NMTOKENS     值为合法的 XML 名称的列表 
+ENTITY       值是一个实体 
+ENTITIES     值是一个实体列表 
+NOTATION     此值是符号的名称 
+xml:         值是一个预定义的 XML 值 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;默认值参数可使用下列值：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;值              解释
+值              属性的默认值
+#REQUIRED       属性值是必需的
+#IMPLIED        属性不是必需的
+#FIXED value    属性值是固定的 
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;如果把sex设置为属性，就可以写：默认为男性&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;lt;!ATTLIST person sex PCDATA 男&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但是，&lt;strong&gt;为person增加id属性，为必须的,id不能以数字开头…&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;三、Why-Use-a-DTD&quot;&gt;&lt;a href=&quot;#三、Why-Use-a-DTD&quot; class=&quot;headerlink&quot; title=&quot;三、Why Use a DTD?&quot;&gt;&lt;/a&gt;三、Why Use a DTD?&lt;/h2&gt;&lt;h4&gt;&lt;br&gt;使用DTD，每个XML文件可以携带自己的格式的描述。&lt;br&gt;使用DTD，团体中的每个人可以使用标准的DTD交换数据。&lt;br&gt;应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。&lt;br&gt;另外您可以使用DTD，以验证自己的数据。&lt;/h4&gt;
+
+&lt;h2 id=&quot;四、XML文件引入&quot;&gt;&lt;a href=&quot;#四、XML文件引入&quot; class=&quot;headerlink&quot; title=&quot;四、XML文件引入&quot;&gt;&lt;/a&gt;四、XML文件引入&lt;/h2&gt;&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE SYSTEM 是引用内部文件的
+&amp;lt;!DOCTYPE PUBLIC 是引用网络文件的
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如：引入内部文件person.dtd&lt;br&gt;    &amp;lt;!DOCTYPE persons SYSTEM “person.dtd”&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Practice&lt;/h4&gt;
+
+&lt;p&gt;下面给出两道练习题：&lt;br&gt;1,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;persons&amp;gt;
+ &amp;lt;person id=&amp;quot;p1&amp;quot;&amp;gt;
+  &amp;lt;sex&amp;gt;&amp;lt;/sex&amp;gt;
+  &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
+  &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
+  &amp;lt;messages&amp;gt;
+   &amp;lt;message&amp;gt;
+    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;content&amp;gt;&amp;lt;/content&amp;gt;
+   &amp;lt;/message&amp;gt;
+  &amp;lt;/messages&amp;gt;
+ &amp;lt;/person&amp;gt;
+&amp;lt;/persons&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;2,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;classroom id=&amp;quot;c1&amp;quot;&amp;gt;
+ &amp;lt;claName&amp;gt;网工3班&amp;lt;/claName&amp;gt;
+ &amp;lt;grade&amp;gt;2014&amp;lt;/grade&amp;gt;
+ &amp;lt;students&amp;gt;
+  &amp;lt;student&amp;gt;
+   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
+   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
+   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
+  &amp;lt;/student&amp;gt;
+  &amp;lt;student&amp;gt;
+   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
+   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
+   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
+  &amp;lt;/student&amp;gt;
+ &amp;lt;/students&amp;gt;
+&amp;lt;/classroom&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;但是，使用dtd会出现一些&lt;strong&gt;问题&lt;/strong&gt;，&lt;br&gt;1，名称会冲突，如果person有name，message也有name就有问题&lt;br&gt;2，控制精度不够，比如sex应该为枚举类型，只有男跟女&lt;br&gt;导致dtd并不能适应很多场合，跟xml进行互换&lt;br&gt;在09年出现了schema，慢慢在xml的定义中替代了dtd&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;h3&gt;答案&lt;/h3&gt;&lt;br&gt;1，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg&quot; alt=&quot;classroom.dtd&quot; title=&quot;classroom.dtd&quot;&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;2，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/person.dtd.jpg&quot; alt=&quot;person.dtd&quot; title=&quot;person.dtd&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      简单介绍一下dtd
+    
+    </summary>
+    
+      <category term="WebService" scheme="http://yoursite.com/categories/WebService/"/>
+    
+    
+      <category term="dtd" scheme="http://yoursite.com/tags/dtd/"/>
+    
+  </entry>
   
   <entry>
     <title>第七周小结</title>
