@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-24T16:00:00.087Z</updated>
+  <updated>2016-04-24T16:15:15.084Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2016/04/24/dtd入门/</id>
     <published>2016-04-24T10:54:04.000Z</published>
-    <updated>2016-04-24T16:00:00.087Z</updated>
+    <updated>2016-04-24T16:15:15.084Z</updated>
     
     <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
@@ -76,16 +76,18 @@ xml:         值是一个预定义的 XML 值
 &lt;p&gt;&amp;lt;!ATTLIST person sex PCDATA 男&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;但是，&lt;strong&gt;为person增加id属性，为必须的,id不能以数字开头…&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;三、Why-Use-a-DTD&quot;&gt;&lt;a href=&quot;#三、Why-Use-a-DTD&quot; class=&quot;headerlink&quot; title=&quot;三、Why Use a DTD?&quot;&gt;&lt;/a&gt;三、Why Use a DTD?&lt;/h2&gt;&lt;h4&gt;&lt;br&gt;使用DTD，每个XML文件可以携带自己的格式的描述。&lt;br&gt;使用DTD，团体中的每个人可以使用标准的DTD交换数据。&lt;br&gt;应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。&lt;br&gt;另外您可以使用DTD，以验证自己的数据。&lt;/h4&gt;
-
-&lt;h2 id=&quot;四、XML文件引入&quot;&gt;&lt;a href=&quot;#四、XML文件引入&quot; class=&quot;headerlink&quot; title=&quot;四、XML文件引入&quot;&gt;&lt;/a&gt;四、XML文件引入&lt;/h2&gt;&lt;blockquote&gt;
+&lt;h2 id=&quot;三、Why-Use-a-DTD&quot;&gt;&lt;a href=&quot;#三、Why-Use-a-DTD&quot; class=&quot;headerlink&quot; title=&quot;三、Why Use a DTD?&quot;&gt;&lt;/a&gt;三、Why Use a DTD?&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;使用DTD，每个XML文件可以携带自己的格式的描述。&lt;/li&gt;
+&lt;li&gt;使用DTD，团体中的每个人可以使用标准的DTD交换数据。&lt;/li&gt;
+&lt;li&gt;应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。&lt;/li&gt;
+&lt;li&gt;另外您可以使用DTD，以验证自己的数据。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;四、Using-in-XML&quot;&gt;&lt;a href=&quot;#四、Using-in-XML&quot; class=&quot;headerlink&quot; title=&quot;四、Using in XML&quot;&gt;&lt;/a&gt;四、Using in XML&lt;/h2&gt;&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE SYSTEM 是引用内部文件的
 &amp;lt;!DOCTYPE PUBLIC 是引用网络文件的
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如：引入内部文件person.dtd&lt;br&gt;    &amp;lt;!DOCTYPE persons SYSTEM “person.dtd”&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h4&gt;Practice&lt;/h4&gt;
-
-&lt;p&gt;下面给出两道练习题：&lt;br&gt;1,&lt;/p&gt;
+&lt;h2 id=&quot;五、Practice&quot;&gt;&lt;a href=&quot;#五、Practice&quot; class=&quot;headerlink&quot; title=&quot;五、Practice&quot;&gt;&lt;/a&gt;五、Practice&lt;/h2&gt;&lt;p&gt;下面给出两道练习题：&lt;br&gt;1,&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;persons&amp;gt;
  &amp;lt;person id=&amp;quot;p1&amp;quot;&amp;gt;
@@ -121,7 +123,7 @@ xml:         值是一个预定义的 XML 值
 &amp;lt;/classroom&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
 &lt;p&gt;但是，使用dtd会出现一些&lt;strong&gt;问题&lt;/strong&gt;，&lt;br&gt;1，名称会冲突，如果person有name，message也有name就有问题&lt;br&gt;2，控制精度不够，比如sex应该为枚举类型，只有男跟女&lt;br&gt;导致dtd并不能适应很多场合，跟xml进行互换&lt;br&gt;在09年出现了schema，慢慢在xml的定义中替代了dtd&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;&lt;h3&gt;答案&lt;/h3&gt;&lt;br&gt;1，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg&quot; alt=&quot;classroom.dtd&quot; title=&quot;classroom.dtd&quot;&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;br&gt;1，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg&quot; alt=&quot;classroom.dtd&quot; title=&quot;classroom.dtd&quot;&gt;&lt;/p&gt;
 &lt;p&gt;2，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/person.dtd.jpg&quot; alt=&quot;person.dtd&quot; title=&quot;person.dtd&quot;&gt;&lt;/p&gt;
 </content>
     
@@ -411,9 +413,9 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
-    
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
     
   </entry>
   
