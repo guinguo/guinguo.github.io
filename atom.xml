@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-24T16:15:15.084Z</updated>
+  <updated>2016-04-27T09:13:37.537Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2016/04/24/dtd入门/</id>
     <published>2016-04-24T10:54:04.000Z</published>
-    <updated>2016-04-24T16:15:15.084Z</updated>
+    <updated>2016-04-27T09:13:37.537Z</updated>
     
     <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
@@ -34,17 +34,7 @@
     &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
 &amp;lt;/person&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;对应的dtd类型定义如下&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE persons [
-&amp;lt;!ELEMENT persons (person+)&amp;gt;
-&amp;lt;!ELEMENT person (id,name,password,age)&amp;gt;
-&amp;lt;!ELEMENT person id ID #REQUIRED&amp;gt;
-&amp;lt;!ELEMENT id (#PCDATA)&amp;gt;
-&amp;lt;!ELEMENT name (#PCDATA)&amp;gt;
-&amp;lt;!ELEMENT password (#PCDATA)&amp;gt;
-&amp;lt;!ELEMENT age (#PCDATA)&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;对应的dtd类型定义如下&lt;br&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;figcaption&gt;&lt;span&gt;对应dtd&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;lt;!DOCTYPE persons [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT persons (person+)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person (id,name,password,age)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person id ID #REQUIRED&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT id (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT name (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT password (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT age (#PCDATA)&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;其中persons 是根元素，每个元素都要说明，persons中有person就如第二行，+号表示1次或者多次，跟正则语法一样&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;用修饰符，(正则)，?表示0次或者1次，*表示0次或者多次，+号表示1次或者动词，默认表示1次&lt;br&gt;其中person中，逗号的属性是必须按照顺序写的，即引用了次dtd的xml的person节点的name节点不能出现在id节点前&lt;/p&gt;
