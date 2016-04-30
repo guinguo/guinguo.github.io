@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-27T09:13:37.537Z</updated>
+  <updated>2016-04-30T11:26:45.520Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>解除网页内容复制限制</title>
+    <link href="http://yoursite.com/2016/04/30/%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
+    <id>http://yoursite.com/2016/04/30/解除网页内容复制限制/</id>
+    <published>2016-04-30T10:44:23.000Z</published>
+    <updated>2016-04-30T11:26:45.520Z</updated>
+    
+    <content type="html">&lt;p&gt;首先呢，背景是自己要把某个页面的数据拿下来打印，好了，一般的话，我们会选中，然后按Ctrl+C复制，到Word或者其他地方Ctrl+V粘贴，然而发现并没有，&lt;del&gt; 我去&lt;/del&gt;。。。&lt;/p&gt;
+&lt;p&gt;好吧，进入主题，首先我百度了一下，发现不是禁用脚本，就是保存网页，然而并没有什么卵用，我找了几个Chrome的解禁插件，也没用。。。&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;这就尴尬了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;但是&lt;/strong&gt;,不要慌。H5有一个contenteditable 的属性，当其为true是，内容可编辑，这就好办了。&lt;br&gt;怎么用呢？&lt;/p&gt;
+&lt;p&gt;首先，你要找到你需要的内容的元素id，&lt;br&gt;按F12，第2步选中内容&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/getId.jpg&quot;&gt;&lt;br&gt;然后复制下来，换到下面代码中的page-body去&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;方法1：&lt;br&gt;在当前页面的浏览器地址栏输入：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     javascript:&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;page-body&#39;&lt;/span&gt;).setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;contentEditable&#39;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法2：&lt;br&gt;在当前页面按F12进入调试工具，切换到console窗口，键入&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;page-body&#39;&lt;/span&gt;).setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;contentEditable&#39;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;回车。两种方法结果一样~&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;h4&gt;那么神奇的事情即将发生&lt;/h4&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/contentEditable.gif&quot;&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;###直接把内容拉倒编辑器或者Word即可&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      一行代码解除限制~
+    
+    </summary>
+    
+      <category term="小技巧" scheme="http://yoursite.com/categories/%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    
+    
+      <category term="网页复制内容" scheme="http://yoursite.com/tags/%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9/"/>
+    
+      <category term="解除复制限制" scheme="http://yoursite.com/tags/%E8%A7%A3%E9%99%A4%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>dtd基础入门</title>
     <link href="http://yoursite.com/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
     <id>http://yoursite.com/2016/04/24/dtd入门/</id>
     <published>2016-04-24T10:54:04.000Z</published>
-    <updated>2016-04-27T09:13:37.537Z</updated>
+    <updated>2016-04-30T11:15:34.764Z</updated>
     
     <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
@@ -123,7 +157,9 @@ xml:         值是一个预定义的 XML 值
     
     </summary>
     
-      <category term="WebService" scheme="http://yoursite.com/categories/WebService/"/>
+      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="WebService" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/WebService/"/>
     
     
       <category term="dtd" scheme="http://yoursite.com/tags/dtd/"/>
