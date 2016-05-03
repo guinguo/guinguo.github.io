@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-30T11:26:45.520Z</updated>
+  <updated>2016-05-03T05:16:33.608Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM学习之OpenJDK源码编译</title>
+    <link href="http://yoursite.com/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"/>
+    <id>http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/</id>
+    <published>2016-05-03T02:26:26.000Z</published>
+    <updated>2016-05-03T05:16:33.608Z</updated>
+    
+    <content type="html">&lt;p&gt;具体步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;获取openjdk源码&lt;/li&gt;
+&lt;li&gt;安装openjdk6–BoostrapJK&lt;/li&gt;
+&lt;li&gt;安装编译时的依赖&lt;/li&gt;
+&lt;li&gt;配置环境变量&lt;/li&gt;
+&lt;li&gt;编译&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;1. 获取openjdk源码&lt;/h3&gt;&lt;br&gt;可以到这里去下载，&lt;a href=&quot;https://jdk7.java.net/source.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OpenJDK Source Releases&lt;/a&gt;&lt;br&gt;我下载的是openjdk-7u40版本，openjdk7，update40，build43&lt;br&gt;&lt;h3&gt;2. 下载jdk6–BoostrapJDK&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;我使用jdk6来辅助编译。可以到oracle官网下载，&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;jdk-6u45-linux-x64.bin&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;&lt;h3&gt;3.安装编译时的依赖&lt;/h3&gt;&lt;br&gt;Ubuntu可以使用一下命令一次安装完成&lt;p&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;yum -y install build-essential gawk m4
+openjkd-6-jkd libasound2-dev libcups2-dev 
+libxrender-dev xorg-dev xutils-dev
+xllproto-print-dev binutils libmotif3
+libmotif-dev ant
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;&lt;h3&gt;3.配置环境变量,编译&lt;/h3&gt;&lt;br&gt;OpenJKD在编译时读取的环境变量很多，但是大多数都有默认值，必须设置的只有两个：LANG和ALT_BOOTDIR。分别为C跟bootJDK的路径&lt;br&gt;所有的环境变量可以使用下面的脚本设置：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#Bootstrap JDK 安装位置&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_BOOTDIR=/opt/openJDK/jdk1.6.0_45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#允许自动下载&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALLOW_DOWNLOADS=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#并行编译的线程数，和CPU内核数量一致即可&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export HOTSPOT_BUILD_JOBS=2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_PARALLEL_COMPILE_JOBS=2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#比较本次build出来的映像与先前版本的差异，对于我们没哟意义，&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#必须设置为false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export SKIP_COMPARE_IMAGES=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#使用预编译头文件，不加这个编译会更慢一些&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export USE_PRECOMPILED_HEADER=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#要编译的内容&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_LANGTOOLS=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_HOTSPOT=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_JDK=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#把它设置为false，可以避开javaws和浏览器java插件的build&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;BUILD_DEPLOY=false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#把它设置为false就不会build出安装包。因为安装包里有些奇怪的依赖&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;BUILD_INSTALL=false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#编译结果所存放的路径&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_OUTPUTDIR=/opt/openJDK/openjdk/build&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#这两个变量必须去掉&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset CLASSPATH&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset JAVA_HOME&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset LD_LIBRARY_PATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;全部设置结束之后，可以输入 make sanity 检测是否正确，如果一切顺利，会输出：Sanity check passed.就可以编译了。&lt;br&gt;输入make(不加参数默认为make all)，我的虚拟机配置比较低，整个编译的过程用了一个多分钟。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结果如下：&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/build.jpg&quot;&gt;&lt;br&gt;我在虚拟机中编译的，而且配置不高，所以有点慢.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;那么问题来了，如何看结果ne？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;　　编译完成之后，进入OpenJDK源码下的build/j2sdk-image目录,(或者build-debug、build-fastdebug这两个目录)，这是整个JDK完整编译结果，内容为debug版jdk，将其复制到%JAVA_HOME%下，替换Oracle JDK。就可以作为一个完整的JDK使用，编译出来的虚拟机，在-version命令中带有用户的机器名。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[root@localhost ~]# java -version
+openjdk version &amp;quot;1.7.0-internal-debug&amp;quot;
+OpenJDK Runtime Environment (build 1.7.0-internal-debug-root_2016_04_25_20_00-b00)
+OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;　　大多数情况我们只关心Hotspot虚拟机，只想单独编译它的话，那么使用hotspot/make目录下的MakeFile进行替换即可，其他参数与前面一致，这时候虚拟机的输出结果存放在&lt;br&gt;    &lt;code&gt;build/hotspot/outputdir/linux_amd64_compiler2&lt;/code&gt; 中，里面对应了不同的优化级别的目录。&lt;/p&gt;
+&lt;p&gt;进入 目录jvmg，在运行虚拟机前，还要手工编辑目录下的env.sh文件，这个文件由编译脚本自动产生，用于设置虚拟机的环境变量，里面已经发布了”JAVA_HOME，CLASSPATH，HOTSPOT_BUILD_USER” 3个环境变量，还需要增加一个“LD_LIBRSRY_CLASSPATH”：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;LD_LIBRARY_PATH=.:$&amp;#123;JAVA_HOME&amp;#125;/jre/lib/amd64/native_threads:$&amp;#123;JAVA_HOME&amp;#125;/jre/lib/amd64:/opt/openJDK/openjdk/build/hotspot/outputdir/linux_amd64_compiler2/product&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export LD_LIBRARY_PATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后执行&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;. ./env.sh
+./gama -version   #有可能是test_gamma,这是自带的一段八皇后代码
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;结果如下&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/jvm.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;　　看到自己变异的虚拟机成功运行起来，哈哈哈~&lt;br&gt;&lt;img src=&quot;/images/acmusume/32.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;编译过程中有可能报错：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可&lt;br&gt;Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties&lt;br&gt;把2006改掉就可以&lt;del&gt;重新编译了&lt;/del&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      自己编译JDK
+    
+    </summary>
+    
+      <category term="JVM学习" scheme="http://yoursite.com/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="java虚拟机" scheme="http://yoursite.com/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+      <category term="编译openjdk" scheme="http://yoursite.com/tags/%E7%BC%96%E8%AF%91openjdk/"/>
+    
+  </entry>
   
   <entry>
     <title>解除网页内容复制限制</title>
@@ -171,7 +241,7 @@ xml:         值是一个预定义的 XML 值
     <link href="http://yoursite.com/2016/04/17/%E7%AC%AC%E4%B8%83%E5%91%A8%E5%B0%8F%E7%BB%93/"/>
     <id>http://yoursite.com/2016/04/17/第七周小结/</id>
     <published>2016-04-17T15:21:49.000Z</published>
-    <updated>2016-04-18T04:29:29.099Z</updated>
+    <updated>2016-05-03T03:08:36.803Z</updated>
     
     <content type="html">&lt;p&gt;这一周好闷热啊啊啊，也是助班师兄师姐&lt;strong&gt;美美的卓盈师姐跟漂亮的月军师姐&lt;/strong&gt;，还有&lt;strong&gt;&lt;del&gt; 喝酒就脸红 &lt;/del&gt;的秀鹏师兄&lt;/strong&gt;拍毕业照的一周，今晚的毕业聚餐喝了不少啤酒呢，我说我啊&lt;br&gt;&lt;img src=&quot;/images/acmusume/17.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;然后刚才突然下了一阵大暴雨(/_=  衣服都来不及收了。。。&lt;/p&gt;
 &lt;hr&gt;
@@ -203,17 +273,15 @@ BoottrapJDK   jdk-6u45
 &lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
 &lt;p&gt;步骤：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;下载openjdk7&lt;/li&gt;
-&lt;li&gt;下载openjdk6–BoostrapJDK&lt;/li&gt;
+&lt;li&gt;获取openjdk源码&lt;/li&gt;
+&lt;li&gt;下载jdk6–BoostrapJDK&lt;/li&gt;
 &lt;li&gt;安装编译时的依赖&lt;/li&gt;
-&lt;li&gt;make&lt;br&gt;下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，&lt;br&gt;看了书上的教程才检查通过的。&lt;br&gt;吃完饭回来发现出错了。。。编了那么久，居然错了。。。&lt;blockquote&gt;
-&lt;p&gt;Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;li&gt;make&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可&lt;br&gt;Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties&lt;br&gt;把2006改掉就可以了&lt;/p&gt;
-&lt;p&gt;还在编，估计今晚不用关机了(/_=&lt;/p&gt;
-&lt;p&gt;今晚班聚喝了酒，有点不舒服，睡啦睡啦&lt;/p&gt;
+&lt;p&gt;下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，&lt;br&gt;看了书上的教程才检查通过的。&lt;br&gt;吃完饭回来发现出错了。。。编了那么久，居然错了。。。&lt;br&gt;Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org&lt;/p&gt;
+&lt;p&gt;改正后重新编，估计今晚不用关机了(/_=&lt;/p&gt;
+&lt;p&gt;具体过程请看 &lt;strong&gt;&lt;a href=&quot;/2016/05/03/JVM学习之OpenJDK源码编译/&quot;&gt;JVM学习之OpenJDK源码编译&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;今晚班聚喝了酒，有点不舒服，睡啦睡啦&lt;/del&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -439,9 +507,9 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
-    
       <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   

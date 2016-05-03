@@ -66,7 +66,7 @@
 <meta property="og:site_name" content="Guinguo's blog">
 <meta property="og:description" content="小小吐槽一下吧0 0">
 <meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg">
-<meta property="og:updated_time" content="2016-04-18T04:29:29.099Z">
+<meta property="og:updated_time" content="2016-05-03T03:08:36.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第七周小结">
 <meta name="twitter:description" content="小小吐槽一下吧0 0">
@@ -336,7 +336,7 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg" rel="gallery_cinn1ygbw0001qgkauk4ht7ed"
+                 href="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg" rel="gallery_cinqu75wb0008f4kabrz993n8"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg" itemprop="contentUrl"/>
               </a>
@@ -379,17 +379,15 @@ BoottrapJDK   jdk-6u45
 </code></pre></blockquote>
 <p>步骤：</p>
 <ol>
-<li>下载openjdk7</li>
-<li>下载openjdk6–BoostrapJDK</li>
+<li>获取openjdk源码</li>
+<li>下载jdk6–BoostrapJDK</li>
 <li>安装编译时的依赖</li>
-<li>make<br>下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，<br>看了书上的教程才检查通过的。<br>吃完饭回来发现出错了。。。编了那么久，居然错了。。。<blockquote>
-<p>Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org</p>
-</blockquote>
-</li>
+<li>make</li>
 </ol>
-<p>通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可<br>Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties<br>把2006改掉就可以了</p>
-<p>还在编，估计今晚不用关机了(/_=</p>
-<p>今晚班聚喝了酒，有点不舒服，睡啦睡啦</p>
+<p>下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，<br>看了书上的教程才检查通过的。<br>吃完饭回来发现出错了。。。编了那么久，居然错了。。。<br>Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org</p>
+<p>改正后重新编，估计今晚不用关机了(/_=</p>
+<p>具体过程请看 <strong><a href="/2016/05/03/JVM学习之OpenJDK源码编译/">JVM学习之OpenJDK源码编译</a></strong></p>
+<p><del>今晚班聚喝了酒，有点不舒服，睡啦睡啦</del></p>
 
       
     </div>
@@ -509,7 +507,7 @@ BoottrapJDK   jdk-6u45
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -517,7 +515,7 @@ BoottrapJDK   jdk-6u45
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -526,7 +524,7 @@ BoottrapJDK   jdk-6u45
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
