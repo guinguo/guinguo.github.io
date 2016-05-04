@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-03T14:58:00.864Z</updated>
+  <updated>2016-05-03T15:19:14.987Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://yoursite.com/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"/>
     <id>http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/</id>
     <published>2016-05-03T02:26:26.000Z</published>
-    <updated>2016-05-03T14:58:00.864Z</updated>
+    <updated>2016-05-03T15:19:14.987Z</updated>
     
-    <content type="html">&lt;p&gt;具体步骤：&lt;/p&gt;
+    <content type="html">&lt;p&gt;在centos7下进行编译&lt;br&gt;具体步骤：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;获取openjdk源码&lt;/li&gt;
 &lt;li&gt;安装openjdk6–BoostrapJK&lt;/li&gt;
