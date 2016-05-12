@@ -565,13 +565,14 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
     <link href="http://yoursite.com/2016/04/06/hello-hexo/"/>
     <id>http://yoursite.com/2016/04/06/hello-hexo/</id>
     <published>2016-04-06T02:02:01.000Z</published>
-    <updated>2016-04-07T15:11:47.354Z</updated>
+    <updated>2016-05-12T05:42:21.947Z</updated>
     
     <content type="html">&lt;p&gt;This is my first hexo article,Hello Hexo!&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://file29.mafengwo.net/M00/1E/2E/wKgBpVWZLZuASMPGAAjSHNJpoC448.groupinfo.w600.jpeg&quot; alt=&quot;sunshine&quot; title=&quot;sunshine&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;经过这一周…断断续续地配置，基本上可以撸文章了&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;待会写个总结，把参考的文档都列出来~&lt;/p&gt;
-&lt;p&gt;=============================fengexian=============================&lt;/p&gt;
-&lt;h2 id=&quot;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内&quot;&gt;&lt;a href=&quot;#我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内&quot; class=&quot;headerlink&quot; title=&quot;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内^_^&quot;&gt;&lt;/a&gt;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内^_^&lt;/h2&gt;</content>
+&lt;p&gt;=============================fengexian=============================&lt;br&gt;我在阅览室完成的文章，加上昨天早上的配置，完成这篇文章的时间在一天之内^_^&lt;/p&gt;
+&lt;hr&gt;
+</content>
     
     <summary type="html">
     
