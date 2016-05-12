@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="毕业聚会,编译openJDK," />
+  <meta name="keywords" content="CentOS开启端口," />
 
 
 
@@ -59,18 +59,21 @@
 
 
 
-<meta name="description" content="小小吐槽一下吧0 0">
+<meta name="description" content="如何打开Linux的端口">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第七周小结">
-<meta property="og:url" content="http://yoursite.com/2016/04/17/第七周小结/index.html">
+<meta property="og:title" content="CentOS 开启http 端口(80)">
+<meta property="og:url" content="http://yoursite.com/2016/05/09/CentOS-开启http-端口-80/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="小小吐槽一下吧0 0">
-<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg">
-<meta property="og:updated_time" content="2016-05-03T03:08:36.803Z">
+<meta property="og:description" content="如何打开Linux的端口">
+<meta property="og:image" content="http://yoursite.com/images/acmusume/01.png">
+<meta property="og:image" content="http://7xsve9.com2.z0.glb.clouddn.com/iptables-L.jpg">
+<meta property="og:image" content="http://7xsve9.com2.z0.glb.clouddn.com/iptables-vnl.jpg">
+<meta property="og:image" content="http://7xsve9.com2.z0.glb.clouddn.com/iptables-80.jpg">
+<meta property="og:updated_time" content="2016-05-11T03:14:56.873Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第七周小结">
-<meta name="twitter:description" content="小小吐槽一下吧0 0">
-<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg">
+<meta name="twitter:title" content="CentOS 开启http 端口(80)">
+<meta name="twitter:description" content="如何打开Linux的端口">
+<meta name="twitter:image" content="http://yoursite.com/images/acmusume/01.png">
 
 
 
@@ -88,7 +91,7 @@
   };
 </script>
 
-  <title> 第七周小结 | Guinguo's blog </title>
+  <title> CentOS 开启http 端口(80) | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +271,7 @@
             
             
               
-                第七周小结
+                CentOS 开启http 端口(80)
               
             
           </h1>
@@ -280,8 +283,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-17T23:21:49+08:00" content="2016-04-17">
-              2016-04-17
+            <time itemprop="dateCreated" datetime="2016-05-09T12:47:59+08:00" content="2016-05-09">
+              2016-05-09
             </time>
           </span>
 
@@ -294,8 +297,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/周总结/" itemprop="url" rel="index">
-                    <span itemprop="name">周总结</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -310,8 +313,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/17/第七周小结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/17/第七周小结/" itemprop="commentsCount"></span>
+                <a href="/2016/05/09/CentOS-开启http-端口-80/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/CentOS-开启http-端口-80/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -331,63 +334,62 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg" rel="gallery_cio3uj53e000dz4kadr1i4uv8"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xsve9.com1.z0.glb.clouddn.com/guinguoimages.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <p>这一周好闷热啊啊啊，也是助班师兄师姐<strong>美美的卓盈师姐跟漂亮的月军师姐</strong>，还有<strong><del> 喝酒就脸红 </del>的秀鹏师兄</strong>拍毕业照的一周，今晚的毕业聚餐喝了不少啤酒呢，我说我啊<br><img src="/images/acmusume/17.png" height="50px" ,="" width="50px" style="margin:0 0"><br>然后刚才突然下了一阵大暴雨(/_=  衣服都来不及收了。。。</p>
-<hr>
-<h1 id="课内学习"><a href="#课内学习" class="headerlink" title="课内学习"></a>课内学习</h1><p></p><h2>汇编</h2><br>主要学了输入功能:<p></p>
-<blockquote>
-<p>INT21H的1号功能：    输入一个字符并保存在AL里面<br>10号功能：    输入一个最长255的字符串，他会自动保存在定义好的缓存区里</p>
-</blockquote>
-<p>并且学了几个数求平均数，主要考虑有无符号，并且有无溢出。</p>
-<blockquote>
-<p>有无符号可以用AND 运算检查最高位是否为1，是的话就是负数<br>溢出则扩充位数，可以使用CWD，自动把AX 扩充到DX+AX</p>
-</blockquote>
-<p>还有十六进制写入</p>
-<blockquote>
-<p>主要判断输入的字符有效性，30-39H直接，41-46H之间，61-66H之间，因为A到F跟a到f。</p>
-</blockquote>
-<p>跟字符串处理指令：</p>
-<blockquote>
-<p>MOVSB(W):一次处理一个字节(字)；<br>CMPSB:一次比较一个字节;<br>SCAS:串赋值，把AL或AX赋值到DS:SI字符串的位置上；<br>LODSB:加载字符：DS:SI ==&gt; AL,AX;<br>STOSB:DS:SI ==&gt; AL,AX ==&gt; ES:DI<br>REP:重复命令，用于赋值串之类的；<br>REPE：重复比较，用于判断字符串相等不；</p>
-<p></p><p>这几个还没用过，感觉挺强大的。</p>
-</blockquote>
-<p></p><h2>计网&amp;计组</h2><br>主要复习了上次的内容，还有讲实验课要注意些什么。<del> 实验都好水 </del><br><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0"><p></p>
-<hr>
-<h1 id="课外学习"><a href="#课外学习" class="headerlink" title="课外学习"></a>课外学习</h1><p></p><h2>编译openJDK.</h2><br>环境是自己之前学Linux虚拟机装的CentOS7系统。<p></p>
-<blockquote>
-<pre><code>操作系统    CentOS Linux release 7.1.1503 (Core)
-gcc version 4.8.2 20140120 
-openJdk版本    openjdk-7u40
-BoottrapJDK   jdk-6u45
-</code></pre></blockquote>
-<p>步骤：</p>
+        <p>　　最近我的vps差点被我玩 <del>坏了</del><br><img align="center" src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0"><br>就是防火墙被我改了，一开始22端口被我换成1888，因为一般的ssh连接都是用22端口，我就想换一个，也许安全的点。一开始没问题，过几天后我发现居然连接不上了。。。</p>
+<p>　　我就查了网上的资料，发现是我防火墙的问题。我开了一个应用，tomcat的8080端口，然后用nginx代理为80，但是，自从我改了ssh端口后就访问不了了，网上的教程就是说有两种方法开启端口。</p>
 <ol>
-<li>获取openjdk源码</li>
-<li>下载jdk6–BoostrapJDK</li>
-<li>安装编译时的依赖</li>
-<li>make</li>
+<li>编辑iptables文件<br>什么是iptables呢？，它是Linux的防火墙，可以根据各种规则配置开放或者关闭网络端口。<a href="https://zh.wikipedia.org/wiki/Iptables" target="_blank" rel="external">wiki</a><blockquote>
+<pre><code>vi /etc/sysconfig/iptables　
+#允许80端口通过防火墙，加在COMMIT之前
+A INPUT -m state –state NEW -m tcp -p tcp –dport 80 -j ACCEPT
+#保存退出后，重启防火墙
+service iptables restart
+#或者 /etc/init.d/iptables restart
+</code></pre></blockquote>
+</li>
+<li>直接command更改(原理也是同1)　<blockquote>
+<pre><code>#查看防火墙状态
+service iptables status
+#开启80端口
+iptables -I INPUT -p tcp --dport 80 -j ACCEPT 
+#保存，可能我之前就是没有保存，导致配置无效。。。
+service iptables save 
+</code></pre></blockquote>
+</li>
 </ol>
-<p>下午搞了好久，准备编译的依赖，make sanity检查时老是出错，最后发现自己的配置不太对，<br>看了书上的教程才检查通过的。<br>吃完饭回来发现出错了。。。编了那么久，居然错了。。。<br>Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org</p>
-<p>改正后重新编，估计今晚不用关机了(/_=</p>
-<p>具体过程请看 <strong><a href="/2016/05/03/JVM学习之OpenJDK源码编译/">JVM学习之OpenJDK源码编译</a></strong></p>
-<p><del>今晚班聚喝了酒，有点不舒服，睡啦睡啦</del></p>
+<p><strong>但是，我安装以上方法配置后，发现仍然不行。</strong><br>nginx也访问不了了，最后我是用以下方式解决的~</p>
+<h1 id="1、iptables-rules"><a href="#1、iptables-rules" class="headerlink" title="1、iptables rules"></a>1、iptables rules</h1><p>　　有两种方法打开80端口，第一种是用iptables命令，第二种是配置文件，(就如同我上面列的两种)，<br>使用命令的：<br>检测iptables是否有效，简单的命令：</p>
+<blockquote>
+<pre><code>iptables -L
+</code></pre></blockquote>
+<p><img src="http://7xsve9.com2.z0.glb.clouddn.com/iptables-L.jpg"></p>
+<p>现在是没有开启80端口的，</p>
+<p>可以看出哪些端口是开启的(ACCEPT)，哪些是关闭的(REJECT)，<strong>但是</strong>，并没有我80端口accept！<br>可以使用命令：</p>
+<blockquote>
+<pre><code>iptables -vnL
+</code></pre></blockquote>
+<p>查看更精确的信息。</p>
+<p><img src="http://7xsve9.com2.z0.glb.clouddn.com/iptables-vnl.jpg"></p>
+<h1 id="2、打开80端口"><a href="#2、打开80端口" class="headerlink" title="2、打开80端口"></a>2、打开80端口</h1><p>　打开80端口，我们需要增加一条记录，加在ACCEPT 后REJECT前，</p>
+<blockquote>
+<pre><code>#iptables -I INPUT 1 -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+</code></pre></blockquote>
+<p>这条命令会增加一条规则，在第一行，启动防火墙端口80，再一次检查端口状态</p>
+<blockquote>
+<p>   #iptables –line -vnL</p>
+</blockquote>
+<p><img src="http://7xsve9.com2.z0.glb.clouddn.com/iptables-80.jpg"><br>现在，我们看到80端口已经打开了，外网可以访问到服务器的80端口应用了.</p>
+<h1 id="3、保存"><a href="#3、保存" class="headerlink" title="3、保存"></a>3、保存</h1><p><strong>但是</strong>这只是临时的，只有保存了，<del>我之前就是没有保存。。。</del> 之后才会生效，不然重启后又没了。</p>
+<blockquote>
+<pre><code>#service iptables save
+</code></pre></blockquote>
+<p>正确的话，会有提示说iptables:[ OK ]</p>
+<h1 id="4、重启防火墙"><a href="#4、重启防火墙" class="headerlink" title="4、重启防火墙"></a>4、重启防火墙</h1><p>现在，防火墙的规则已经永久保证了，我们可以重启它</p>
+<blockquote>
+<pre><code>#service iptables restart
+</code></pre></blockquote>
+<p>会提示几个[ OK ],表示正常了。<br>最后，测试一下是否可以访问到服务器的80端口,<br>ok,now it work~</p>
 
       
     </div>
@@ -408,9 +410,7 @@ BoottrapJDK   jdk-6u45
       
         <div class="post-tags">
           
-            <a href="/tags/毕业聚会/" rel="tag">#毕业聚会</a>
-          
-            <a href="/tags/编译openJDK/" rel="tag">#编译openJDK</a>
+            <a href="/tags/CentOS开启端口/" rel="tag">#CentOS开启端口</a>
           
         </div>
       
@@ -419,17 +419,13 @@ BoottrapJDK   jdk-6u45
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/11/第六周周结/" rel="next" title="第六周周结">
-                <i class="fa fa-chevron-left"></i> 第六周周结
+              <a href="/2016/05/03/JVM学习之OpenJDK源码编译/" rel="next" title="JVM学习之OpenJDK源码编译">
+                <i class="fa fa-chevron-left"></i> JVM学习之OpenJDK源码编译
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/24/dtd入门/" rel="prev" title="dtd基础入门">
-                dtd基础入门 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -478,8 +474,8 @@ BoottrapJDK   jdk-6u45
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/17/第七周小结/"
-           data-title="第七周小结" data-url="http://yoursite.com/2016/04/17/第七周小结/">
+      <div class="ds-thread" data-thread-key="2016/05/09/CentOS-开启http-端口-80/"
+           data-title="CentOS 开启http 端口(80)" data-url="http://yoursite.com/2016/05/09/CentOS-开启http-端口-80/">
       </div>
     
   </div>
@@ -588,7 +584,7 @@ BoottrapJDK   jdk-6u45
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#课内学习"><span class="nav-number">1.</span> <span class="nav-text">课内学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">计网&计组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#课外学习"><span class="nav-number">2.</span> <span class="nav-text">课外学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">编译openJDK.</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、iptables-rules"><span class="nav-number">1.</span> <span class="nav-text">1、iptables rules</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、打开80端口"><span class="nav-number">2.</span> <span class="nav-text">2、打开80端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、保存"><span class="nav-number">3.</span> <span class="nav-text">3、保存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、重启防火墙"><span class="nav-number">4.</span> <span class="nav-text">4、重启防火墙</span></a></li></ol></div>
             
           </div>
         </section>
