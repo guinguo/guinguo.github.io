@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-11T03:14:56.873Z</updated>
+  <updated>2016-05-14T05:17:30.126Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux系统配置ssh免密码登录</title>
+    <link href="http://yoursite.com/2016/05/14/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
+    <id>http://yoursite.com/2016/05/14/Linux系统配置ssh免密码登录/</id>
+    <published>2016-05-14T02:51:24.000Z</published>
+    <updated>2016-05-14T05:17:30.126Z</updated>
+    
+    <content type="html">&lt;p&gt; 一开始以为很简单，配置一下就好，没想到，一粗心，弄了有点久&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;　　首先呢，什么是SSH呢？–&amp;gt;&lt;a href=&quot;http://www.ibm.com/developerworks/cn/aix/library/au-sshsecurity/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;传送门&lt;/a&gt;。然后，如果你每次登录远程服务器，都需要按(复杂的)密码，会很麻烦的，为了安全性，不会设置简单密码，可是每次都输入，&lt;del&gt;很痛苦的&lt;/del&gt;。。。&lt;/p&gt;
+&lt;p&gt;好了，如果你了解了ssh之后，那么，如何生成密匙对呢？&lt;/p&gt;
+&lt;h2 id=&quot;利用git的ssh密匙对&quot;&gt;&lt;a href=&quot;#利用git的ssh密匙对&quot; class=&quot;headerlink&quot; title=&quot;利用git的ssh密匙对&quot;&gt;&lt;/a&gt;利用git的ssh密匙对&lt;/h2&gt;&lt;p&gt;　　打开PUTTYGEN，在Putty安装目录下，如果没有自行下载。然后点击顶部Conversions-&amp;gt;Import Key,选择id_rsa，一般存在C盘的用户目录下的.ssh文件夹里面，点击Save private key&lt;br&gt;保存下来，用于authenticate的公匙。把id_rsa.pub里面那一行内容拷贝下来。跳过第2步。&lt;/p&gt;
+&lt;h2 id=&quot;自己生成密匙对&quot;&gt;&lt;a href=&quot;#自己生成密匙对&quot; class=&quot;headerlink&quot; title=&quot;自己生成密匙对&quot;&gt;&lt;/a&gt;自己生成密匙对&lt;/h2&gt;&lt;p&gt;　　同样打开PUTTYGEN,点击Generate，&lt;strong&gt;注意，鼠标要在中间（进度条下面不断移动！），如果不这样做要等很久，上次有同学后台运行，等了快半个钟都没好，不知道老外怎么设计的这个软件。。。&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;,好了之后，点击Save private key,保存下来，用于authenticate的公匙。顺便吧key框里面的内容拷贝下来，保存也行，点击Save public key。然后continue~&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;配置服务器&quot;&gt;&lt;a href=&quot;#配置服务器&quot; class=&quot;headerlink&quot; title=&quot;配置服务器&quot;&gt;&lt;/a&gt;配置服务器&lt;/h2&gt;&lt;p&gt;好了，完成以上两步中的一步就可以继续了，打开，putty，用密码登录远程服务器操作。&lt;/p&gt;
+&lt;h3 id=&quot;建立-ssh目录（如果没有）&quot;&gt;&lt;a href=&quot;#建立-ssh目录（如果没有）&quot; class=&quot;headerlink&quot; title=&quot;建立~/.ssh目录（如果没有）&quot;&gt;&lt;/a&gt;建立~/.ssh目录（如果没有）&lt;/h3&gt;&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;ls ~/.ssh
+authorized_keys
+#没有就
+mkdir ~/.ssh
+vim ~/.ssh/authorized_keys
+#把刚才复制的内容，贴进去
+:wq#保存退出
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;注意，这里有一个坑，就是鼠标右键粘贴时，前面几个字母可能会丢失，我也不知道为什么，一不注意，就像我一样GG了–&amp;gt;&lt;a href=&quot;http://blog.sina.com.cn/s/blog_5f5e2ce50101788l.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;server refused our key&lt;/a&gt;&lt;/strong&gt;，我跟这位up主一样去找各种原因，，，&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;重启sshd服务&quot;&gt;&lt;a href=&quot;#重启sshd服务&quot; class=&quot;headerlink&quot; title=&quot;重启sshd服务&quot;&gt;&lt;/a&gt;重启sshd服务&lt;/h3&gt;&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;service sshd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;h3 id=&quot;测试ssh公匙登录&quot;&gt;&lt;a href=&quot;#测试ssh公匙登录&quot; class=&quot;headerlink&quot; title=&quot;测试ssh公匙登录&quot;&gt;&lt;/a&gt;测试ssh公匙登录&lt;/h3&gt;&lt;p&gt;　　打开Putty&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ssh.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;然后就可以在putty中加入它了。然后点击open。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Using username &amp;quot;root&amp;quot;.
+Authenticating with public key &amp;quot;imported-openssh-key&amp;quot;
+Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;中间如果出现什么问题可以参考 &lt;a href=&quot;https://segmentfault.com/a/1190000002911599&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;centos7 服务器部署ssh证书授权登录&lt;/a&gt; 进行更详细的配置。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      不用输入密码自动远程登录
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="ssh" scheme="http://yoursite.com/tags/ssh/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS 开启http 端口(80)</title>
