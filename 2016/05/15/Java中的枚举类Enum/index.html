@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="dtd," />
+  <meta name="keywords" content="Enum类," />
 
 
 
@@ -59,18 +59,18 @@
 
 
 
-<meta name="description" content="简单介绍一下dtd">
+<meta name="description" content="简单总结一下Java中的枚举类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dtd基础入门">
-<meta property="og:url" content="http://yoursite.com/2016/04/24/dtd入门/index.html">
+<meta property="og:title" content="Java中的枚举类Enum">
+<meta property="og:url" content="http://yoursite.com/2016/05/15/Java中的枚举类Enum/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="简单介绍一下dtd">
-<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/dtd.jpg">
-<meta property="og:updated_time" content="2016-04-30T11:15:34.764Z">
+<meta property="og:description" content="简单总结一下Java中的枚举类">
+<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/enum.jpg">
+<meta property="og:updated_time" content="2016-05-15T08:57:46.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dtd基础入门">
-<meta name="twitter:description" content="简单介绍一下dtd">
-<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/dtd.jpg">
+<meta name="twitter:title" content="Java中的枚举类Enum">
+<meta name="twitter:description" content="简单总结一下Java中的枚举类">
+<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/enum.jpg">
 
 
 
@@ -88,7 +88,7 @@
   };
 </script>
 
-  <title> dtd基础入门 | Guinguo's blog </title>
+  <title> Java中的枚举类Enum | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +268,7 @@
             
             
               
-                dtd基础入门
+                Java中的枚举类Enum
               
             
           </h1>
@@ -280,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T18:54:04+08:00" content="2016-04-24">
-              2016-04-24
+            <time itemprop="dateCreated" datetime="2016-05-15T11:00:59+08:00" content="2016-05-15">
+              2016-05-15
             </time>
           </span>
 
@@ -294,20 +294,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/周总结/" itemprop="url" rel="index">
-                    <span itemprop="name">周总结</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/周总结/WebService/" itemprop="url" rel="index">
-                    <span itemprop="name">WebService</span>
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
                   </a>
                 </span>
 
@@ -322,8 +310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/24/dtd入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/24/dtd入门/" itemprop="commentsCount"></span>
+                <a href="/2016/05/15/Java中的枚举类Enum/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/15/Java中的枚举类Enum/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -343,117 +331,22 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com1.z0.glb.clouddn.com/dtd.jpg" rel="gallery_cio8cnte5000hkgka9p5znwhv"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xsve9.com1.z0.glb.clouddn.com/dtd.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <h2 id="一、What-is-DTD"><a href="#一、What-is-DTD" class="headerlink" title="一、What is DTD"></a>一、What is DTD</h2><blockquote>
-<p>DTD (Document type definition)文档类型定义, <a href="https://en.wikipedia.org/wiki/Document_type_definition" target="_blank" rel="external">wiki</a><br>用于规定xml或者html之类的标记性文档的类型</p>
-</blockquote>
-<h2 id="二、How-to-use-it"><a href="#二、How-to-use-it" class="headerlink" title="二、How to use it"></a>二、How to use it</h2><p>直接举一个栗子，比如现在我定义了一个Person对象，</p>
-<blockquote>
-<pre><code>&lt;person&gt;
-    &lt;id&gt;&lt;/id&gt;
-    &lt;name&gt;&lt;/name&gt;
-    &lt;password&gt;&lt;/password&gt;
-    &lt;age&gt;&lt;/age&gt;
-&lt;/person&gt;
-</code></pre></blockquote>
-<p>对应的dtd类型定义如下<br><figure class="highlight xml"><figcaption><span>对应dtd</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE persons [</span><br><span class="line">&lt;!ELEMENT persons (person+)&gt;</span><br><span class="line">&lt;!ELEMENT person (id,name,password,age)&gt;</span><br><span class="line">&lt;!ELEMENT person id ID #REQUIRED&gt;</span><br><span class="line">&lt;!ELEMENT id (#PCDATA)&gt;</span><br><span class="line">&lt;!ELEMENT name (#PCDATA)&gt;</span><br><span class="line">&lt;!ELEMENT password (#PCDATA)&gt;</span><br><span class="line">&lt;!ELEMENT age (#PCDATA)&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>其中persons 是根元素，每个元素都要说明，persons中有person就如第二行，+号表示1次或者多次，跟正则语法一样</p>
-<blockquote>
-<p>用修饰符，(正则)，?表示0次或者1次，*表示0次或者多次，+号表示1次或者动词，默认表示1次<br>其中person中，逗号的属性是必须按照顺序写的，即引用了次dtd的xml的person节点的name节点不能出现在id节点前</p>
-</blockquote>
-<p>可以把id设置为属性<br>声明属性,使用下列语法：</p>
-<blockquote>
-<p>&lt;!ATTLIST 元素名称 属性名称 属性类型 默认值&gt;<br>&lt;!ATTLIST person id ID #REQUIRED&gt;<br><strong>其中类型有</strong></p>
-<pre><code>类型                 描述 
-CDATA        值为字符数据 (character data) 
-(en1|en2|..) 此值是枚举列表中的一个值 
-ID           值为唯一的 id 
-IDREF        值为另外一个元素的 id 
-IDREFS       值为其他 id 的列表 
-NMTOKEN      值为合法的 XML 名称 
-NMTOKENS     值为合法的 XML 名称的列表 
-ENTITY       值是一个实体 
-ENTITIES     值是一个实体列表 
-NOTATION     此值是符号的名称 
-xml:         值是一个预定义的 XML 值 
-</code></pre><p><strong>默认值参数可使用下列值：</strong></p>
-<pre><code>值              解释
-值              属性的默认值
-#REQUIRED       属性值是必需的
-#IMPLIED        属性不是必需的
-#FIXED value    属性值是固定的 
-</code></pre></blockquote>
-<p>如果把sex设置为属性，就可以写：默认为男性</p>
-<blockquote>
-<p>&lt;!ATTLIST person sex PCDATA 男&gt;</p>
-</blockquote>
-<p>但是，<strong>为person增加id属性，为必须的,id不能以数字开头…</strong></p>
-<h2 id="三、Why-Use-a-DTD"><a href="#三、Why-Use-a-DTD" class="headerlink" title="三、Why Use a DTD?"></a>三、Why Use a DTD?</h2><ol>
-<li>使用DTD，每个XML文件可以携带自己的格式的描述。</li>
-<li>使用DTD，团体中的每个人可以使用标准的DTD交换数据。</li>
-<li>应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。</li>
-<li>另外您可以使用DTD，以验证自己的数据。</li>
-</ol>
-<h2 id="四、Using-in-XML"><a href="#四、Using-in-XML" class="headerlink" title="四、Using in XML"></a>四、Using in XML</h2><blockquote>
-<pre><code>&lt;!DOCTYPE SYSTEM 是引用内部文件的
-&lt;!DOCTYPE PUBLIC 是引用网络文件的
-</code></pre><p>例如：引入内部文件person.dtd<br>    &lt;!DOCTYPE persons SYSTEM “person.dtd”&gt;</p>
-</blockquote>
-<h2 id="五、Practice"><a href="#五、Practice" class="headerlink" title="五、Practice"></a>五、Practice</h2><p>下面给出两道练习题：<br>1,</p>
-<blockquote>
-<pre><code>&lt;persons&gt;
- &lt;person id=&quot;p1&quot;&gt;
-  &lt;sex&gt;&lt;/sex&gt;
-  &lt;name&gt;&lt;/name&gt;
-  &lt;age&gt;&lt;/age&gt;
-  &lt;messages&gt;
-   &lt;message&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;content&gt;&lt;/content&gt;
-   &lt;/message&gt;
-  &lt;/messages&gt;
- &lt;/person&gt;
-&lt;/persons&gt;
-</code></pre></blockquote>
-<p>2,</p>
-<blockquote>
-<pre><code>&lt;classroom id=&quot;c1&quot;&gt;
- &lt;claName&gt;网工3班&lt;/claName&gt;
- &lt;grade&gt;2014&lt;/grade&gt;
- &lt;students&gt;
-  &lt;student&gt;
-   &lt;id&gt;s1&lt;/id&gt;
-   &lt;stuName&gt;guin&lt;/stuName&gt;
-   &lt;age&gt;21&lt;/age&gt;
-  &lt;/student&gt;
-  &lt;student&gt;
-   &lt;id&gt;s1&lt;/id&gt;
-   &lt;stuName&gt;guin&lt;/stuName&gt;
-   &lt;age&gt;21&lt;/age&gt;
-  &lt;/student&gt;
- &lt;/students&gt;
-&lt;/classroom&gt;
-</code></pre></blockquote>
-<p>但是，使用dtd会出现一些<strong>问题</strong>，<br>1，名称会冲突，如果person有name，message也有name就有问题<br>2，控制精度不够，比如sex应该为枚举类型，只有男跟女<br>导致dtd并不能适应很多场合，跟xml进行互换<br>在09年出现了schema，慢慢在xml的定义中替代了dtd</p>
-<p><strong>答案</strong><br>1，<img src="http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg" alt="classroom.dtd" title="classroom.dtd"></p>
-<p>2，<img src="http://7xsve9.com1.z0.glb.clouddn.com/person.dtd.jpg" alt="person.dtd" title="person.dtd"></p>
+        <p>Effective Java2中介绍了目前的枚举类模式，我简单总结一下。<br><a id="more"></a></p>
+<h3 id="以前的枚举模式"><a href="#以前的枚举模式" class="headerlink" title="以前的枚举模式"></a>以前的枚举模式</h3><figure class="highlight java"><figcaption><span>enum</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> APPLE_RED =<span class="number">0</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> APPLE_GREEN =<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> APPLE_YELLOW =<span class="number">2</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BANANA_GREEN =<span class="number">0</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BANANA_YELLOW =<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="产生的问题："><a href="#产生的问题：" class="headerlink" title="产生的问题："></a>产生的问题：</h3><ul>
+<li>如果将apple传到想要banana的方法中，程序是无法检测出错误的。</li>
+<li>使程序很脆弱。如果int发生了变化，客户端就必须重新编译。如果不，程序运行正常，但他们的运行行为就是不确定的。</li>
+<li>打印出来就是一个数字， 意思不明确</li>
+<li>换成String可能导致性能问题（串比较）</li>
+<li>书写可能出现错误</li>
+</ul>
+<h3 id="现在的模式-类型安全的枚举"><a href="#现在的模式-类型安全的枚举" class="headerlink" title="现在的模式 类型安全的枚举"></a>现在的模式 <em>类型安全的枚举</em></h3><figure class="highlight java"><figcaption><span>enum</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Apple &#123;RED,GREEN,YELLOW&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Banana &#123;GREEN,YELLOW&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h3><p>　　通过共有的静态final域为每一个枚举常量导出实例的类。因为没有可以访问的构造器。–&gt;final–&gt;Singleton<br>完善了int枚举模式的不足之处，还允许添加任意的方法和域，并实现任意的接口。</p>
+<h3 id="栗子"><a href="#栗子" class="headerlink" title="栗子"></a>栗子</h3><figure class="highlight java"><figcaption><span>enum</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">     <span class="keyword">public</span> <span class="keyword">enum</span> Operation &#123;</span><br><span class="line">		</span><br><span class="line">		PLUS(<span class="string">"+"</span>)&#123;<span class="function"><span class="keyword">double</span> <span class="title">apply</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>&#123;<span class="keyword">return</span> x+y;&#125;&#125;,</span><br><span class="line">		MINUS(<span class="string">"-"</span>)&#123;<span class="function"><span class="keyword">double</span> <span class="title">apply</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>&#123;<span class="keyword">return</span> x-y;&#125;&#125;,</span><br><span class="line">		TIMES(<span class="string">"*"</span>)&#123;<span class="function"><span class="keyword">double</span> <span class="title">apply</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>&#123;<span class="keyword">return</span> x*y;&#125;&#125;,</span><br><span class="line">		DIVIDE(<span class="string">"/"</span>)&#123;<span class="function"><span class="keyword">double</span> <span class="title">apply</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>&#123;<span class="keyword">return</span> x/y;&#125;&#125;;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> String symbol;</span><br><span class="line">		</span><br><span class="line">		Operation(String symbol)&#123;<span class="keyword">this</span>.symbol = symbol;&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>.symbol;&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">apply</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><figcaption><span>test</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		<span class="keyword">double</span> x = Double.parseDouble(args[<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">double</span> y = Double.parseDouble(args[<span class="number">1</span>]);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Operation op : Operation.values())&#123;</span><br><span class="line">			System.out.printf(<span class="string">"%f  %s %f = %f%n "</span>,</span><br><span class="line">								x, op, y, op.apply(x,y));</span><br><span class="line">			&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>编译运行</strong><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/enum.jpg" alt="result"></p>
 
       
     </div>
@@ -474,7 +367,7 @@ xml:         值是一个预定义的 XML 值
       
         <div class="post-tags">
           
-            <a href="/tags/dtd/" rel="tag">#dtd</a>
+            <a href="/tags/Enum类/" rel="tag">#Enum类</a>
           
         </div>
       
@@ -483,17 +376,13 @@ xml:         值是一个预定义的 XML 值
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/17/第七周小结/" rel="next" title="第七周小结">
-                <i class="fa fa-chevron-left"></i> 第七周小结
+              <a href="/2016/05/14/Linux系统配置ssh免密码登录/" rel="next" title="Linux系统配置ssh免密码登录">
+                <i class="fa fa-chevron-left"></i> Linux系统配置ssh免密码登录
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/30/解除网页内容复制限制/" rel="prev" title="解除网页内容复制限制">
-                解除网页内容复制限制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -542,8 +431,8 @@ xml:         值是一个预定义的 XML 值
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/24/dtd入门/"
-           data-title="dtd基础入门" data-url="http://yoursite.com/2016/04/24/dtd入门/">
+      <div class="ds-thread" data-thread-key="2016/05/15/Java中的枚举类Enum/"
+           data-title="Java中的枚举类Enum" data-url="http://yoursite.com/2016/05/15/Java中的枚举类Enum/">
       </div>
     
   </div>
@@ -652,7 +541,7 @@ xml:         值是一个预定义的 XML 值
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、What-is-DTD"><span class="nav-number">1.</span> <span class="nav-text">一、What is DTD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、How-to-use-it"><span class="nav-number">2.</span> <span class="nav-text">二、How to use it</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Why-Use-a-DTD"><span class="nav-number">3.</span> <span class="nav-text">三、Why Use a DTD?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Using-in-XML"><span class="nav-number">4.</span> <span class="nav-text">四、Using in XML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、Practice"><span class="nav-number">5.</span> <span class="nav-text">五、Practice</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#以前的枚举模式"><span class="nav-number">1.</span> <span class="nav-text">以前的枚举模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#产生的问题："><span class="nav-number">2.</span> <span class="nav-text">产生的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现在的模式-类型安全的枚举"><span class="nav-number">3.</span> <span class="nav-text">现在的模式 类型安全的枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#想法"><span class="nav-number">4.</span> <span class="nav-text">想法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栗子"><span class="nav-number">5.</span> <span class="nav-text">栗子</span></a></li></ol></div>
             
           </div>
         </section>
