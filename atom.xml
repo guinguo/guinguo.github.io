@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-15T09:03:18.068Z</updated>
+  <updated>2016-05-16T13:45:03.460Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,104 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM中几大垃圾收集器</title>
+    <link href="http://yoursite.com/2016/05/16/JVM%E4%B8%AD%E5%87%A0%E5%A4%A7%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
+    <id>http://yoursite.com/2016/05/16/JVM中几大垃圾收集器/</id>
+    <published>2016-05-16T00:59:28.000Z</published>
+    <updated>2016-05-16T13:45:03.460Z</updated>
+    
+    <content type="html">&lt;p&gt;　　在java虚拟机中，无用的类的判断有一下三个条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该类的所有实例已被回收，堆中无该类的任何实例&lt;/li&gt;
+&lt;li&gt;加载该类的classloder已被回收&lt;/li&gt;
+&lt;li&gt;该类的java.lang.class对象没有在任何地方被引用，无法在任何地方通过反射访问其方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;Serial&quot;&gt;&lt;a href=&quot;#Serial&quot; class=&quot;headerlink&quot; title=&quot;Serial&quot;&gt;&lt;/a&gt;Serial&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;历史最悠久，是一个单线程的垃圾收集器，采用&lt;strong&gt;复制&lt;/strong&gt;算法，在进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。它只会使用一个CPU或者单个线程进行工作。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可能体验不好，但他简单高效，（一般停留几十ms或者100ms内），&lt;br&gt;不常发生是可以接受的，它仍是JVM运行在Client下默认的新生代收集器。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.processon.com/chart_image/573925ffe4b0b2fcdca6bedb.png&quot; alt=&quot;Serial&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;说一下收集的并行与并发：
+并行（Parallel）：多条GC线程与用户线程并行工作，此时的用户线程依然要等待。
+并发（Concurrent）：GC线程与用户线程同时执行（不一定并行），可能交替执行。用户线程运行着，
+GC线程运行在另一个CPU
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;h2 id=&quot;ParNew&quot;&gt;&lt;a href=&quot;#ParNew&quot; class=&quot;headerlink&quot; title=&quot;ParNew&quot;&gt;&lt;/a&gt;ParNew&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;Serial 的多线程版本，其他很多可空参数与Serial相同(&lt;code&gt;-XX:SurvivorPatio&lt;/code&gt;)、收集算法、暂停其他所有线程STW(Stop The World)、对象分配规则、回收策略。&lt;br&gt;　　 Server下新生代收集器首选，除了Serial，只有它能与CMS一起配合工作。&lt;br&gt;可以使用&lt;code&gt;-XX: ParallelGCThreads&lt;/code&gt;指定线程数&lt;br&gt;&lt;img src=&quot;https://www.processon.com/chart_image/573935d7e4b06d79094ba025.png&quot; alt=&quot;ParNew&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Parallel-Scavenge&quot;&gt;&lt;a href=&quot;#Parallel-Scavenge&quot; class=&quot;headerlink&quot; title=&quot;Parallel Scavenge&quot;&gt;&lt;/a&gt;Parallel Scavenge&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;这是一个新生代收集器，使用&lt;strong&gt;复制&lt;/strong&gt;算法，并行的多线程垃圾收集器，也叫吞吐量优先的收集器。&lt;br&gt;他与CMS的区别是，他的目标是达到一个可控的吞吐量，CMS是尽量减少停顿时间。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;那什么事吞吐量呢？&lt;br&gt;吞吐量 = 运行用户代码时间&lt;strong&gt;/&lt;/strong&gt;(运行用户代码时间+垃圾收集时间)&lt;br&gt;例如：jvm运行了100分钟，gc运行了1分钟，吞吐量就= (100-1)/100=99%&lt;br&gt;所以，CMS&lt;em&gt;（停顿时间）&lt;/em&gt;适合交互程序，而Parallel Scavenge&lt;em&gt;（高吞吐量）&lt;/em&gt;适合后台运算不需要太多交互的任务。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;参数&quot;&gt;&lt;a href=&quot;#参数&quot; class=&quot;headerlink&quot; title=&quot;参数&quot;&gt;&lt;/a&gt;参数&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;MaxGCPauseMillis  设置停顿时间，&amp;gt;0的毫秒数，是牺牲吞吐量，新生代空间获取来的&lt;br&gt;GCTimeRatio  设置吞吐量， 1-99，默认99，即最大允许1/(1+99)=1%的GC时间&lt;br&gt;比如GCTimeRatio=19，GC时间就为5%,===&amp;gt; 1/(1+19).&lt;br&gt;-XX:+UseAdaptivaSizePolicy 是一个开关，打开的话无需手动指定新生代，老年代大小，Survivor区比例等细节参数，会自动调整（动态的）&lt;br&gt;一般只需设置- Xmx(最大堆)，MaxGCpauseMillis(最大停顿时间)或者GCTimeRatio(吞吐量),其他细节由JVM完成。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自适应也是Parallel Scavenge 与 ParNew的重要区别&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Serial-Old&quot;&gt;&lt;a href=&quot;#Serial-Old&quot; class=&quot;headerlink&quot; title=&quot;Serial Old&quot;&gt;&lt;/a&gt;Serial Old&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;是Serial 的老年代版本，单线程。使用&lt;strong&gt;标记-整理&lt;/strong&gt;算法，主要用于Client模式。&lt;br&gt;在Server下&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JDK1.5前与Parallel Scavenge 搭配&lt;/li&gt;
+&lt;li&gt;作为CMS的后备&lt;br&gt;&lt;img src=&quot;https://www.processon.com/chart_image/57395e7be4b06d79094d9945.png&quot; alt=&quot;Serial Old&quot;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Parallel-Old&quot;&gt;&lt;a href=&quot;#Parallel-Old&quot; class=&quot;headerlink&quot; title=&quot;Parallel Old&quot;&gt;&lt;/a&gt;Parallel Old&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;是Parallel Scavenge 的老年代版本，多线程。使用&lt;strong&gt;标记-整理&lt;/strong&gt;算法，在JDK1.6才有的&lt;br&gt;使用：在注重吞吐量及CPU资源敏感的场合==&amp;gt;&lt;strong&gt;Parallel Scavenge + Parallel Old&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;https://www.processon.com/chart_image/57395fb0e4b06d79094dadad.png&quot; alt=&quot;Serial Old&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;CMS-Concurrent-Mark-Sweep&quot;&gt;&lt;a href=&quot;#CMS-Concurrent-Mark-Sweep&quot; class=&quot;headerlink&quot; title=&quot;CMS(Concurrent Mark Sweep)&quot;&gt;&lt;/a&gt;CMS(Concurrent Mark Sweep)&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;这是一个为了减少回收停顿时间的收集器，采用&lt;strong&gt;标记-清除&lt;/strong&gt;算法&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;- T1	初始标记(initial mark)		仅标记可达GCroots的对象	STW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- T2	并发标记(concurrent mark)	&lt;span class=&quot;function&quot;&gt;GCRoots &lt;span class=&quot;title&quot;&gt;Tracing&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(追踪)&lt;/span&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- T3	重新标记&lt;span class=&quot;params&quot;&gt;(remark)&lt;/span&gt;				修正T2时变动的对象		STW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- T4	并发清除&lt;span class=&quot;params&quot;&gt;(concurrent sweep)&lt;/span&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;T2&amp;gt;T4&amp;gt;T3&amp;gt;T1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.processon.com/chart_image/5739c12fe4b0b2fcdcb04295.png&quot; alt=&quot;CMS&quot;&gt;&lt;br&gt;&lt;strong&gt;但是CMS也有它的缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对CPU资源非常敏感(并发程序的特点)，默认启动回收线程数：(cpu数量+3)/4，当CPU数量越多，回收的线程占用CPU就少==&amp;gt;比如 CPU=2时，那么久启动一个线程回收，占了50%的CPU资源.&lt;/li&gt;
+&lt;li&gt;无法处理浮动垃圾(出现在标记过程之后的垃圾),可能出现Concurrent Mode Failure，导致另一次Full GC。&lt;/li&gt;
+&lt;li&gt;标记-清理 ==&amp;gt; 产生大量的空间碎片，无法分配大的对象，导致另一次Full GC。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;+UseCompactAtFullCollection (开关，默认打开)，在CMS顶不住要进行Full GC时开启内存碎片的合并整理过程，但停顿时间不得不变长。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;G1&quot;&gt;&lt;a href=&quot;#G1&quot; class=&quot;headerlink&quot; title=&quot;G1&quot;&gt;&lt;/a&gt;G1&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;Garbage-First，是当今收集器技术发展的最前沿成果之一，JDK7u4后达到商用程度。用于服务端应用的收集器，有如下特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;并行与并发，G1能够充分利用多CPU，多核环境下的硬件优势，来缩短STW停顿时间，且可以并发收集，让java进程继续执行&lt;/li&gt;
+&lt;li&gt;分代收集，与其他收集器一样，能够采用不同的方式去处理新建的对象和已经存活一段时间，熬过了多次GC的对象，以获得更好的收集效果。&lt;/li&gt;
+&lt;li&gt;可预测的停顿，相比CMS的优势，可以指定一个长度M的毫秒时间片内，消耗在GC的时间&amp;lt;N毫秒。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;G1不再是单独在某个代进行收集，而是划分堆成独立的Region，并且根据每个Region的价值大小进行收集的。cc采用Remembered Set来避免全局扫描的，查看G1的-&lt;a href=&quot;http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;详细信息&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;回收步骤: &lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;口     初始标记(Initial Marking)        &lt;/li&gt;
+&lt;li&gt;口        并发标记(Concurrent Marking)    &lt;/li&gt;
+&lt;li&gt;口        最终标记(FInal Marking)                &lt;/li&gt;
+&lt;li&gt;口        筛选回收(Live Data Counting and Evacuation)    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前几个步骤与CMS有很多相似指出，初始标记只是标记一下GC Roots能直接关联到的对象，并修改TAMS(Next Top at Mask Start)的值，让下一阶段的用户程序并发运行时，能在可用的Region中创建新对象，需要STW，时间短。并发标记是从GC Roots开始对堆中对象进行可达性分析，找出存活对象，耗时较长，但也可以并发执行。最终标记阶段是为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间的对象变化记录在线程Remembered Set Logs里面，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set中，需要STW，但仍可以并行执行。最后在筛选回收阶段会对每个Region的回收价值和成本进行排序，根据用户期望的GC停顿时间来指定回收计划，也可以做到与用户程序一起并发执行，但是因为时间可控，停顿用户将大幅度提高收集效率。&lt;br&gt;&lt;img src=&quot;https://www.processon.com/chart_image/5739cd6fe4b0b2fcdcb0dc23.png&quot; alt=&quot;G1&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;推荐使用-G1-的场景-Recommended-Use-Cases&quot;&gt;&lt;a href=&quot;#推荐使用-G1-的场景-Recommended-Use-Cases&quot; class=&quot;headerlink&quot; title=&quot;推荐使用 G1 的场景(Recommended Use Cases)&quot;&gt;&lt;/a&gt;推荐使用 G1 的场景(Recommended Use Cases)&lt;/h3&gt;&lt;p&gt;G1的首要目标是为需要大量内存的系统提供一个保证GC低延迟的解决方案. 也就是说堆内存在6GB及以上,稳定和可预测的暂停时间小于0.5秒.&lt;/p&gt;
+&lt;p&gt;如果应用程序具有如下的一个或多个特征,那么将垃圾收集器从CMS或ParallelOldGC切换到G1将会大大提升性能.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Full GC 次数太频繁或者消耗时间太长.&lt;/li&gt;
+&lt;li&gt;对象分配的频率或代数提升(promotion)显著变化.&lt;/li&gt;
+&lt;li&gt;受够了太长的垃圾回收或内存整理时间(超过0.5~1秒)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注意: 如果正在使用CMS或ParallelOldGC,而应用程序的垃圾收集停顿时间并不长,那么继续使用现在的垃圾收集器是个好主意. 使用最新的JDK时并不要求切换到G1收集器。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      总结一下jvm中几大垃圾收集器
+    
+    </summary>
+    
+      <category term="JVM学习" scheme="http://yoursite.com/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="垃圾收集器" scheme="http://yoursite.com/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
+    
+      <category term="GC" scheme="http://yoursite.com/tags/GC/"/>
+    
+  </entry>
   
   <entry>
     <title>Java中的枚举类Enum</title>
@@ -668,9 +766,9 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
-    
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
     
   </entry>
   

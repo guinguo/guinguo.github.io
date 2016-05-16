@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java虚拟机,编译openjdk," />
+  <meta name="keywords" content="垃圾收集器,GC," />
 
 
 
@@ -59,18 +59,18 @@
 
 
 
-<meta name="description" content="自己编译JDK">
+<meta name="description" content="总结一下jvm中几大垃圾收集器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM学习之OpenJDK源码编译">
-<meta property="og:url" content="http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/index.html">
+<meta property="og:title" content="JVM中几大垃圾收集器">
+<meta property="og:url" content="http://yoursite.com/2016/05/16/JVM中几大垃圾收集器/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="自己编译JDK">
-<meta property="og:image" content="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg">
-<meta property="og:updated_time" content="2016-05-03T15:19:14.987Z">
+<meta property="og:description" content="总结一下jvm中几大垃圾收集器">
+<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/gcs.jpg">
+<meta property="og:updated_time" content="2016-05-16T13:45:03.460Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM学习之OpenJDK源码编译">
-<meta name="twitter:description" content="自己编译JDK">
-<meta name="twitter:image" content="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg">
+<meta name="twitter:title" content="JVM中几大垃圾收集器">
+<meta name="twitter:description" content="总结一下jvm中几大垃圾收集器">
+<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/gcs.jpg">
 
 
 
@@ -88,7 +88,7 @@
   };
 </script>
 
-  <title> JVM学习之OpenJDK源码编译 | Guinguo's blog </title>
+  <title> JVM中几大垃圾收集器 | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +268,7 @@
             
             
               
-                JVM学习之OpenJDK源码编译
+                JVM中几大垃圾收集器
               
             
           </h1>
@@ -280,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T10:26:26+08:00" content="2016-05-03">
-              2016-05-03
+            <time itemprop="dateCreated" datetime="2016-05-16T08:59:28+08:00" content="2016-05-16">
+              2016-05-16
             </time>
           </span>
 
@@ -310,8 +310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/03/JVM学习之OpenJDK源码编译/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/JVM学习之OpenJDK源码编译/" itemprop="commentsCount"></span>
+                <a href="/2016/05/16/JVM中几大垃圾收集器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/16/JVM中几大垃圾收集器/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -336,9 +336,9 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg" rel="gallery_cio9ea9tk0001c8kayatstiuu"
+                 href="http://7xsve9.com1.z0.glb.clouddn.com/gcs.jpg" rel="gallery_cio9ea9sy0000c8katzd63s7h"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg" itemprop="contentUrl"/>
+                <img src="http://7xsve9.com1.z0.glb.clouddn.com/gcs.jpg" itemprop="contentUrl"/>
               </a>
             
           
@@ -349,52 +349,80 @@
       
 
       
-        <p>在centos7下进行编译<br>具体步骤：</p>
+        <p>　　在java虚拟机中，无用的类的判断有一下三个条件：</p>
 <ul>
-<li>获取openjdk源码</li>
-<li>安装openjdk6–BoostrapJK</li>
-<li>安装编译时的依赖</li>
-<li>配置环境变量</li>
-<li>编译</li>
+<li>该类的所有实例已被回收，堆中无该类的任何实例</li>
+<li>加载该类的classloder已被回收</li>
+<li>该类的java.lang.class对象没有在任何地方被引用，无法在任何地方通过反射访问其方法</li>
 </ul>
-<h3>1. 获取openjdk源码</h3><br>可以到这里去下载，<a href="https://jdk7.java.net/source.html" target="_blank" rel="external">OpenJDK Source Releases</a><br>我下载的是openjdk-7u40版本，openjdk7，update40，build43<br><h3>2. 下载jdk6–BoostrapJDK</h3>
-
+<a id="more"></a>
+<h2 id="Serial"><a href="#Serial" class="headerlink" title="Serial"></a>Serial</h2><hr>
+<p>历史最悠久，是一个单线程的垃圾收集器，采用<strong>复制</strong>算法，在进行垃圾收集时，必须暂停其他所有的工作线程，直到它收集结束。它只会使用一个CPU或者单个线程进行工作。</p>
 <blockquote>
-<p>我使用jdk6来辅助编译。可以到oracle官网下载，<a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html" target="_blank" rel="external">jdk-6u45-linux-x64.bin</a></p>
+<p>可能体验不好，但他简单高效，（一般停留几十ms或者100ms内），<br>不常发生是可以接受的，它仍是JVM运行在Client下默认的新生代收集器。</p>
 </blockquote>
-<p></p><h3>3.安装编译时的依赖</h3><br>可以使用以下命令一次安装完成<p></p>
+<p><img src="https://www.processon.com/chart_image/573925ffe4b0b2fcdca6bedb.png" alt="Serial"></p>
 <blockquote>
-<pre><code>yum -y install build-essential gawk m4
-openjkd-6-jkd libasound2-dev libcups2-dev 
-libxrender-dev xorg-dev xutils-dev
-xllproto-print-dev binutils libmotif3
-libmotif-dev ant
+<pre><code>说一下收集的并行与并发：
+并行（Parallel）：多条GC线程与用户线程并行工作，此时的用户线程依然要等待。
+并发（Concurrent）：GC线程与用户线程同时执行（不一定并行），可能交替执行。用户线程运行着，
+GC线程运行在另一个CPU
 </code></pre></blockquote>
-<p></p><h3>3.配置环境变量,编译</h3><br>OpenJKD在编译时读取的环境变量很多，但是大多数都有默认值，必须设置的只有两个：LANG和ALT_BOOTDIR。分别为C跟bootJDK的路径<br>所有的环境变量可以使用下面的脚本设置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">export LANG=C</span><br><span class="line">#Bootstrap JDK 安装位置</span><br><span class="line">export ALT_BOOTDIR=/opt/openJDK/jdk1.6.0_45</span><br><span class="line"></span><br><span class="line">#允许自动下载</span><br><span class="line">export ALLOW_DOWNLOADS=true</span><br><span class="line">#并行编译的线程数，和CPU内核数量一致即可</span><br><span class="line">export HOTSPOT_BUILD_JOBS=2</span><br><span class="line">export ALT_PARALLEL_COMPILE_JOBS=2</span><br><span class="line"></span><br><span class="line">#比较本次build出来的映像与先前版本的差异，对于我们没哟意义，</span><br><span class="line">#必须设置为false</span><br><span class="line">export SKIP_COMPARE_IMAGES=true</span><br><span class="line"></span><br><span class="line">#使用预编译头文件，不加这个编译会更慢一些</span><br><span class="line">export USE_PRECOMPILED_HEADER=true</span><br><span class="line"></span><br><span class="line">#要编译的内容</span><br><span class="line">export BUILD_LANGTOOLS=true</span><br><span class="line">export BUILD_HOTSPOT=true</span><br><span class="line">export BUILD_JDK=true</span><br><span class="line"></span><br><span class="line">#把它设置为false，可以避开javaws和浏览器java插件的build</span><br><span class="line">BUILD_DEPLOY=false</span><br><span class="line"></span><br><span class="line">#把它设置为false就不会build出安装包。因为安装包里有些奇怪的依赖</span><br><span class="line">BUILD_INSTALL=false</span><br><span class="line"></span><br><span class="line">#编译结果所存放的路径</span><br><span class="line">export ALT_OUTPUTDIR=/opt/openJDK/openjdk/build</span><br><span class="line"></span><br><span class="line">#这两个变量必须去掉</span><br><span class="line">unset CLASSPATH</span><br><span class="line">unset JAVA_HOME</span><br><span class="line">unset LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure><p></p>
-<p>全部设置结束之后，可以输入 make sanity 检测是否正确，如果一切顺利，会输出：Sanity check passed.就可以编译了。<br>输入make(不加参数默认为make all)，我的虚拟机配置比较低，整个编译的过程用了一个多钟。</p>
-<p><strong>结果如下：</strong><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/build.jpg"><br>我在虚拟机中编译的，而且配置不高，所以有点慢.</p>
-<p><strong>那么问题来了，如何看结果ne？</strong></p>
-<p>　　编译完成之后，进入OpenJDK源码下的build/j2sdk-image目录,(或者build-debug、build-fastdebug这两个目录)，这是整个JDK完整编译结果，内容为debug版jdk，将其复制到%JAVA_HOME%下，替换Oracle JDK。就可以作为一个完整的JDK使用，编译出来的虚拟机，在-version命令中带有用户的机器名。</p>
-<pre><code>[root@localhost ~]# java -version
-openjdk version &quot;1.7.0-internal-debug&quot;
-OpenJDK Runtime Environment (build 1.7.0-internal-debug-root_2016_04_25_20_00-b00)
-OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
-</code></pre><p>　　大多数情况我们只关心Hotspot虚拟机，只想单独编译它的话，那么使用hotspot/make目录下的MakeFile进行替换即可，其他参数与前面一致，这时候虚拟机的输出结果存放在<br>    <code>build/hotspot/outputdir/linux_amd64_compiler2</code> 中，里面对应了不同的优化级别的目录。</p>
-<p>进入 目录jvmg，在运行虚拟机前，还要手工编辑目录下的env.sh文件，这个文件由编译脚本自动产生，用于设置虚拟机的环境变量，里面已经发布了”JAVA_HOME，CLASSPATH，HOTSPOT_BUILD_USER” 3个环境变量，还需要增加一个“LD_LIBRSRY_CLASSPATH”：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LD_LIBRARY_PATH=.:$&#123;JAVA_HOME&#125;/jre/lib/amd64/native_threads:$&#123;JAVA_HOME&#125;/jre/lib/amd64:/opt/openJDK/openjdk/build/hotspot/outputdir/linux_amd64_compiler2/product</span><br><span class="line">export LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
-<p>然后执行</p>
+<h2 id="ParNew"><a href="#ParNew" class="headerlink" title="ParNew"></a>ParNew</h2><hr>
+<p>Serial 的多线程版本，其他很多可空参数与Serial相同(<code>-XX:SurvivorPatio</code>)、收集算法、暂停其他所有线程STW(Stop The World)、对象分配规则、回收策略。<br>　　 Server下新生代收集器首选，除了Serial，只有它能与CMS一起配合工作。<br>可以使用<code>-XX: ParallelGCThreads</code>指定线程数<br><img src="https://www.processon.com/chart_image/573935d7e4b06d79094ba025.png" alt="ParNew"></p>
+<h2 id="Parallel-Scavenge"><a href="#Parallel-Scavenge" class="headerlink" title="Parallel Scavenge"></a>Parallel Scavenge</h2><hr>
+<p>这是一个新生代收集器，使用<strong>复制</strong>算法，并行的多线程垃圾收集器，也叫吞吐量优先的收集器。<br>他与CMS的区别是，他的目标是达到一个可控的吞吐量，CMS是尽量减少停顿时间。</p>
 <blockquote>
-<pre><code>. ./env.sh
-./gama -version   #有可能是test_gamma,这是自带的一段八皇后代码
-</code></pre></blockquote>
-<p><strong>结果如下</strong><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/jvm.jpg"></p>
-<p>　　自己编译的虚拟机成功运行起来，哈哈哈~<br><img src="/images/acmusume/32.png" height="50px" ,="" width="50px" style="margin:0 0"></p>
-<hr>
-<p>编译过程中有可能报错：</p>
-<blockquote>
-<p>Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org</p>
+<p>那什么事吞吐量呢？<br>吞吐量 = 运行用户代码时间<strong>/</strong>(运行用户代码时间+垃圾收集时间)<br>例如：jvm运行了100分钟，gc运行了1分钟，吞吐量就= (100-1)/100=99%<br>所以，CMS<em>（停顿时间）</em>适合交互程序，而Parallel Scavenge<em>（高吞吐量）</em>适合后台运算不需要太多交互的任务。</p>
 </blockquote>
-<p>通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可<br>Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties<br>把2006改掉就可以<del>重新编译了</del><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0"></p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><blockquote>
+<p>MaxGCPauseMillis  设置停顿时间，&gt;0的毫秒数，是牺牲吞吐量，新生代空间获取来的<br>GCTimeRatio  设置吞吐量， 1-99，默认99，即最大允许1/(1+99)=1%的GC时间<br>比如GCTimeRatio=19，GC时间就为5%,===&gt; 1/(1+19).<br>-XX:+UseAdaptivaSizePolicy 是一个开关，打开的话无需手动指定新生代，老年代大小，Survivor区比例等细节参数，会自动调整（动态的）<br>一般只需设置- Xmx(最大堆)，MaxGCpauseMillis(最大停顿时间)或者GCTimeRatio(吞吐量),其他细节由JVM完成。</p>
+<p><strong>自适应也是Parallel Scavenge 与 ParNew的重要区别</strong></p>
+</blockquote>
+<h2 id="Serial-Old"><a href="#Serial-Old" class="headerlink" title="Serial Old"></a>Serial Old</h2><hr>
+<p>是Serial 的老年代版本，单线程。使用<strong>标记-整理</strong>算法，主要用于Client模式。<br>在Server下</p>
+<ul>
+<li>JDK1.5前与Parallel Scavenge 搭配</li>
+<li>作为CMS的后备<br><img src="https://www.processon.com/chart_image/57395e7be4b06d79094d9945.png" alt="Serial Old"></li>
+</ul>
+<h2 id="Parallel-Old"><a href="#Parallel-Old" class="headerlink" title="Parallel Old"></a>Parallel Old</h2><hr>
+<p>是Parallel Scavenge 的老年代版本，多线程。使用<strong>标记-整理</strong>算法，在JDK1.6才有的<br>使用：在注重吞吐量及CPU资源敏感的场合==&gt;<strong>Parallel Scavenge + Parallel Old</strong><br><img src="https://www.processon.com/chart_image/57395fb0e4b06d79094dadad.png" alt="Serial Old"></p>
+<h2 id="CMS-Concurrent-Mark-Sweep"><a href="#CMS-Concurrent-Mark-Sweep" class="headerlink" title="CMS(Concurrent Mark Sweep)"></a>CMS(Concurrent Mark Sweep)</h2><hr>
+<p>这是一个为了减少回收停顿时间的收集器，采用<strong>标记-清除</strong>算法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- T1	初始标记(initial mark)		仅标记可达GCroots的对象	STW</span><br><span class="line">- T2	并发标记(concurrent mark)	<span class="function">GCRoots <span class="title">Tracing</span><span class="params">(追踪)</span>	</span><br><span class="line">- T3	重新标记<span class="params">(remark)</span>				修正T2时变动的对象		STW</span><br><span class="line">- T4	并发清除<span class="params">(concurrent sweep)</span>	</span><br><span class="line"></span><br><span class="line">T2&gt;T4&gt;T3&gt;T1</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://www.processon.com/chart_image/5739c12fe4b0b2fcdcb04295.png" alt="CMS"><br><strong>但是CMS也有它的缺点</strong></p>
+<ul>
+<li>对CPU资源非常敏感(并发程序的特点)，默认启动回收线程数：(cpu数量+3)/4，当CPU数量越多，回收的线程占用CPU就少==&gt;比如 CPU=2时，那么久启动一个线程回收，占了50%的CPU资源.</li>
+<li>无法处理浮动垃圾(出现在标记过程之后的垃圾),可能出现Concurrent Mode Failure，导致另一次Full GC。</li>
+<li>标记-清理 ==&gt; 产生大量的空间碎片，无法分配大的对象，导致另一次Full GC。</li>
+</ul>
+<blockquote>
+<p>+UseCompactAtFullCollection (开关，默认打开)，在CMS顶不住要进行Full GC时开启内存碎片的合并整理过程，但停顿时间不得不变长。</p>
+</blockquote>
+<h2 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h2><hr>
+<p>Garbage-First，是当今收集器技术发展的最前沿成果之一，JDK7u4后达到商用程度。用于服务端应用的收集器，有如下特点：</p>
+<ol>
+<li>并行与并发，G1能够充分利用多CPU，多核环境下的硬件优势，来缩短STW停顿时间，且可以并发收集，让java进程继续执行</li>
+<li>分代收集，与其他收集器一样，能够采用不同的方式去处理新建的对象和已经存活一段时间，熬过了多次GC的对象，以获得更好的收集效果。</li>
+<li>可预测的停顿，相比CMS的优势，可以指定一个长度M的毫秒时间片内，消耗在GC的时间&lt;N毫秒。</li>
+</ol>
+<p>G1不再是单独在某个代进行收集，而是划分堆成独立的Region，并且根据每个Region的价值大小进行收集的。cc采用Remembered Set来避免全局扫描的，查看G1的-<a href="http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html" target="_blank" rel="external">详细信息</a></p>
+<p><strong>回收步骤: </strong></p>
+<ul>
+<li>口     初始标记(Initial Marking)        </li>
+<li>口        并发标记(Concurrent Marking)    </li>
+<li>口        最终标记(FInal Marking)                </li>
+<li>口        筛选回收(Live Data Counting and Evacuation)    </li>
+</ul>
+<p>前几个步骤与CMS有很多相似指出，初始标记只是标记一下GC Roots能直接关联到的对象，并修改TAMS(Next Top at Mask Start)的值，让下一阶段的用户程序并发运行时，能在可用的Region中创建新对象，需要STW，时间短。并发标记是从GC Roots开始对堆中对象进行可达性分析，找出存活对象，耗时较长，但也可以并发执行。最终标记阶段是为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间的对象变化记录在线程Remembered Set Logs里面，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set中，需要STW，但仍可以并行执行。最后在筛选回收阶段会对每个Region的回收价值和成本进行排序，根据用户期望的GC停顿时间来指定回收计划，也可以做到与用户程序一起并发执行，但是因为时间可控，停顿用户将大幅度提高收集效率。<br><img src="https://www.processon.com/chart_image/5739cd6fe4b0b2fcdcb0dc23.png" alt="G1"></p>
+<h3 id="推荐使用-G1-的场景-Recommended-Use-Cases"><a href="#推荐使用-G1-的场景-Recommended-Use-Cases" class="headerlink" title="推荐使用 G1 的场景(Recommended Use Cases)"></a>推荐使用 G1 的场景(Recommended Use Cases)</h3><p>G1的首要目标是为需要大量内存的系统提供一个保证GC低延迟的解决方案. 也就是说堆内存在6GB及以上,稳定和可预测的暂停时间小于0.5秒.</p>
+<p>如果应用程序具有如下的一个或多个特征,那么将垃圾收集器从CMS或ParallelOldGC切换到G1将会大大提升性能.</p>
+<ul>
+<li>Full GC 次数太频繁或者消耗时间太长.</li>
+<li>对象分配的频率或代数提升(promotion)显著变化.</li>
+<li>受够了太长的垃圾回收或内存整理时间(超过0.5~1秒)</li>
+</ul>
+<p>注意: 如果正在使用CMS或ParallelOldGC,而应用程序的垃圾收集停顿时间并不长,那么继续使用现在的垃圾收集器是个好主意. 使用最新的JDK时并不要求切换到G1收集器。</p>
 
       
     </div>
@@ -415,9 +443,9 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
       
         <div class="post-tags">
           
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
+            <a href="/tags/垃圾收集器/" rel="tag">#垃圾收集器</a>
           
-            <a href="/tags/编译openjdk/" rel="tag">#编译openjdk</a>
+            <a href="/tags/GC/" rel="tag">#GC</a>
           
         </div>
       
@@ -426,17 +454,13 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/30/解除网页内容复制限制/" rel="next" title="解除网页内容复制限制">
-                <i class="fa fa-chevron-left"></i> 解除网页内容复制限制
+              <a href="/2016/05/15/Java中的枚举类Enum/" rel="next" title="Java中的枚举类Enum">
+                <i class="fa fa-chevron-left"></i> Java中的枚举类Enum
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/09/CentOS-开启http-端口-80/" rel="prev" title="CentOS 开启http 端口(80)">
-                CentOS 开启http 端口(80) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -485,8 +509,8 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/03/JVM学习之OpenJDK源码编译/"
-           data-title="JVM学习之OpenJDK源码编译" data-url="http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/">
+      <div class="ds-thread" data-thread-key="2016/05/16/JVM中几大垃圾收集器/"
+           data-title="JVM中几大垃圾收集器" data-url="http://yoursite.com/2016/05/16/JVM中几大垃圾收集器/">
       </div>
     
   </div>
@@ -595,7 +619,7 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">1. 获取openjdk源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">2. 下载jdk6–BoostrapJDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">3.安装编译时的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">3.配置环境变量,编译</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial"><span class="nav-number">1.</span> <span class="nav-text">Serial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ParNew"><span class="nav-number">2.</span> <span class="nav-text">ParNew</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Scavenge"><span class="nav-number">3.</span> <span class="nav-text">Parallel Scavenge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-Old"><span class="nav-number">4.</span> <span class="nav-text">Serial Old</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Old"><span class="nav-number">5.</span> <span class="nav-text">Parallel Old</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-Concurrent-Mark-Sweep"><span class="nav-number">6.</span> <span class="nav-text">CMS(Concurrent Mark Sweep)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1"><span class="nav-number">7.</span> <span class="nav-text">G1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐使用-G1-的场景-Recommended-Use-Cases"><span class="nav-number">7.1.</span> <span class="nav-text">推荐使用 G1 的场景(Recommended Use Cases)</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
