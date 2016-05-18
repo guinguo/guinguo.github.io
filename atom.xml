@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-16T13:45:03.460Z</updated>
+  <updated>2016-05-18T03:08:46.198Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VMware桥接模式下无法ping通网关</title>
+    <link href="http://yoursite.com/2016/05/18/VMware%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E6%97%A0%E6%B3%95ping%E9%80%9A%E7%BD%91%E5%85%B3/"/>
+    <id>http://yoursite.com/2016/05/18/VMware桥接模式下无法ping通网关/</id>
+    <published>2016-05-18T01:55:14.000Z</published>
+    <updated>2016-05-18T03:08:46.198Z</updated>
+    
+    <content type="html">&lt;p&gt;　　以下情况是发生在校园网或者单一网络环境下。如果你遇到同样的问题，并且是校园网，那可能跟我遇到同样的问题了。而且大神远程帮我配了很久，最后发现是网络环境问题，&lt;del&gt;好尴尬&lt;/del&gt;&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;昨天在配置一台Centos6的虚拟机网卡的时候，遇到的问题。虚拟机无法ping 通网关，也无法ping通宿主机(我本机)，也无法ping通外网。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先检查网卡属性是否正常选中了vmware bridge功能。&lt;/li&gt;
+&lt;li&gt;vm workstation全局网络配置是否配置正常。&lt;/li&gt;
+&lt;li&gt;这两项的网卡、bridge都要正常对应。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我照着教程配置，如下：&lt;/p&gt;
+&lt;h2 id=&quot;有问题的&quot;&gt;&lt;a href=&quot;#有问题的&quot; class=&quot;headerlink&quot; title=&quot;有问题的&quot;&gt;&lt;/a&gt;有问题的&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;cat /etc/sysconfig/network-scripts/ifcfg-eth0&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip1.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;左边是虚拟机的，右边是我本机的网卡信息&lt;br&gt;默认网关都是172.16.85.254&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;保存之后，重启网卡。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;/etc/init.d/network restart&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip2.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;倒数第四行是我的一个备份文件来着，不用管它&lt;/p&gt;
+&lt;p&gt;查看ip信息&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip3.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;好了，是我配的172.16.85.200&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;先看一下我本机能否ping通虚拟机跟网关&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip4.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;本机正常~&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;再看一下虚拟机能否ping回来&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip5.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;ping通自己，正常&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip6.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;&lt;strong&gt;但是，ping不通我本机的ip地址&lt;/strong&gt;难道是出口网关的问题？&lt;br&gt;我们ping一下它&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip7.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;oh~ 真的是这样。&lt;br&gt;　　好吧。到了这里，我大概猜到原因了，因为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;想起了我之前遇到的一个问题，同样也是在虚拟机(Centos7桌面版)，
+我本机连接校园网WIFI，已登录账号。然后虚拟机用桥接方式上网，
+但是，虚拟机一打开网页，提示要登录，但是我本机已登录，所以本机就被挤下线了
+就是虚拟机里面登录了，本机被踢下线了。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;我们的校园网同一账号只允许一个上线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所以我虚拟机用桥接连到宿主机(我本机)，但是，它没有被分配ip所以上不了网，配置静态ip也不行，&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;这就就好比我连接了校园网WiFi(无需密码可以连接的)，但是不登录，想自己配ip上网，肯定不行啊~。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;正常的&quot;&gt;&lt;a href=&quot;#正常的&quot; class=&quot;headerlink&quot; title=&quot;正常的&quot;&gt;&lt;/a&gt;正常的&lt;/h2&gt;&lt;p&gt;所谓正常的，就是连接到WiFi，不是那种一个账号分配一个ip的网络，比如说校园网。&lt;br&gt;好了，我连接到一个WiFi环境下&lt;br&gt;做如下配置。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip9.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;重启网卡。&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/ip8.jpg&quot; alt=&quot;ifcfg-eth0&quot;&gt;&lt;br&gt;&lt;strong&gt;好了，一切正常了&lt;/strong&gt;&lt;br&gt;回归平静&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最后感谢 &lt;a href=&quot;http://www.itweet.cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;whoami&lt;/a&gt; 大神帮我远程配置。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/acmusume/13.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      校园网环境下，虚拟机下桥接模式无法ping通网关(或外网)
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="VMware网卡配置" scheme="http://yoursite.com/tags/VMware%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM中几大垃圾收集器</title>
