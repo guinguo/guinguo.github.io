@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-18T03:08:46.198Z</updated>
+  <updated>2016-05-26T06:53:05.408Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Zookeeper集群安装于部署</title>
+    <link href="http://yoursite.com/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/"/>
+    <id>http://yoursite.com/2016/05/26/Zookeeper集群安装于部署/</id>
+    <published>2016-05-26T06:48:17.000Z</published>
+    <updated>2016-05-26T06:53:05.408Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/zk.jpg&quot; alt=&quot;zookeeper&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Zookeeper我就不多做介绍了，具体请看&lt;br&gt;&lt;a href=&quot;https://zh.wikipedia.org/zh/Apache_ZooKeeper&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;维基百科&lt;/a&gt;，或者&lt;a href=&quot;https://wiki.apache.org/hadoop/ZooKeeper&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官网介绍&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1、准备环境&quot;&gt;&lt;a href=&quot;#1、准备环境&quot; class=&quot;headerlink&quot; title=&quot;1、准备环境&quot;&gt;&lt;/a&gt;1、准备环境&lt;/h2&gt;&lt;h3 id=&quot;安装jdk，安装jdk，安装jdk&quot;&gt;&lt;a href=&quot;#安装jdk，安装jdk，安装jdk&quot; class=&quot;headerlink&quot; title=&quot;安装jdk，安装jdk，安装jdk&quot;&gt;&lt;/a&gt;安装jdk，安装jdk，安装jdk&lt;/h3&gt;&lt;p&gt;　　重要的事情说三遍，因为我就是没有装，导致弄了好久老是报错&lt;br&gt;使用zkServer.sh status 看出角色时报Error contacting service. It is probably not running.的错误&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;br&gt;　　因为Zookeeper是java写的，所以需要java的环境。请到oracle官网下载最新版的jdk，并且解压安装，解压的话最好放到/usr/lib/jdk/下&lt;br&gt;，接着到Apache官网下载 &lt;a href=&quot;http://www.apache.org/dyn/closer.cgi/zookeeper/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Zookeeper&lt;/a&gt;。&lt;br&gt;　　然后，修改hosts文件，把主机跟ip地址映射起来，&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/hosts.jpg&quot; alt=&quot;hosts&quot;&gt;&lt;br&gt;如果嫌麻烦的话，可以不用这一步，待会配置是直接填ip就行&lt;/p&gt;
+&lt;h2 id=&quot;2、解压安装&quot;&gt;&lt;a href=&quot;#2、解压安装&quot; class=&quot;headerlink&quot; title=&quot;2、解压安装&quot;&gt;&lt;/a&gt;2、解压安装&lt;/h2&gt;&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;tar -zxvf zookeeper-3.4.6.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;h2 id=&quot;3、复制配置文件&quot;&gt;&lt;a href=&quot;#3、复制配置文件&quot; class=&quot;headerlink&quot; title=&quot;3、复制配置文件&quot;&gt;&lt;/a&gt;3、复制配置文件&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;cp /root/zookeeper-3.4.6/conf/zoo_sample.cfg /root/zookeeper-3.4.6/conf/zoo.cfg&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;4、修改配置文件zoo-cfg&quot;&gt;&lt;a href=&quot;#4、修改配置文件zoo-cfg&quot; class=&quot;headerlink&quot; title=&quot;4、修改配置文件zoo.cfg&quot;&gt;&lt;/a&gt;4、修改配置文件zoo.cfg&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;#建立data文件夹，用于存放数据的&lt;br&gt;mkdir /root/zookeeper-3.4.6/data&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim /root/zookeeper-3.4.6/conf/zoo.cfg 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;#把下面对应的值改了就行&lt;br&gt;dataDir=/root/zookeeper-3.4.6/data&lt;/p&gt;
+&lt;p&gt;server.1=itr-mastertest01:2888:3888&lt;br&gt;server.2=itr-mastertest02:2888:3888&lt;br&gt;server.3=itr-nodetest01:2888:3888&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;5、进入data目录&quot;&gt;&lt;a href=&quot;#5、进入data目录&quot; class=&quot;headerlink&quot; title=&quot;5、进入data目录&quot;&gt;&lt;/a&gt;5、进入data目录&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;cd /root/zookeeper-3.4.6/data&lt;br&gt;vim myid&lt;br&gt;1&lt;/p&gt;
+&lt;p&gt;#1,代表第server.1台server&lt;br&gt;!wq&lt;/p&gt;
+&lt;p&gt;#保存退出&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;6、复制到其他集群服务器上&quot;&gt;&lt;a href=&quot;#6、复制到其他集群服务器上&quot; class=&quot;headerlink&quot; title=&quot;6、复制到其他集群服务器上&quot;&gt;&lt;/a&gt;6、复制到其他集群服务器上&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;scp -rq /root/zookeeper-3.4.6 itr-mastertest02:/root/&lt;br&gt;scp -rq /root/zookeeper-3.4.6 nodetest01:/root/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;7、修改myid的值&quot;&gt;&lt;a href=&quot;#7、修改myid的值&quot; class=&quot;headerlink&quot; title=&quot;7、修改myid的值&quot;&gt;&lt;/a&gt;7、修改myid的值&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;[root@mastertest02 data]# vim myid &lt;/p&gt;
+&lt;p&gt;#写入2&lt;br&gt;[root@server3 data]# vi myid&lt;/p&gt;
+&lt;p&gt;#写入3&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;8、启动zookeeper&quot;&gt;&lt;a href=&quot;#8、启动zookeeper&quot; class=&quot;headerlink&quot; title=&quot;8、启动zookeeper&quot;&gt;&lt;/a&gt;8、启动zookeeper&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;[root@itr-mastertest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start&lt;br&gt;[root@itr-mastertest02 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start&lt;br&gt;[root@itr-nodetest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;9、查看状态&quot;&gt;&lt;a href=&quot;#9、查看状态&quot; class=&quot;headerlink&quot; title=&quot;9、查看状态&quot;&gt;&lt;/a&gt;9、查看状态&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;[root@itr-mastertest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh status&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/zk1.jpg&quot; alt=&quot;itr-mastertest01&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/zk2.jpg&quot; alt=&quot;itr-mastertest02&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/zk3.jpg&quot; alt=&quot;itr-mastertest02&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      Zookeeper-cluster-deploy
+    
+    </summary>
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Zookeeper" scheme="http://yoursite.com/tags/Zookeeper/"/>
+    
+  </entry>
   
   <entry>
     <title>VMware桥接模式下无法ping通网关</title>

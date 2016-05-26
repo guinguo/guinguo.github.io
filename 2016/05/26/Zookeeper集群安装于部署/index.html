@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="网页复制内容,解除复制限制," />
+  <meta name="keywords" content="Zookeeper," />
 
 
 
@@ -59,18 +59,18 @@
 
 
 
-<meta name="description" content="一行代码解除限制~">
+<meta name="description" content="Zookeeper-cluster-deploy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解除网页内容复制限制">
-<meta property="og:url" content="http://yoursite.com/2016/04/30/解除网页内容复制限制/index.html">
+<meta property="og:title" content="Zookeeper集群安装于部署">
+<meta property="og:url" content="http://yoursite.com/2016/05/26/Zookeeper集群安装于部署/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="一行代码解除限制~">
-<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/copy.jpg">
-<meta property="og:updated_time" content="2016-04-30T11:26:45.520Z">
+<meta property="og:description" content="Zookeeper-cluster-deploy">
+<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/zookeeper.jpg">
+<meta property="og:updated_time" content="2016-05-26T06:53:05.408Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解除网页内容复制限制">
-<meta name="twitter:description" content="一行代码解除限制~">
-<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/copy.jpg">
+<meta name="twitter:title" content="Zookeeper集群安装于部署">
+<meta name="twitter:description" content="Zookeeper-cluster-deploy">
+<meta name="twitter:image" content="http://7xsve9.com1.z0.glb.clouddn.com/zookeeper.jpg">
 
 
 
@@ -88,7 +88,7 @@
   };
 </script>
 
-  <title> 解除网页内容复制限制 | Guinguo's blog </title>
+  <title> Zookeeper集群安装于部署 | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +268,7 @@
             
             
               
-                解除网页内容复制限制
+                Zookeeper集群安装于部署
               
             
           </h1>
@@ -280,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-30T18:44:23+08:00" content="2016-04-30">
-              2016-04-30
+            <time itemprop="dateCreated" datetime="2016-05-26T14:48:17+08:00" content="2016-05-26">
+              2016-05-26
             </time>
           </span>
 
@@ -294,8 +294,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/小技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">小技巧</span>
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
                   </a>
                 </span>
 
@@ -310,8 +310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/30/解除网页内容复制限制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/30/解除网页内容复制限制/" itemprop="commentsCount"></span>
+                <a href="/2016/05/26/Zookeeper集群安装于部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Zookeeper集群安装于部署/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -336,9 +336,9 @@
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com1.z0.glb.clouddn.com/copy.jpg" rel="gallery_ciony68xv000kqcka0wfvfryz"
+                 href="http://7xsve9.com1.z0.glb.clouddn.com/zookeeper.jpg" rel="gallery_ciony68x0000eqckasnju0s8i"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xsve9.com1.z0.glb.clouddn.com/copy.jpg" itemprop="contentUrl"/>
+                <img src="http://7xsve9.com1.z0.glb.clouddn.com/zookeeper.jpg" itemprop="contentUrl"/>
               </a>
             
           
@@ -349,16 +349,45 @@
       
 
       
-        <p>首先呢，背景是自己要把某个页面的数据拿下来打印，好了，一般的话，我们会选中，然后按Ctrl+C复制，到Word或者其他地方Ctrl+V粘贴，然而发现并没有，<del> 我去</del>。。。</p>
-<p>好吧，进入主题，首先我百度了一下，发现不是禁用脚本，就是保存网页，然而并没有什么卵用，我找了几个Chrome的解禁插件，也没用。。。<br><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0">这就尴尬了</p>
-<p><strong>但是</strong>,不要慌。H5有一个contenteditable 的属性，当其为true是，内容可编辑，这就好办了。<br>怎么用呢？</p>
-<p>首先，你要找到你需要的内容的元素id，<br>按F12，第2步选中内容<br><img src="http://7xsve9.com1.z0.glb.clouddn.com/getId.jpg"><br>然后复制下来，换到下面代码中的page-body去</p>
+        <p><img src="http://7xsve9.com1.z0.glb.clouddn.com/zk.jpg" alt="zookeeper"></p>
+<p>Zookeeper我就不多做介绍了，具体请看<br><a href="https://zh.wikipedia.org/zh/Apache_ZooKeeper" target="_blank" rel="external">维基百科</a>，或者<a href="https://wiki.apache.org/hadoop/ZooKeeper" target="_blank" rel="external">官网介绍</a><br><a id="more"></a></p>
+<h2 id="1、准备环境"><a href="#1、准备环境" class="headerlink" title="1、准备环境"></a>1、准备环境</h2><h3 id="安装jdk，安装jdk，安装jdk"><a href="#安装jdk，安装jdk，安装jdk" class="headerlink" title="安装jdk，安装jdk，安装jdk"></a>安装jdk，安装jdk，安装jdk</h3><p>　　重要的事情说三遍，因为我就是没有装，导致弄了好久老是报错<br>使用zkServer.sh status 看出角色时报Error contacting service. It is probably not running.的错误<br><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0"><br>　　因为Zookeeper是java写的，所以需要java的环境。请到oracle官网下载最新版的jdk，并且解压安装，解压的话最好放到/usr/lib/jdk/下<br>，接着到Apache官网下载 <a href="http://www.apache.org/dyn/closer.cgi/zookeeper/" target="_blank" rel="external">Zookeeper</a>。<br>　　然后，修改hosts文件，把主机跟ip地址映射起来，<br><img src="http://7xsve9.com1.z0.glb.clouddn.com/hosts.jpg" alt="hosts"><br>如果嫌麻烦的话，可以不用这一步，待会配置是直接填ip就行</p>
+<h2 id="2、解压安装"><a href="#2、解压安装" class="headerlink" title="2、解压安装"></a>2、解压安装</h2><blockquote>
+<pre><code>tar -zxvf zookeeper-3.4.6.tar.gz
+</code></pre></blockquote>
+<h2 id="3、复制配置文件"><a href="#3、复制配置文件" class="headerlink" title="3、复制配置文件"></a>3、复制配置文件</h2><blockquote>
+<p>cp /root/zookeeper-3.4.6/conf/zoo_sample.cfg /root/zookeeper-3.4.6/conf/zoo.cfg</p>
+</blockquote>
+<h2 id="4、修改配置文件zoo-cfg"><a href="#4、修改配置文件zoo-cfg" class="headerlink" title="4、修改配置文件zoo.cfg"></a>4、修改配置文件zoo.cfg</h2><blockquote>
+<p>#建立data文件夹，用于存放数据的<br>mkdir /root/zookeeper-3.4.6/data</p>
+<pre><code>vim /root/zookeeper-3.4.6/conf/zoo.cfg 
+</code></pre><p>#把下面对应的值改了就行<br>dataDir=/root/zookeeper-3.4.6/data</p>
+<p>server.1=itr-mastertest01:2888:3888<br>server.2=itr-mastertest02:2888:3888<br>server.3=itr-nodetest01:2888:3888</p>
+</blockquote>
+<h2 id="5、进入data目录"><a href="#5、进入data目录" class="headerlink" title="5、进入data目录"></a>5、进入data目录</h2><blockquote>
+<p>cd /root/zookeeper-3.4.6/data<br>vim myid<br>1</p>
+<p>#1,代表第server.1台server<br>!wq</p>
+<p>#保存退出</p>
+</blockquote>
+<h2 id="6、复制到其他集群服务器上"><a href="#6、复制到其他集群服务器上" class="headerlink" title="6、复制到其他集群服务器上"></a>6、复制到其他集群服务器上</h2><blockquote>
+<p>scp -rq /root/zookeeper-3.4.6 itr-mastertest02:/root/<br>scp -rq /root/zookeeper-3.4.6 nodetest01:/root/</p>
+</blockquote>
+<h2 id="7、修改myid的值"><a href="#7、修改myid的值" class="headerlink" title="7、修改myid的值"></a>7、修改myid的值</h2><blockquote>
+<p>[root@mastertest02 data]# vim myid </p>
+<p>#写入2<br>[root@server3 data]# vi myid</p>
+<p>#写入3</p>
+</blockquote>
+<h2 id="8、启动zookeeper"><a href="#8、启动zookeeper" class="headerlink" title="8、启动zookeeper"></a>8、启动zookeeper</h2><blockquote>
+<p>[root@itr-mastertest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start<br>[root@itr-mastertest02 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start<br>[root@itr-nodetest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh start</p>
+</blockquote>
+<h2 id="9、查看状态"><a href="#9、查看状态" class="headerlink" title="9、查看状态"></a>9、查看状态</h2><blockquote>
+<p>[root@itr-mastertest01 ~]# zk zookeeper-3.4.6/bin/zkServer.sh status</p>
+</blockquote>
+<p><img src="http://7xsve9.com1.z0.glb.clouddn.com/zk1.jpg" alt="itr-mastertest01"></p>
 <hr>
-<p>方法1：<br>在当前页面的浏览器地址栏输入：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;     javascript:<span class="built_in">document</span>.getElementById(<span class="string">'page-body'</span>).setAttribute(<span class="string">'contentEditable'</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure></p>
-<p>方法2：<br>在当前页面按F12进入调试工具，切换到console窗口，键入<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;     <span class="built_in">document</span>.getElementById(<span class="string">'page-body'</span>).setAttribute(<span class="string">'contentEditable'</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure></p>
-<p>回车。两种方法结果一样~</p>
-<p></p><h4>那么神奇的事情即将发生</h4><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/contentEditable.gif"><p></p>
-<p>###直接把内容拉倒编辑器或者Word即可</p>
+<p><img src="http://7xsve9.com1.z0.glb.clouddn.com/zk2.jpg" alt="itr-mastertest02"></p>
+<hr>
+<p><img src="http://7xsve9.com1.z0.glb.clouddn.com/zk3.jpg" alt="itr-mastertest02"></p>
 
       
     </div>
@@ -379,9 +408,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/网页复制内容/" rel="tag">#网页复制内容</a>
-          
-            <a href="/tags/解除复制限制/" rel="tag">#解除复制限制</a>
+            <a href="/tags/Zookeeper/" rel="tag">#Zookeeper</a>
           
         </div>
       
@@ -390,17 +417,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/24/dtd入门/" rel="next" title="dtd基础入门">
-                <i class="fa fa-chevron-left"></i> dtd基础入门
+              <a href="/2016/05/18/VMware桥接模式下无法ping通网关/" rel="next" title="VMware桥接模式下无法ping通网关">
+                <i class="fa fa-chevron-left"></i> VMware桥接模式下无法ping通网关
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/03/JVM学习之OpenJDK源码编译/" rel="prev" title="JVM学习之OpenJDK源码编译">
-                JVM学习之OpenJDK源码编译 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -449,8 +472,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/30/解除网页内容复制限制/"
-           data-title="解除网页内容复制限制" data-url="http://yoursite.com/2016/04/30/解除网页内容复制限制/">
+      <div class="ds-thread" data-thread-key="2016/05/26/Zookeeper集群安装于部署/"
+           data-title="Zookeeper集群安装于部署" data-url="http://yoursite.com/2016/05/26/Zookeeper集群安装于部署/">
       </div>
     
   </div>
@@ -559,7 +582,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">那么神奇的事情即将发生</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、准备环境"><span class="nav-number">1.</span> <span class="nav-text">1、准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk，安装jdk，安装jdk"><span class="nav-number">1.1.</span> <span class="nav-text">安装jdk，安装jdk，安装jdk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、解压安装"><span class="nav-number">2.</span> <span class="nav-text">2、解压安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、复制配置文件"><span class="nav-number">3.</span> <span class="nav-text">3、复制配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、修改配置文件zoo-cfg"><span class="nav-number">4.</span> <span class="nav-text">4、修改配置文件zoo.cfg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、进入data目录"><span class="nav-number">5.</span> <span class="nav-text">5、进入data目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、复制到其他集群服务器上"><span class="nav-number">6.</span> <span class="nav-text">6、复制到其他集群服务器上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、修改myid的值"><span class="nav-number">7.</span> <span class="nav-text">7、修改myid的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、启动zookeeper"><span class="nav-number">8.</span> <span class="nav-text">8、启动zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、查看状态"><span class="nav-number">9.</span> <span class="nav-text">9、查看状态</span></a></li></ol></div>
             
           </div>
         </section>
