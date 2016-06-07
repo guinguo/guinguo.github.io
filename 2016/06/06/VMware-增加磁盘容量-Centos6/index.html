@@ -1,0 +1,667 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Guinguo's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="一开始分配的磁盘太小">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VMware 增加磁盘容量-Centos6">
+<meta property="og:url" content="http://yoursite.com/2016/06/06/VMware-增加磁盘容量-Centos6/index.html">
+<meta property="og:site_name" content="Guinguo's blog">
+<meta property="og:description" content="一开始分配的磁盘太小">
+<meta property="og:updated_time" content="2016-06-05T16:16:44.120Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VMware 增加磁盘容量-Centos6">
+<meta name="twitter:description" content="一开始分配的磁盘太小">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> VMware 增加磁盘容量-Centos6 | Guinguo's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?651f6694a8a016ae53eaffce893df97d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Guinguo's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Just try it</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Qh7UfB7sRNYosLvQWNGP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                VMware 增加磁盘容量-Centos6
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-06T00:09:33+08:00" content="2016-06-06">
+              2016-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/06/VMware-增加磁盘容量-Centos6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/06/VMware-增加磁盘容量-Centos6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>直接给出命令：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><span class="line">关机</span><br><span class="line">扩展磁盘</span><br><span class="line">[root@apache-server ~]# df -h</span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/vg_os-lv_root</span><br><span class="line">                       14G  9.3G  3.4G  74% /</span><br><span class="line">tmpfs                 495M     0  495M   0% /dev/shm</span><br><span class="line">/dev/sda1             190M   27M  153M  15% /boot</span><br><span class="line">/dev/mapper/vg_os-lv_data</span><br><span class="line">                      5.0G   11M  4.8G   1% /data</span><br><span class="line">					  </span><br><span class="line">[root@apache-server ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 32.2 GB, 32212254720 bytes</span><br><span class="line">255 heads, 63 sectors/track, 3916 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00012311</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *           1          26      204800   83  Linux</span><br><span class="line">Partition 1 does not end on cylinder boundary.</span><br><span class="line">/dev/sda2              26        2611    20765696   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_root: 14.6 GB, 14604566528 bytes</span><br><span class="line">255 heads, 63 sectors/track, 1775 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_swap: 1073 MB, 1073741824 bytes</span><br><span class="line">255 heads, 63 sectors/track, 130 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_data: 5582 MB, 5582618624 bytes</span><br><span class="line">255 heads, 63 sectors/track, 678 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line">[root@apache-server ~]# fdisk /dev/sda</span><br><span class="line"></span><br><span class="line">WARNING: DOS-compatible mode is deprecated. It's strongly recommended to</span><br><span class="line">         switch off the mode (command 'c') and change display units to</span><br><span class="line">         sectors (command 'u').</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   e   extended</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">p</span><br><span class="line">Partition number (1-4): 3</span><br><span class="line">First cylinder (2611-3916, default 2611): </span><br><span class="line">Using default value 2611</span><br><span class="line">Last cylinder, +cylinders or +size&#123;K,M,G&#125; (2611-3916, default 3916): </span><br><span class="line">Using default value 3916</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: Device or resource busy.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">Syncing disks.</span><br><span class="line">[root@apache-server ~]# reboot</span><br><span class="line"></span><br><span class="line">Broadcast message from root@apache-server</span><br><span class="line">        (/dev/pts/0) at 22:49 ...</span><br><span class="line"></span><br><span class="line">The system is going down for reboot NOW!</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@apache-server ~]# </span><br><span class="line">Last login: Sun Jun  5 22:47:34 2016 from 192.168.191.5</span><br><span class="line">[root@apache-server ~]# fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 32.2 GB, 32212254720 bytes</span><br><span class="line">255 heads, 63 sectors/track, 3916 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00012311</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *           1          26      204800   83  Linux</span><br><span class="line">Partition 1 does not end on cylinder boundary.</span><br><span class="line">/dev/sda2              26        2611    20765696   8e  Linux LVM</span><br><span class="line">/dev/sda3            2611        3916    10483750   83  Linux</span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_root: 14.6 GB, 14604566528 bytes</span><br><span class="line">255 heads, 63 sectors/track, 1775 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_swap: 1073 MB, 1073741824 bytes</span><br><span class="line">255 heads, 63 sectors/track, 130 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/mapper/vg_os-lv_data: 5582 MB, 5582618624 bytes</span><br><span class="line">255 heads, 63 sectors/track, 678 cylinders</span><br><span class="line">Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disk identifier: 0x00000000</span><br><span class="line"></span><br><span class="line">[root@apache-server ~]# lvm</span><br><span class="line">lvm&gt; pvcreate /dev/sda3　　</span><br><span class="line">  Device /dev/sda3　　 not found (or ignored by filtering).</span><br><span class="line">lvm&gt; pvcreate /dev/sda3</span><br><span class="line">  Physical volume "/dev/sda3" successfully created</span><br><span class="line">lvm&gt;  vgextend vg_os /dev/sda3</span><br><span class="line">  Volume group "vg_os" successfully extended</span><br><span class="line">lvm&gt;  lvextend /dev/vg_os/lv_root /dev/sda3</span><br><span class="line">  Size of logical volume vg_os/lv_root changed from 13.60 GiB (3482 extents) to 23.60 GiB (6041 extents).</span><br><span class="line">  Logical volume lv_root successfully resized</span><br><span class="line">lvm&gt;  pvdisplay</span><br><span class="line">  --- Physical volume ---</span><br><span class="line">  PV Name               /dev/sda2</span><br><span class="line">  VG Name               vg_os</span><br><span class="line">  PV Size               19.80 GiB / not usable 3.00 MiB</span><br><span class="line">  Allocatable           yes (but full)</span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              5069</span><br><span class="line">  Free PE               0</span><br><span class="line">  Allocated PE          5069</span><br><span class="line">  PV UUID               oX0Vt2-m4F5-utFk-CAdx-Vw2P-id0v-l0FPba</span><br><span class="line">   </span><br><span class="line">  --- Physical volume ---</span><br><span class="line">  PV Name               /dev/sda3</span><br><span class="line">  VG Name               vg_os</span><br><span class="line">  PV Size               10.00 GiB / not usable 2.04 MiB</span><br><span class="line">  Allocatable           yes (but full)</span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              2559</span><br><span class="line">  Free PE               0</span><br><span class="line">  Allocated PE          2559</span><br><span class="line">  PV UUID               B27Hb0-nLHZ-uEm4-RE9W-dUDJ-Y3xf-ZHAthg</span><br><span class="line">   </span><br><span class="line">lvm&gt; quit</span><br><span class="line">  Exiting.</span><br><span class="line">[root@apache-server ~]# resize2fs /dev/vg_os/lv_root</span><br><span class="line">resize2fs 1.41.12 (17-May-2010)</span><br><span class="line">Filesystem at /dev/vg_os/lv_root is mounted on /; on-line resizing required</span><br><span class="line">old desc_blocks = 1, new_desc_blocks = 2</span><br><span class="line">Performing an on-line resize of /dev/vg_os/lv_root to 6185984 (4k) blocks.</span><br><span class="line">The filesystem on /dev/vg_os/lv_root is now 6185984 blocks long.</span><br><span class="line"></span><br><span class="line">[root@apache-server ~]# df -h</span><br><span class="line">Filesystem            Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/vg_os-lv_root</span><br><span class="line">                       24G  9.3G   13G  43% /</span><br><span class="line">tmpfs                 495M     0  495M   0% /dev/shm</span><br><span class="line">/dev/sda1             190M   27M  153M  15% /boot</span><br><span class="line">/dev/mapper/vg_os-lv_data</span><br><span class="line">                      5.0G   11M  4.8G   1% /data</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>cankao<br><a href="http://www.centoscn.com/CentOS/config/2015/0730/5942.html" target="_blank" rel="external">http://www.centoscn.com/CentOS/config/2015/0730/5942.html</a><br><a href="http://blog.csdn.net/gsying1474/article/details/49150037" target="_blank" rel="external">http://blog.csdn.net/gsying1474/article/details/49150037</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/05/周总结-Hadoop-HA/" rel="next" title="周总结--Hadoop HA">
+                <i class="fa fa-chevron-left"></i> 周总结--Hadoop HA
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/06/VMware-增加磁盘容量-Centos6/"
+           data-title="VMware 增加磁盘容量-Centos6" data-url="http://yoursite.com/2016/06/06/VMware-增加磁盘容量-Centos6/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="guinguo" />
+          <p class="site-author-name" itemprop="name">guinguo</p>
+          <p class="site-description motion-element" itemprop="description">guinguo的博客,记录生活中的点点滴滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiblogs.cc" target="_blank">黄奇blogs</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guinguo</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guinguo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
