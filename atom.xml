@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-06-05T16:16:44.120Z</updated>
+  <updated>2016-07-23T15:39:46.098Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,521 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hadoop-Cluster-Set-Up-P3_Hadoop</title>
+    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/"/>
+    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</id>
+    <published>2016-07-23T07:27:44.000Z</published>
+    <updated>2016-07-23T15:39:46.098Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;获取安装包&quot;&gt;&lt;a href=&quot;#获取安装包&quot; class=&quot;headerlink&quot; title=&quot;获取安装包&quot;&gt;&lt;/a&gt;获取安装包&lt;/h1&gt;&lt;p&gt;　　你可以拿到源码包然后重新编译一次，我直接下载解压版&lt;br&gt;使用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget http://archive.apache.org/dist/hadoop/core/current/hadoop-2.7.2.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;解压到 /usr/local下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -zxvf hadoop-2.7.2.tar.gz -C /usr/local/
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;修改配置文件&quot;&gt;&lt;a href=&quot;#修改配置文件&quot; class=&quot;headerlink&quot; title=&quot;修改配置文件&quot;&gt;&lt;/a&gt;修改配置文件&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;1、 core-site.xml&lt;br&gt;参考配置 &lt;a href=&quot;https://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-common/core-default.xml&quot; title=&quot;core-default.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;core-default.xml&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;configuration&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;fs.defaultFS&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;hdfs://mycluster&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.tmp.dir&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;/home/root/hadoop/tmp&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;ha.zookeeper.quorum&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;server1:2181,server2:2181,server3:2181&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;fs.trash.interval&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;2000&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;/configuration&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;说明：&lt;br&gt;　　hadoop.tmp.dir 是hadoop文件系统依赖的基础配置，很多路径都依赖它。如果hdfs-site.xml中不配 置namenode和datanode的存放位置，默认就放在这个路径中&lt;/p&gt;
+&lt;p&gt; 1、hadoop.tmp.dir&lt;/p&gt;
+&lt;p&gt; 2、dfs.datanode.data.dir    &lt;/p&gt;
+&lt;p&gt; 3、dfs.namenode.name.dir    &lt;/p&gt;
+&lt;p&gt; 4、dfs.namenode.edits.dir    &lt;/p&gt;
+&lt;p&gt; 5、dfs.namenode.checkpoint.dir    &lt;/p&gt;
+&lt;p&gt; 6、dfs.namenode.checkpoint.edits.dir    &lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;2、hdfs-site.xml&lt;br&gt;参考配置 &lt;a href=&quot;https://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml&quot; title=&quot;hdfs-default.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hdfs-default.xml&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;configuration&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.replication&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;2&amp;lt;/value&amp;gt; &amp;lt;!-- hdfs存的副本(数量) --&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.nameservices&amp;lt;/name&amp;gt; 
+&amp;lt;value&amp;gt;mycluster&amp;lt;/value&amp;gt; &amp;lt;!-- 服务的名称，可用逗号分隔 --&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.ha.namenodes.mycluster&amp;lt;/name&amp;gt; 
+&amp;lt;value&amp;gt;nn1,nn2&amp;lt;/value&amp;gt; &amp;lt;!-- HA的两个节点 --&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.namenode.rpc-address.mycluster.nn1&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;server1:9000&amp;lt;/value&amp;gt; 
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.namenode.http-address.mycluster.nn1&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;server1:50070&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.namenode.rpc-address.mycluster.nn2&amp;lt;/name&amp;gt; 
+&amp;lt;value&amp;gt;server2:9000&amp;lt;/value&amp;gt; &amp;lt;!--处理所有客户端请求--&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.namenode.http-address.mycluster.nn2&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;server2:50070&amp;lt;/value&amp;gt; 
+&amp;lt;!--dfs namenode web ui监听的端口--&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.ha.automatic-failover.enabled.mycluster&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt; &amp;lt;!--启用HA--&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.namenode.shared.edits.dir&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;qjournal://server1:8485;server2:8485;server3:8485/mycluster&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.journalnode.edits.dir&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;/home/root/hadoop/tmp/journal&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt; &amp;lt;!--配置ssh登录信息--&amp;gt;
+&amp;lt;name&amp;gt;dfs.ha.fencing.methods&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;sshfence&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.ha.fencing.ssh.private-key-files&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;/root/.ssh/id_rsa&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;dfs.client.failover.proxy.provider.mycluster&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;/configuration&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;3、yarn-site.xml&lt;br&gt;参考配置 &lt;a href=&quot;https://hadoop.apache.org/docs/r2.4.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml&quot; title=&quot;yarn-default.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;yarn-default.xml&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;configuration&amp;gt;    
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.aux-services&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;mapreduce_shuffle&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;org.apache.hadoop.mapred.ShuffleHandler&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.local-dirs&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;/home/root/hadoop/nm&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.log-dirs&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;/home/root/hadoop/logs&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.log-aggregation-enable&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt; 
+
+&amp;lt;property&amp;gt;
+  &amp;lt;description&amp;gt;Where to aggregate logs&amp;lt;/description&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.remote-app-log-dir&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;hdfs://mycluster/var/log/hadoop-yarn/apps&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;!-- Resource Manager Configs --&amp;gt;
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.connect.retry-interval.ms&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;2000&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.ha.enabled&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.ha.automatic-failover.enabled&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.ha.automatic-failover.embedded&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.cluster-id&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;yarn-cluster&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.ha.rm-ids&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;rm1,rm2&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.ha.id&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;rm1&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.scheduler.class&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.recovery.enabled&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.store.class&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.zk.state-store.address&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:2181,server2:2181,server3:2181&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.app.mapreduce.am.scheduler.connection.wait.interval-ms&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;5000&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+
+  &amp;lt;!-- RM1 configs --&amp;gt;
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23140&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.scheduler.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23130&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.webapp.https.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23189&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.webapp.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23188&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.resource-tracker.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23125&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.admin.address.rm1&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:23141&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+
+&amp;lt;!-- RM2 configs --&amp;gt;
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23140&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.scheduler.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23130&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.webapp.https.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23189&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.webapp.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23188&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.resource-tracker.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23125&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.admin.address.rm2&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server2:23141&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+
+&amp;lt;!-- Node Manager Configs --&amp;gt;
+&amp;lt;property&amp;gt;
+  &amp;lt;description&amp;gt;Address where the localizer IPC is.&amp;lt;/description&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.localizer.address&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;0.0.0.0:23344&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;description&amp;gt;NM Webapp address.&amp;lt;/description&amp;gt;
+  &amp;lt;name&amp;gt;yarn.nodemanager.webapp.address&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;0.0.0.0:23999&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+  &amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;yarn.nodemanager.local-dirs&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;/home/root/hadoop/nodemanager/yarn/local&amp;lt;/value&amp;gt;
+  &amp;lt;/property&amp;gt;
+
+  &amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;yarn.nodemanager.log-dirs&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;/home/root/hadoop/nodemanager/yarn/log&amp;lt;/value&amp;gt;
+  &amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;mapreduce.shuffle.port&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;23080&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;property&amp;gt;
+  &amp;lt;name&amp;gt;yarn.resourcemanager.zk-address&amp;lt;/name&amp;gt;
+  &amp;lt;value&amp;gt;server1:2181,server2:2181,server3:2181&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+
+&amp;lt;/configuration&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;4、mapred-site.xml&lt;br&gt;参考配置 &lt;a href=&quot;https://hadoop.apache.org/docs/r2.7.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml&quot; title=&quot;mapred-default.xml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mapred-default.xml&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;configuration&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.jobhistory.address&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;server1:10020&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.jobhistory.webapp.address&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;server1:19888&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.jobhistory.webapp.https.address&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;server1:19890&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.jobhistory.admin.address&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;server1:10033&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.framework.name&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;yarn&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;yarn.app.mapreduce.am.staging-dir&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;/user&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.task.timeout&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;1800000&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;/configuration&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;5、slaves &lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;vi slaves
+
+server3
+server4
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;6、hadoop-env.sh修改&lt;br&gt;  JAVA_HOME指定为jdk安装目录，JAVA_HOME=/usr/local/jdk1.7.0_79&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;复制到其他节点&quot;&gt;&lt;a href=&quot;#复制到其他节点&quot; class=&quot;headerlink&quot; title=&quot;复制到其他节点&quot;&gt;&lt;/a&gt;复制到其他节点&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;7、scp hadoop-2.7.2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# scp -rq hadoop-2.7.2 server2:/usr/local/
+[root@server1 local]# scp -rq hadoop-2.7.2 server3:/usr/local/
+[root@server1 local]# scp -rq hadoop-2.7.2 server4:/usr/local/
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;启动各种服务&quot;&gt;&lt;a href=&quot;#启动各种服务&quot; class=&quot;headerlink&quot; title=&quot;启动各种服务&quot;&gt;&lt;/a&gt;启动各种服务&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;8、启动journalnode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# hadoop-daemon.sh start journalnode
+[root@server2 local]# hadoop-daemon.sh start journalnode
+[root@server3 local]# hadoop-daemon.sh start journalnode
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;9、格式化zkfc集群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# /usr/local/hadoop-2.7.2/bin/hdfs zkfc -formatZK
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;10、格式化hdfs文件系统[格式化namenode,接着启动namenode]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# /usr/local/hadoop-2.7.2/bin/hdfs namenode -format -clusterId mycluster
+[root@server1 local]# /usr/local/hadoop-2.7.2/sbin/hadoop-daemon.sh start namenode
+[root@server2 local]# /usr/local/hadoop-2.7.2/bin/hdfs namenode -bootstrapStandby
+[root@server2 local]# /usr/local/hadoop-2.7.2/sbin/hadoop-daemon.sh start namenode
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;11、启动datanode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# /usr/local/hadoop-2.7.2/sbin/hadoop-daemons.sh start datanode
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;12、启动zkfc [DFSZKFailoverController]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# /usr/local/hadoop-2.7.2/sbin/hadoop-daemon.sh start zkfc
+[root@server2 local]# /usr/local/hadoop-2.7.2/sbin/hadoop-daemon.sh start zkfc
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;13、启动yarn&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# /usr/local/hadoop-2.7.2/sbin/yarn-daemon.sh start resourcemanager
+[root@server1 local]# /usr/local/hadoop-2.7.2/sbin/yarn-daemons.sh start nodemanager
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;14、启动historyserver [查询作业执行的详细情况]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 local]# mr-jobhistory-daemon.sh start historyserver  
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;测试&quot;&gt;&lt;a href=&quot;#测试&quot; class=&quot;headerlink&quot; title=&quot;测试&quot;&gt;&lt;/a&gt;测试&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;15、测试hdfs+Yarn+MR&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;/usr/local/hadoop-2.7.2/bin/hadoop fs -put /usr/local/zookeeper.out /test/zookeeper.out
+hadoop jar hadoop-mapreduce-examples-2.7.2.jar wordcount /test /output
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;过程日志&quot;&gt;&lt;a href=&quot;#过程日志&quot; class=&quot;headerlink&quot; title=&quot;过程日志&quot;&gt;&lt;/a&gt;过程日志&lt;/h1&gt;&lt;h2 id=&quot;server1&quot;&gt;&lt;a href=&quot;#server1&quot; class=&quot;headerlink&quot; title=&quot;server1&quot;&gt;&lt;/a&gt;server1&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server1 local]# hdfs zkfc -formatZK&lt;br&gt;16/07/23 08:13:03 INFO tools.DFSZKFailoverController: Failover controller configured for NameNode NameNode at server1/198.176.49.198:9000&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:host.name=server1&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.version=1.7.0_79&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.vendor=Oracle Corporation&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.home=/usr/local/java/jdk1.7.0_79/jre&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.class.path=/usr/local/hadoop-2.7.2/etc/hadoop:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr&lt;br&gt;&lt;strong&gt;此处省去大量lib…&lt;/strong&gt;&lt;br&gt;p-2.7.2/contrib/capacity-scheduler/&lt;em&gt;.jar&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.library.path=/usr/local/hadoop-2.7.2/lib/native&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:java.compiler=&lt;na&gt;&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:os.name=Linux&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:os.arch=amd64&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:os.version=2.6.32-042stab112.15&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:user.name=root&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:user.home=/root&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Client environment:user.dir=/usr/local&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Initiating client connection, connectString=server1:2181,server2:2181,server3:2181 sessionTimeout=5000 watcher=org.apache.hadoop.ha.ActiveStandbyElector$WatcherWithClientRef@25a296b8&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ClientCnxn: Opening socket connection to server server1/198.176.49.198:2181. Will not attempt to authenticate using SASL (unknown error)&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ClientCnxn: Socket connection established to server1/198.176.49.198:2181, initiating session&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ClientCnxn: Session establishment complete on server server1/198.176.49.198:2181, sessionid = 0x15617ab536f0000, negotiated timeout = 20000&lt;br&gt;16/07/23 08:13:03 INFO ha.ActiveStandbyElector: Successfully created /hadoop-ha/mycluster in ZK.&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ZooKeeper: Session: 0x15617ab536f0000 closed&lt;br&gt;16/07/23 08:13:03 WARN ha.ActiveStandbyElector: Ignoring stale result from old client with sessionId 0x15617ab536f0000&lt;br&gt;16/07/23 08:13:03 INFO zookeeper.ClientCnxn: EventThread shut down&lt;br&gt;[root@server1 local]# hdfs namenode -format -clusterId mycluster&lt;br&gt;16/07/23 08:14:21 INFO namenode.NameNode: STARTUP_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;STARTUP_MSG: Starting NameNode&lt;br&gt;STARTUP_MSG:   host = server1/198.176.49.198&lt;br&gt;STARTUP_MSG:   args = [-format, -clusterId, mycluster]&lt;br&gt;STARTUP_MSG:   version = 2.7.2&lt;br&gt;STARTUP_MSG:   classpath = /usr/local/hadoop-2.7.2/etc/hadoop:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/commons-codec-1.4.jar&lt;br&gt;&lt;strong&gt;此处省去大量lib…&lt;/strong&gt;&lt;br&gt;-2.7.2.jar:/usr/local/hadoop-2.7.2/contrib/capacity-scheduler/&lt;/na&gt;&lt;/em&gt;.jar&lt;br&gt;STARTUP_MSG:   build = &lt;a href=&quot;https://git-wip-us.apache.org/repos/asf/hadoop.git&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://git-wip-us.apache.org/repos/asf/hadoop.git&lt;/a&gt; -r b165c4fe8a74265c792ce23f546c64604acf0e41; compiled by ‘jenkins’ on 2016-01-26T00:08Z&lt;br&gt;STARTUP_MSG:   java = 1.7.0_79&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;16/07/23 08:14:21 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]&lt;br&gt;16/07/23 08:14:21 INFO namenode.NameNode: createNameNode [-format, -clusterId, mycluster]&lt;br&gt;Formatting using clusterid: mycluster&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: No KeyProvider found.&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: fsLock is fair:true&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.DatanodeManager: dfs.block.invalidate.limit=1000&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.DatanodeManager: dfs.namenode.datanode.registration.ip-hostname-check=true&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: dfs.namenode.startup.delay.block.deletion.sec is set to 000:00:00:00.000&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: The block deletion will start around 2016 Jul 23 08:14:22&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: Computing capacity for map BlocksMap&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: VM type       = 64-bit&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: 2.0% max memory 889 MB = 17.8 MB&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: capacity      = 2^21 = 2097152 entries&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: dfs.block.access.token.enable=false&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: defaultReplication         = 2&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: maxReplication             = 512&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: minReplication             = 1&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: maxReplicationStreams      = 2&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: replicationRecheckInterval = 3000&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: encryptDataTransfer        = false&lt;br&gt;16/07/23 08:14:22 INFO blockmanagement.BlockManager: maxNumBlocksToLog          = 1000&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: fsOwner             = root (auth:SIMPLE)&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: supergroup          = supergroup&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: isPermissionEnabled = true&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: Determined nameservice ID: mycluster&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: HA Enabled: true&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: Append Enabled: true&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: Computing capacity for map INodeMap&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: VM type       = 64-bit&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: 1.0% max memory 889 MB = 8.9 MB&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: capacity      = 2^20 = 1048576 entries&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSDirectory: ACLs enabled? false&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSDirectory: XAttrs enabled? true&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSDirectory: Maximum size of an xattr: 16384&lt;br&gt;16/07/23 08:14:22 INFO namenode.NameNode: Caching file names occuring more than 10 times&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: Computing capacity for map cachedBlocks&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: VM type       = 64-bit&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: 0.25% max memory 889 MB = 2.2 MB&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: capacity      = 2^18 = 262144 entries&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: dfs.namenode.safemode.threshold-pct = 0.9990000128746033&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: dfs.namenode.safemode.min.datanodes = 0&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: dfs.namenode.safemode.extension     = 30000&lt;br&gt;16/07/23 08:14:22 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.window.num.buckets = 10&lt;br&gt;16/07/23 08:14:22 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.num.users = 10&lt;br&gt;16/07/23 08:14:22 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.windows.minutes = 1,5,25&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: Retry cache on namenode is enabled&lt;br&gt;16/07/23 08:14:22 INFO namenode.FSNamesystem: Retry cache will use 0.03 of total heap and retry cache entry expiry time is 600000 millis&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: Computing capacity for map NameNodeRetryCache&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: VM type       = 64-bit&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: 0.029999999329447746% max memory 889 MB = 273.1 KB&lt;br&gt;16/07/23 08:14:22 INFO util.GSet: capacity      = 2^15 = 32768 entries&lt;br&gt;16/07/23 08:14:24 INFO namenode.FSImage: Allocated new BlockPoolId: BP-1601089490-198.176.49.198-1469276064635&lt;br&gt;16/07/23 08:14:24 INFO common.Storage: Storage directory /home/root/hadoop/tmp/dfs/name has been successfully formatted.&lt;br&gt;16/07/23 08:14:25 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid &amp;gt;= 0&lt;br&gt;16/07/23 08:14:26 INFO util.ExitUtil: Exiting with status 0&lt;br&gt;16/07/23 08:14:26 INFO namenode.NameNode: SHUTDOWN_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;SHUTDOWN_MSG: Shutting down NameNode at server1/198.176.49.198&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;[root@server1 local]# hadoop-daemon.sh start namenode&lt;br&gt;starting namenode, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-namenode-server1.out&lt;br&gt;[root@server1 local]# hadoop-daemons.sh start datanode&lt;br&gt;server3: starting datanode, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-datanode-server3.out&lt;br&gt;server4: starting datanode, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-datanode-server4.out&lt;br&gt;[root@server1 local]# hadoop-daemon.sh start zkfc&lt;br&gt;starting zkfc, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-zkfc-server1.out&lt;/p&gt;
+&lt;p&gt;.^H[root@server1 local]#&lt;br&gt;[root@server1 local]# yarn-daemon.sh start resourcemanager&lt;br&gt;starting resourcemanager, logging to /usr/local/hadoop-2.7.2/logs/yarn-root-resourcemanager-server1.out&lt;br&gt;[root@server1 local]# yarn-daemons.sh start nodemanager&lt;br&gt;server4: starting nodemanager, logging to /usr/local/hadoop-2.7.2/logs/yarn-root-nodemanager-server4.out&lt;br&gt;server3: starting nodemanager, logging to /usr/local/hadoop-2.7.2/logs/yarn-root-nodemanager-server3.out&lt;br&gt;[root@server1 local]# mr-jobhistory-daemon.sh start historyserver&lt;br&gt;starting historyserver, logging to /usr/local/hadoop-2.7.2/logs/mapred-root-historyserver-server1.out&lt;br&gt;[root@server1 local]# jps&lt;br&gt;2511 Jps&lt;br&gt;2457 JobHistoryServer&lt;br&gt;2071 DFSZKFailoverController&lt;br&gt;1771 QuorumPeerMain&lt;br&gt;1950 NameNode&lt;br&gt;2169 ResourceManager&lt;br&gt;1076 JournalNode&lt;br&gt;[root@server1 local]# zkCli.sh&lt;br&gt;Connecting to localhost:2181&lt;br&gt;2016-07-23 08:19:47,928 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT&lt;br&gt;2016-07-23 08:19:47,931 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=server1&lt;br&gt;2016-07-23 08:19:47,931 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.7.0_79&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/usr/local/java/jdk1.7.0_79/jre&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/usr/local/zookeeper-3.4.6/bin/../build/classes:/usr/local/zookeeper-3.4.6/bin/../build/lib/&lt;em&gt;.jar:/usr/local/zookeeper-3.4.6/bin/../lib/slf4j-log4j12-1.6.1.jar:/usr/local/zookeeper-3.4.6/bin/../lib/slf4j-api-1.6.1.jar:/usr/local/zookeeper-3.4.6/bin/../lib/netty-3.7.0.Final.jar:/usr/local/zookeeper-3.4.6/bin/../lib/log4j-1.2.16.jar:/usr/local/zookeeper-3.4.6/bin/../lib/jline-0.9.94.jar:/usr/local/zookeeper-3.4.6/bin/../zookeeper-3.4.6.jar:/usr/local/zookeeper-3.4.6/bin/../src/java/lib/&lt;/em&gt;.jar:/usr/local/zookeeper-3.4.6/bin/../conf:.:/usr/local/java/jdk1.7.0_79/lib/dt.jar:/usr/local/java/jdk1.7.0_79/lib/tools.jar&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp&lt;br&gt;2016-07-23 08:19:47,933 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;na&gt;&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=2.6.32-042stab112.15&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=root&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/root&lt;br&gt;2016-07-23 08:19:47,934 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/usr/local&lt;br&gt;2016-07-23 08:19:47,935 [myid:] - INFO  [main:ZooKeeper@438] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@c81739c&lt;br&gt;Welcome to ZooKeeper!&lt;br&gt;2016-07-23 08:19:47,959 [myid:] - INFO  [main-SendThread(localhost.localdomain:2181):ClientCnxn$SendThread@975] - Opening socket connection to server localhost.localdomain/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)&lt;br&gt;2016-07-23 08:19:47,965 [myid:] - INFO  [main-SendThread(localhost.localdomain:2181):ClientCnxn$SendThread@852] - Socket connection established to localhost.localdomain/127.0.0.1:2181, initiating session&lt;br&gt;JLine support is enabled&lt;br&gt;2016-07-23 08:19:47,976 [myid:] - INFO  [main-SendThread(localhost.localdomain:2181):ClientCnxn$SendThread@1235] - Session establishment complete on server localhost.localdomain/127.0.0.1:2181, sessionid = 0x15617ab536f0002, negotiated timeout = 30000&lt;/na&gt;&lt;/p&gt;
+&lt;p&gt;WATCHER::&lt;/p&gt;
+&lt;p&gt;WatchedEvent state:SyncConnected type:None path:null&lt;br&gt;[zk: localhost:2181(CONNECTED) 0] ls /&lt;br&gt;[rmstore, yarn-leader-election, hadoop-ha, zookeeper]&lt;br&gt;[zk: localhost:2181(CONNECTED) 1] ls /hadoop-ha/mycluster&lt;br&gt;[ActiveBreadCrumb, ActiveStandbyElectorLock]&lt;/p&gt;
+&lt;p&gt;`&lt;/p&gt;
+&lt;h2 id=&quot;server2&quot;&gt;&lt;a href=&quot;#server2&quot; class=&quot;headerlink&quot; title=&quot;server2&quot;&gt;&lt;/a&gt;server2&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server2 ~]# zkServer.sh status&lt;br&gt;JMX enabled by default&lt;br&gt;Using config: /usr/local/zookeeper-3.4.6/bin/../conf/zoo.cfg&lt;br&gt;Mode: leader&lt;br&gt;[root@server2 ~]# hdfs namenode -bootstrapStandby&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: STARTUP_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;STARTUP_MSG: Starting NameNode&lt;br&gt;STARTUP_MSG:   host = server2/198.176.49.2&lt;br&gt;STARTUP_MSG:   args = [-bootstrapStandby]&lt;br&gt;STARTUP_MSG:   version = 2.7.2&lt;br&gt;STARTUP_MSG:   classpath = /usr/local/hadoop-2.7.2/etc/hadoop:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/commons-code&lt;br&gt;&lt;strong&gt;此处省去大量lib…&lt;/strong&gt;&lt;br&gt;doop.git -r b165c4fe8a74265c792ce23f546c64604acf0e41; compiled by ‘jenkins’ on 2016-01-26T00:08Z&lt;br&gt;STARTUP_MSG:   java = 1.7.0_79&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]&lt;/p&gt;
+&lt;h1 id=&quot;16-07-23-08-15-02-INFO-namenode-NameNode-createNameNode-bootstrapStandby&quot;&gt;&lt;a href=&quot;#16-07-23-08-15-02-INFO-namenode-NameNode-createNameNode-bootstrapStandby&quot; class=&quot;headerlink&quot; title=&quot;16/07/23 08:15:02 INFO namenode.NameNode: createNameNode [-bootstrapStandby]&quot;&gt;&lt;/a&gt;16/07/23 08:15:02 INFO namenode.NameNode: createNameNode [-bootstrapStandby]&lt;/h1&gt;&lt;p&gt;About to bootstrap Standby ID nn2 from:&lt;br&gt;           Nameservice ID: mycluster&lt;br&gt;        Other Namenode ID: nn1&lt;br&gt;  Other NN’s HTTP address: &lt;a href=&quot;http://server1:50070&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server1:50070&lt;/a&gt;&lt;br&gt;  Other NN’s IPC  address: server1/198.176.49.198:9000&lt;br&gt;             Namespace ID: 1284273816&lt;br&gt;            Block pool ID: BP-1601089490-198.176.49.198-1469276064635&lt;br&gt;               Cluster ID: mycluster&lt;br&gt;           Layout version: -63&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;isUpgradeFinalized: true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;=====================================================&lt;br&gt;16/07/23 08:15:04 INFO common.Storage: Storage directory /home/root/hadoop/tmp/dfs/name has been successfully formatted.&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Opening connection to &lt;a href=&quot;http://server1:50070/imagetransfer?getimage=1&amp;amp;txid=0&amp;amp;storageInfo=-63:1284273816:0:mycluster&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server1:50070/imagetransfer?getimage=1&amp;amp;txid=0&amp;amp;storageInfo=-63:1284273816:0:mycluster&lt;/a&gt;&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Image Transfer timeout configured to 60000 milliseconds&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Transfer took 0.00s at 0.00 KB/s&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Downloaded file fsimage.ckpt_0000000000000000000 size 351 bytes.&lt;br&gt;16/07/23 08:15:05 INFO util.ExitUtil: Exiting with status 0&lt;br&gt;16/07/23 08:15:05 INFO namenode.NameNode: SHUTDOWN_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;SHUTDOWN_MSG: Shutting down NameNode at server2/198.176.49.2&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;[root@server2 ~]# hadoop-daemon.sh start namenode&lt;br&gt;starting namenode, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-namenode-server2.out&lt;br&gt;[root@server2 ~]# hadoop-daemon.sh start zkfc&lt;br&gt;starting zkfc, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-zkfc-server2.out&lt;br&gt;[root@server2 ~]# jps&lt;br&gt;1613 QuorumPeerMain&lt;br&gt;1886 Jps&lt;br&gt;1007 JournalNode&lt;br&gt;1736 NameNode&lt;br&gt;1825 DFSZKFailoverController&lt;br&gt;[root@server2 ~]#&lt;br&gt;`&lt;/p&gt;
+&lt;h2 id=&quot;server3&quot;&gt;&lt;a href=&quot;#server3&quot; class=&quot;headerlink&quot; title=&quot;server3&quot;&gt;&lt;/a&gt;server3&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server3 ~]# zkServer.sh status&lt;br&gt;JMX enabled by default&lt;br&gt;Using config: /usr/local/zookeeper-3.4.6/bin/../conf/zoo.cfg&lt;br&gt;Mode: follower&lt;br&gt;[root@server3 ~]# jps&lt;br&gt;1017 JournalNode&lt;br&gt;1641 NodeManager&lt;br&gt;1750 Jps&lt;br&gt;1538 DataNode&lt;br&gt;1454 QuorumPeerMain&lt;br&gt;[root@server3 ~]# &lt;/p&gt;
+&lt;p&gt;`&lt;/p&gt;
+&lt;h2 id=&quot;server4&quot;&gt;&lt;a href=&quot;#server4&quot; class=&quot;headerlink&quot; title=&quot;server4&quot;&gt;&lt;/a&gt;server4&lt;/h2&gt;&lt;p&gt;&lt;code&gt;[root@server4 ~]# jps
+902 Jps
+676 DataNode
+793 NodeManager
+[root@server4 ~]#&lt;/code&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      Hadoop2.7.2 HA集群搭建
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop-Cluster-Set-Up-P1_Prepare</title>
+    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/"/>
+    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</id>
+    <published>2016-07-23T00:49:23.000Z</published>
+    <updated>2016-07-23T14:25:17.285Z</updated>
+    
+    <content type="html">&lt;p&gt;前几天买了4台vps来搭建集群，具体情况如下：&lt;br&gt;本来要进行分区，存储数据的，但是这个类型的vps居然不支持重新分区。。。&lt;br&gt;Centos7&lt;/p&gt;
+&lt;p&gt;Server1        master(NameNode)&lt;br&gt;Server2        master(SecondaryNameNode)&lt;br&gt;Server3        slave1(DataNode)&lt;br&gt;Server4        slave2(DataNode)&lt;/p&gt;
+&lt;h1 id=&quot;改hosts文件，增加Hadoop用户&quot;&gt;&lt;a href=&quot;#改hosts文件，增加Hadoop用户&quot; class=&quot;headerlink&quot; title=&quot;改hosts文件，增加Hadoop用户&quot;&gt;&lt;/a&gt;改hosts文件，增加Hadoop用户&lt;/h1&gt;&lt;p&gt;拿到vps后，修改hosts文件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;像这样一行一行把ip地址映射上去&lt;br&gt;192.168.1.1 Server1&lt;/p&gt;
+&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;useradd hadoop
+echo &amp;quot;hadoop123&amp;quot;|passwd --stdin hadoop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;授予sudo权限&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &amp;apos;hadoop  ALL=(ALL)       NOPASSWD: ALL&amp;apos; &amp;gt;&amp;gt; /etc/sudoers
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;配置ssh免密码登录&quot;&gt;&lt;a href=&quot;#配置ssh免密码登录&quot; class=&quot;headerlink&quot; title=&quot;配置ssh免密码登录&quot;&gt;&lt;/a&gt;配置ssh免密码登录&lt;/h1&gt;&lt;p&gt;[root@server1 ~]# ssh-keygen -t rsa&lt;br&gt;三个回车，出现&lt;br&gt;The key’s randomart image is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;+--[ RSA 2048]----+
+|E                |
+|.                |
+|o.               |
+|o.     .         |
+|o     . S .      |
+|..     . +       |
+|  +   . oo .     |
+| . o o..+o=      |
+|    .o=++=..     |
++-----------------+
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;将id-rsa.pub 公钥添加到.ssh/authorized_keys文件中&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat  id-rsa.pub &amp;gt;&amp;gt; authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我使用复制方式，从server1复制到server2，然后添加server2的公钥，再复制到server3，4。&lt;br&gt;最后在server4就有了一份全部server的公钥文件，如果麻烦你也可以直接复制到一个文件。&lt;br&gt;最后分发到四台server。执行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod 600 .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;好了，配置好了之后，注意:&lt;br&gt;&lt;strong&gt;第一次ssh登录时可能需要输入密码，再次访问时即可免密码登录。&lt;/strong&gt;&lt;br&gt;还有我在每一台server是分别ssh其他三台server。因为出现：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;The authenticity of host &amp;apos;server1 (xx.xx.xx.xx)&amp;apos; can&amp;apos;t be established.
+ECDSA key fingerprint is c6:03:ee:f5:60:0c:ae:76:d8:f3:ad:70:c5:66:04:2d.
+Are you sure you want to continue connecting (yes/no)?
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;会把host记录在.ssh/known_hosts文件中，之后就可以直接ssh上，如果嫌麻烦可以&lt;br&gt;修改/etc/ssh/ssh_config&lt;br&gt;将其中的# StrictHostKeyChecking ask 改成 StrictHostKeyChecking no&lt;/p&gt;
+&lt;h1 id=&quot;安装jdk1-7&quot;&gt;&lt;a href=&quot;#安装jdk1-7&quot; class=&quot;headerlink&quot; title=&quot;安装jdk1.7&quot;&gt;&lt;/a&gt;安装jdk1.7&lt;/h1&gt;&lt;p&gt;这里安装的是jdk-7u79-linux-x64，因为1.8会出现各种奇怪的问题，之前在虚拟机就遇到过，所以还是装1.7的好&lt;br&gt;下载jdk-7u79-linux-x64.tar.gz，并上传到server上，&lt;br&gt;如果是国外的服务器，ftp上传慢的话，课使用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget --no-cookies --no-check-certificate --header &amp;quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F;oraclelicense=accept-securebackup-cookie&amp;quot; &amp;quot;http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个命令，下载速度有7M/s&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;解压安装&lt;/p&gt;
+&lt;p&gt;  tar -zxvf jdk-7u79-linux-x64.tar.gz -C /usr/local/java/&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置环境变量&lt;/p&gt;
+&lt;p&gt;  vi /etc/profile&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;增加&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;lange:xml&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#JAVA&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;JAVA_HOME=/usr/java/jdk1.7.0_79&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;PATH=$JAVA_HOME/bin:$PATH&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export JAVA_HOME&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export PATH&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export CLASSPATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;然后执行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[root@server1 ~]# source /etc/profile
+[root@server1 ~]# java -version
+java version &amp;quot;1.7.0_79&amp;quot;
+Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;P2安装Zookeeper&lt;br&gt; 这里安装的版本是zookeeper-3.4.8&lt;br&gt;  参考 &lt;a href=&quot;/2016/05/26/Zookeeper集群安装于部署/&quot;&gt;Zookeeper集群安装于部署&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;P3安装Hadoop&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;SQL-on-Hadoop&quot;&gt;&lt;a href=&quot;#SQL-on-Hadoop&quot; class=&quot;headerlink&quot; title=&quot;SQL-on-Hadoop&quot;&gt;&lt;/a&gt;SQL-on-Hadoop&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;P4安装HBase&lt;/li&gt;
+&lt;li&gt;P5安装Hive&lt;/li&gt;
+&lt;li&gt;P6安装Spark&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      hadoop集群搭建前的准备
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+  </entry>
   
   <entry>
     <title>VMware 增加磁盘容量-Centos6</title>
@@ -45,7 +560,7 @@
     <link href="http://yoursite.com/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/"/>
     <id>http://yoursite.com/2016/06/05/周总结-Hadoop-HA/</id>
     <published>2016-06-05T15:26:23.000Z</published>
-    <updated>2016-06-07T10:39:05.078Z</updated>
+    <updated>2016-06-07T10:46:05.890Z</updated>
     
     <content type="html">&lt;p&gt;又到一年高考季，我也要考汇编了2333&lt;/p&gt;
 &lt;p&gt;　　这一周一直在搞这个Hadoop的集群部署，花了我好久。。。&lt;br&gt;一来是没有经验，二来是机子配置不行，跑四台虚拟机很卡。&lt;/p&gt;
@@ -78,10 +593,8 @@
     
       <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
     
-      <category term="Hadoop" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/Hadoop/"/>
     
-    
-      <category term="周总结" scheme="http://yoursite.com/tags/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
     
   </entry>
   
@@ -143,7 +656,7 @@
     <link href="http://yoursite.com/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/"/>
     <id>http://yoursite.com/2016/05/26/Zookeeper集群安装于部署/</id>
     <published>2016-05-26T06:48:17.000Z</published>
-    <updated>2016-05-26T06:53:05.408Z</updated>
+    <updated>2016-06-07T10:47:03.679Z</updated>
     
     <content type="html">&lt;p&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/zk.jpg&quot; alt=&quot;zookeeper&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Zookeeper我就不多做介绍了，具体请看&lt;br&gt;&lt;a href=&quot;https://zh.wikipedia.org/zh/Apache_ZooKeeper&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;维基百科&lt;/a&gt;，或者&lt;a href=&quot;https://wiki.apache.org/hadoop/ZooKeeper&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官网介绍&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -194,6 +707,8 @@
     
       <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
     
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
     
       <category term="Zookeeper" scheme="http://yoursite.com/tags/Zookeeper/"/>
     
@@ -1008,9 +1523,9 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
-    
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
     
   </entry>
   

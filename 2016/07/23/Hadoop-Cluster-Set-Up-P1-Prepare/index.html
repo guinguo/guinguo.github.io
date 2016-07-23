@@ -41,10 +41,12 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ssh," />
+  <meta name="keywords" content="Hadoop," />
 
 
 
+
+  
 
 
   <link rel="alternate" href="/atom.xml" title="Guinguo's blog" type="application/atom+xml" />
@@ -59,19 +61,16 @@
 
 
 
-<meta name="description" content="不用输入密码自动远程登录">
+<meta name="description" content="hadoop集群搭建前的准备">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux系统配置ssh免密码登录">
-<meta property="og:url" content="http://yoursite.com/2016/05/14/Linux系统配置ssh免密码登录/index.html">
+<meta property="og:title" content="Hadoop-Cluster-Set-Up-P1_Prepare">
+<meta property="og:url" content="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="不用输入密码自动远程登录">
-<meta property="og:image" content="http://yoursite.com/images/acmusume/01.png">
-<meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/ssh.jpg">
-<meta property="og:updated_time" content="2016-05-14T05:17:30.126Z">
+<meta property="og:description" content="hadoop集群搭建前的准备">
+<meta property="og:updated_time" content="2016-07-23T14:25:17.285Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux系统配置ssh免密码登录">
-<meta name="twitter:description" content="不用输入密码自动远程登录">
-<meta name="twitter:image" content="http://yoursite.com/images/acmusume/01.png">
+<meta name="twitter:title" content="Hadoop-Cluster-Set-Up-P1_Prepare">
+<meta name="twitter:description" content="hadoop集群搭建前的准备">
 
 
 
@@ -89,7 +88,7 @@
   };
 </script>
 
-  <title> Linux系统配置ssh免密码登录 | Guinguo's blog </title>
+  <title> Hadoop-Cluster-Set-Up-P1_Prepare | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +268,7 @@
             
             
               
-                Linux系统配置ssh免密码登录
+                Hadoop-Cluster-Set-Up-P1_Prepare
               
             
           </h1>
@@ -281,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-14T10:51:24+08:00" content="2016-05-14">
-              2016-05-14
+            <time itemprop="dateCreated" datetime="2016-07-23T08:49:23+08:00" content="2016-07-23">
+              2016-07-23
             </time>
           </span>
 
@@ -295,8 +294,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
                   </a>
                 </span>
 
@@ -311,8 +310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/14/Linux系统配置ssh免密码登录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/Linux系统配置ssh免密码登录/" itemprop="commentsCount"></span>
+                <a href="/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -334,32 +333,71 @@
       
 
       
-        <p> 一开始以为很简单，配置一下就好，没想到，一粗心，弄了有点久<br><a id="more"></a><br>　　首先呢，什么是SSH呢？–&gt;<a href="http://www.ibm.com/developerworks/cn/aix/library/au-sshsecurity/" target="_blank" rel="external">传送门</a>。然后，如果你每次登录远程服务器，都需要按(复杂的)密码，会很麻烦的，为了安全性，不会设置简单密码，可是每次都输入，<del>很痛苦的</del>。。。</p>
-<p>好了，如果你了解了ssh之后，那么，如何生成密匙对呢？</p>
-<h2 id="利用git的ssh密匙对"><a href="#利用git的ssh密匙对" class="headerlink" title="利用git的ssh密匙对"></a>利用git的ssh密匙对</h2><p>　　打开PUTTYGEN，在Putty安装目录下，如果没有自行下载。然后点击顶部Conversions-&gt;Import Key,选择id_rsa，一般存在C盘的用户目录下的.ssh文件夹里面，点击Save private key<br>保存下来，用于authenticate的公匙。把id_rsa.pub里面那一行内容拷贝下来。跳过第2步。</p>
-<h2 id="自己生成密匙对"><a href="#自己生成密匙对" class="headerlink" title="自己生成密匙对"></a>自己生成密匙对</h2><p>　　同样打开PUTTYGEN,点击Generate，<strong>注意，鼠标要在中间（进度条下面不断移动！），如果不这样做要等很久，上次有同学后台运行，等了快半个钟都没好，不知道老外怎么设计的这个软件。。。</strong><br><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0">,好了之后，点击Save private key,保存下来，用于authenticate的公匙。顺便吧key框里面的内容拷贝下来，保存也行，点击Save public key。然后continue~</p>
+        <p>前几天买了4台vps来搭建集群，具体情况如下：<br>本来要进行分区，存储数据的，但是这个类型的vps居然不支持重新分区。。。<br>Centos7</p>
+<p>Server1        master(NameNode)<br>Server2        master(SecondaryNameNode)<br>Server3        slave1(DataNode)<br>Server4        slave2(DataNode)</p>
+<h1 id="改hosts文件，增加Hadoop用户"><a href="#改hosts文件，增加Hadoop用户" class="headerlink" title="改hosts文件，增加Hadoop用户"></a>改hosts文件，增加Hadoop用户</h1><p>拿到vps后，修改hosts文件</p>
+<pre><code>vi /etc/hosts
+</code></pre><p>像这样一行一行把ip地址映射上去<br>192.168.1.1 Server1</p>
 <hr>
-<h2 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h2><p>好了，完成以上两步中的一步就可以继续了，打开，putty，用密码登录远程服务器操作。</p>
-<h3 id="建立-ssh目录（如果没有）"><a href="#建立-ssh目录（如果没有）" class="headerlink" title="建立~/.ssh目录（如果没有）"></a>建立~/.ssh目录（如果没有）</h3><blockquote>
-<pre><code>ls ~/.ssh
-authorized_keys
-#没有就
-mkdir ~/.ssh
-vim ~/.ssh/authorized_keys
-#把刚才复制的内容，贴进去
-:wq#保存退出
-</code></pre><p><strong>注意，这里有一个坑，就是鼠标右键粘贴时，前面几个字母可能会丢失，我也不知道为什么，一不注意，就像我一样GG了–&gt;<a href="http://blog.sina.com.cn/s/blog_5f5e2ce50101788l.html" target="_blank" rel="external">server refused our key</a></strong>，我跟这位up主一样去找各种原因，，，</p>
-</blockquote>
-<h3 id="重启sshd服务"><a href="#重启sshd服务" class="headerlink" title="重启sshd服务"></a>重启sshd服务</h3><blockquote>
-<pre><code>service sshd restart
-</code></pre></blockquote>
-<h3 id="测试ssh公匙登录"><a href="#测试ssh公匙登录" class="headerlink" title="测试ssh公匙登录"></a>测试ssh公匙登录</h3><p>　　打开Putty<br><img src="http://7xsve9.com1.z0.glb.clouddn.com/ssh.jpg" alt=""><br>然后就可以在putty中加入它了。然后点击open。</p>
+<pre><code>useradd hadoop
+echo &quot;hadoop123&quot;|passwd --stdin hadoop
+</code></pre><p>授予sudo权限</p>
+<pre><code>echo &apos;hadoop  ALL=(ALL)       NOPASSWD: ALL&apos; &gt;&gt; /etc/sudoers
+</code></pre><h1 id="配置ssh免密码登录"><a href="#配置ssh免密码登录" class="headerlink" title="配置ssh免密码登录"></a>配置ssh免密码登录</h1><p>[root@server1 ~]# ssh-keygen -t rsa<br>三个回车，出现<br>The key’s randomart image is:</p>
 <blockquote>
-<pre><code>Using username &quot;root&quot;.
-Authenticating with public key &quot;imported-openssh-key&quot;
-Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
+<pre><code>+--[ RSA 2048]----+
+|E                |
+|.                |
+|o.               |
+|o.     .         |
+|o     . S .      |
+|..     . +       |
+|  +   . oo .     |
+| . o o..+o=      |
+|    .o=++=..     |
++-----------------+
 </code></pre></blockquote>
-<p>中间如果出现什么问题可以参考 <a href="https://segmentfault.com/a/1190000002911599" target="_blank" rel="external">centos7 服务器部署ssh证书授权登录</a> 进行更详细的配置。</p>
+<p>将id-rsa.pub 公钥添加到.ssh/authorized_keys文件中</p>
+<pre><code>cat  id-rsa.pub &gt;&gt; authorized_keys
+</code></pre><p>我使用复制方式，从server1复制到server2，然后添加server2的公钥，再复制到server3，4。<br>最后在server4就有了一份全部server的公钥文件，如果麻烦你也可以直接复制到一个文件。<br>最后分发到四台server。执行</p>
+<pre><code>chmod 600 .ssh/authorized_keys
+</code></pre><p>好了，配置好了之后，注意:<br><strong>第一次ssh登录时可能需要输入密码，再次访问时即可免密码登录。</strong><br>还有我在每一台server是分别ssh其他三台server。因为出现：</p>
+<blockquote>
+<pre><code>The authenticity of host &apos;server1 (xx.xx.xx.xx)&apos; can&apos;t be established.
+ECDSA key fingerprint is c6:03:ee:f5:60:0c:ae:76:d8:f3:ad:70:c5:66:04:2d.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre></blockquote>
+<p>会把host记录在.ssh/known_hosts文件中，之后就可以直接ssh上，如果嫌麻烦可以<br>修改/etc/ssh/ssh_config<br>将其中的# StrictHostKeyChecking ask 改成 StrictHostKeyChecking no</p>
+<h1 id="安装jdk1-7"><a href="#安装jdk1-7" class="headerlink" title="安装jdk1.7"></a>安装jdk1.7</h1><p>这里安装的是jdk-7u79-linux-x64，因为1.8会出现各种奇怪的问题，之前在虚拟机就遇到过，所以还是装1.7的好<br>下载jdk-7u79-linux-x64.tar.gz，并上传到server上，<br>如果是国外的服务器，ftp上传慢的话，课使用</p>
+<pre><code>wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F;oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz&quot;
+</code></pre><p>这个命令，下载速度有7M/s</p>
+<ul>
+<li><p>解压安装</p>
+<p>  tar -zxvf jdk-7u79-linux-x64.tar.gz -C /usr/local/java/</p>
+</li>
+<li><p>配置环境变量</p>
+<p>  vi /etc/profile</p>
+</li>
+</ul>
+<p>增加<br><figure class="highlight plain"><figcaption><span>lange:xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#JAVA</span><br><span class="line">JAVA_HOME=/usr/java/jdk1.7.0_79</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br><span class="line">export CLASSPATH</span><br></pre></td></tr></table></figure></p>
+<p>然后执行</p>
+<pre><code>[root@server1 ~]# source /etc/profile
+[root@server1 ~]# java -version
+java version &quot;1.7.0_79&quot;
+Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+</code></pre><hr>
+<ul>
+<li><p>P2安装Zookeeper<br> 这里安装的版本是zookeeper-3.4.8<br>  参考 <a href="/2016/05/26/Zookeeper集群安装于部署/">Zookeeper集群安装于部署</a></p>
+</li>
+<li><p>P3安装Hadoop</p>
+</li>
+</ul>
+<h1 id="SQL-on-Hadoop"><a href="#SQL-on-Hadoop" class="headerlink" title="SQL-on-Hadoop"></a>SQL-on-Hadoop</h1><ul>
+<li>P4安装HBase</li>
+<li>P5安装Hive</li>
+<li>P6安装Spark</li>
+</ul>
 
       
     </div>
@@ -380,7 +418,7 @@ Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
       
         <div class="post-tags">
           
-            <a href="/tags/ssh/" rel="tag">#ssh</a>
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
           
         </div>
       
@@ -389,16 +427,16 @@ Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/09/CentOS-开启http-端口-80/" rel="next" title="CentOS 开启http 端口(80)">
-                <i class="fa fa-chevron-left"></i> CentOS 开启http 端口(80)
+              <a href="/2016/06/06/VMware-增加磁盘容量-Centos6/" rel="next" title="VMware 增加磁盘容量-Centos6">
+                <i class="fa fa-chevron-left"></i> VMware 增加磁盘容量-Centos6
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/05/15/Java中的枚举类Enum/" rel="prev" title="Java中的枚举类Enum">
-                Java中的枚举类Enum <i class="fa fa-chevron-right"></i>
+              <a href="/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/" rel="prev" title="Hadoop-Cluster-Set-Up-P3_Hadoop">
+                Hadoop-Cluster-Set-Up-P3_Hadoop <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -448,8 +486,8 @@ Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/14/Linux系统配置ssh免密码登录/"
-           data-title="Linux系统配置ssh免密码登录" data-url="http://yoursite.com/2016/05/14/Linux系统配置ssh免密码登录/">
+      <div class="ds-thread" data-thread-key="2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/"
+           data-title="Hadoop-Cluster-Set-Up-P1_Prepare" data-url="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/">
       </div>
     
   </div>
@@ -558,7 +596,7 @@ Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用git的ssh密匙对"><span class="nav-number">1.</span> <span class="nav-text">利用git的ssh密匙对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自己生成密匙对"><span class="nav-number">2.</span> <span class="nav-text">自己生成密匙对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置服务器"><span class="nav-number">3.</span> <span class="nav-text">配置服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-ssh目录（如果没有）"><span class="nav-number">3.1.</span> <span class="nav-text">建立~/.ssh目录（如果没有）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启sshd服务"><span class="nav-number">3.2.</span> <span class="nav-text">重启sshd服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试ssh公匙登录"><span class="nav-number">3.3.</span> <span class="nav-text">测试ssh公匙登录</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#改hosts文件，增加Hadoop用户"><span class="nav-number">1.</span> <span class="nav-text">改hosts文件，增加Hadoop用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置ssh免密码登录"><span class="nav-number">2.</span> <span class="nav-text">配置ssh免密码登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装jdk1-7"><span class="nav-number">3.</span> <span class="nav-text">安装jdk1.7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-on-Hadoop"><span class="nav-number">4.</span> <span class="nav-text">SQL-on-Hadoop</span></a></li></ol></div>
             
           </div>
         </section>
