@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-23T15:39:46.098Z</updated>
+  <updated>2016-07-23T15:50:32.612Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,27 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hadoop-Cluster-Set-Up-P4_HBase</title>
+    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/"/>
+    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</id>
+    <published>2016-07-23T15:50:32.000Z</published>
+    <updated>2016-07-23T15:50:32.612Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hadoop-Cluster-Set-Up-P3_Hadoop</title>
     <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/"/>
     <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</id>
     <published>2016-07-23T07:27:44.000Z</published>
-    <updated>2016-07-23T15:39:46.098Z</updated>
+    <updated>2016-07-23T15:46:45.983Z</updated>
     
     <content type="html">&lt;h1 id=&quot;获取安装包&quot;&gt;&lt;a href=&quot;#获取安装包&quot; class=&quot;headerlink&quot; title=&quot;获取安装包&quot;&gt;&lt;/a&gt;获取安装包&lt;/h1&gt;&lt;p&gt;　　你可以拿到源码包然后重新编译一次，我直接下载解压版&lt;br&gt;使用&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget http://archive.apache.org/dist/hadoop/core/current/hadoop-2.7.2.tar.gz
@@ -417,8 +433,8 @@ hadoop jar hadoop-mapreduce-examples-2.7.2.jar wordcount /test /output
 &lt;p&gt;WATCHER::&lt;/p&gt;
 &lt;p&gt;WatchedEvent state:SyncConnected type:None path:null&lt;br&gt;[zk: localhost:2181(CONNECTED) 0] ls /&lt;br&gt;[rmstore, yarn-leader-election, hadoop-ha, zookeeper]&lt;br&gt;[zk: localhost:2181(CONNECTED) 1] ls /hadoop-ha/mycluster&lt;br&gt;[ActiveBreadCrumb, ActiveStandbyElectorLock]&lt;/p&gt;
 &lt;p&gt;`&lt;/p&gt;
-&lt;h2 id=&quot;server2&quot;&gt;&lt;a href=&quot;#server2&quot; class=&quot;headerlink&quot; title=&quot;server2&quot;&gt;&lt;/a&gt;server2&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server2 ~]# zkServer.sh status&lt;br&gt;JMX enabled by default&lt;br&gt;Using config: /usr/local/zookeeper-3.4.6/bin/../conf/zoo.cfg&lt;br&gt;Mode: leader&lt;br&gt;[root@server2 ~]# hdfs namenode -bootstrapStandby&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: STARTUP_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;STARTUP_MSG: Starting NameNode&lt;br&gt;STARTUP_MSG:   host = server2/198.176.49.2&lt;br&gt;STARTUP_MSG:   args = [-bootstrapStandby]&lt;br&gt;STARTUP_MSG:   version = 2.7.2&lt;br&gt;STARTUP_MSG:   classpath = /usr/local/hadoop-2.7.2/etc/hadoop:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/commons-code&lt;br&gt;&lt;strong&gt;此处省去大量lib…&lt;/strong&gt;&lt;br&gt;doop.git -r b165c4fe8a74265c792ce23f546c64604acf0e41; compiled by ‘jenkins’ on 2016-01-26T00:08Z&lt;br&gt;STARTUP_MSG:   java = 1.7.0_79&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]&lt;/p&gt;
-&lt;h1 id=&quot;16-07-23-08-15-02-INFO-namenode-NameNode-createNameNode-bootstrapStandby&quot;&gt;&lt;a href=&quot;#16-07-23-08-15-02-INFO-namenode-NameNode-createNameNode-bootstrapStandby&quot; class=&quot;headerlink&quot; title=&quot;16/07/23 08:15:02 INFO namenode.NameNode: createNameNode [-bootstrapStandby]&quot;&gt;&lt;/a&gt;16/07/23 08:15:02 INFO namenode.NameNode: createNameNode [-bootstrapStandby]&lt;/h1&gt;&lt;p&gt;About to bootstrap Standby ID nn2 from:&lt;br&gt;           Nameservice ID: mycluster&lt;br&gt;        Other Namenode ID: nn1&lt;br&gt;  Other NN’s HTTP address: &lt;a href=&quot;http://server1:50070&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server1:50070&lt;/a&gt;&lt;br&gt;  Other NN’s IPC  address: server1/198.176.49.198:9000&lt;br&gt;             Namespace ID: 1284273816&lt;br&gt;            Block pool ID: BP-1601089490-198.176.49.198-1469276064635&lt;br&gt;               Cluster ID: mycluster&lt;br&gt;           Layout version: -63&lt;/p&gt;
+&lt;h2 id=&quot;server2&quot;&gt;&lt;a href=&quot;#server2&quot; class=&quot;headerlink&quot; title=&quot;server2&quot;&gt;&lt;/a&gt;server2&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server2 ~]# zkServer.sh status&lt;br&gt;JMX enabled by default&lt;br&gt;Using config: /usr/local/zookeeper-3.4.6/bin/../conf/zoo.cfg&lt;br&gt;Mode: leader&lt;br&gt;[root@server2 ~]# hdfs namenode -bootstrapStandby&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: STARTUP_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;STARTUP_MSG: Starting NameNode&lt;br&gt;STARTUP_MSG:   host = server2/198.176.49.2&lt;br&gt;STARTUP_MSG:   args = [-bootstrapStandby]&lt;br&gt;STARTUP_MSG:   version = 2.7.2&lt;br&gt;STARTUP_MSG:   classpath = /usr/local/hadoop-2.7.2/etc/hadoop:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop-2.7.2/share/hadoop/common/lib/commons-code&lt;br&gt;&lt;strong&gt;此处省去大量lib…&lt;/strong&gt;&lt;br&gt;doop.git -r b165c4fe8a74265c792ce23f546c64604acf0e41; compiled by ‘jenkins’ on 2016-01-26T00:08Z&lt;br&gt;STARTUP_MSG:   java = 1.7.0_79&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]&lt;br&gt;16/07/23 08:15:02 INFO namenode.NameNode: createNameNode [-bootstrapStandby]&lt;/p&gt;
+&lt;p&gt;=====================================================&lt;br&gt;About to bootstrap Standby ID nn2 from:&lt;br&gt;           Nameservice ID: mycluster&lt;br&gt;        Other Namenode ID: nn1&lt;br&gt;  Other NN’s HTTP address: &lt;a href=&quot;http://server1:50070&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server1:50070&lt;/a&gt;&lt;br&gt;  Other NN’s IPC  address: server1/198.176.49.198:9000&lt;br&gt;             Namespace ID: 1284273816&lt;br&gt;            Block pool ID: BP-1601089490-198.176.49.198-1469276064635&lt;br&gt;               Cluster ID: mycluster&lt;br&gt;           Layout version: -63&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;isUpgradeFinalized: true
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;=====================================================&lt;br&gt;16/07/23 08:15:04 INFO common.Storage: Storage directory /home/root/hadoop/tmp/dfs/name has been successfully formatted.&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Opening connection to &lt;a href=&quot;http://server1:50070/imagetransfer?getimage=1&amp;amp;txid=0&amp;amp;storageInfo=-63:1284273816:0:mycluster&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://server1:50070/imagetransfer?getimage=1&amp;amp;txid=0&amp;amp;storageInfo=-63:1284273816:0:mycluster&lt;/a&gt;&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Image Transfer timeout configured to 60000 milliseconds&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Transfer took 0.00s at 0.00 KB/s&lt;br&gt;16/07/23 08:15:05 INFO namenode.TransferFsImage: Downloaded file fsimage.ckpt_0000000000000000000 size 351 bytes.&lt;br&gt;16/07/23 08:15:05 INFO util.ExitUtil: Exiting with status 0&lt;br&gt;16/07/23 08:15:05 INFO namenode.NameNode: SHUTDOWN_MSG:&lt;br&gt;/&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;SHUTDOWN_MSG: Shutting down NameNode at server2/198.176.49.2&lt;br&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;em&gt;**&lt;/em&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;/&lt;br&gt;[root@server2 ~]# hadoop-daemon.sh start namenode&lt;br&gt;starting namenode, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-namenode-server2.out&lt;br&gt;[root@server2 ~]# hadoop-daemon.sh start zkfc&lt;br&gt;starting zkfc, logging to /usr/local/hadoop-2.7.2/logs/hadoop-root-zkfc-server2.out&lt;br&gt;[root@server2 ~]# jps&lt;br&gt;1613 QuorumPeerMain&lt;br&gt;1886 Jps&lt;br&gt;1007 JournalNode&lt;br&gt;1736 NameNode&lt;br&gt;1825 DFSZKFailoverController&lt;br&gt;[root@server2 ~]#&lt;br&gt;`&lt;/p&gt;
 &lt;h2 id=&quot;server3&quot;&gt;&lt;a href=&quot;#server3&quot; class=&quot;headerlink&quot; title=&quot;server3&quot;&gt;&lt;/a&gt;server3&lt;/h2&gt;&lt;p&gt;`&lt;br&gt;[root@server3 ~]# zkServer.sh status&lt;br&gt;JMX enabled by default&lt;br&gt;Using config: /usr/local/zookeeper-3.4.6/bin/../conf/zoo.cfg&lt;br&gt;Mode: follower&lt;br&gt;[root@server3 ~]# jps&lt;br&gt;1017 JournalNode&lt;br&gt;1641 NodeManager&lt;br&gt;1750 Jps&lt;br&gt;1538 DataNode&lt;br&gt;1454 QuorumPeerMain&lt;br&gt;[root@server3 ~]# &lt;/p&gt;
@@ -1523,9 +1539,9 @@ System.out.println(&amp;quot;request line: &amp;quot; + httpPost.getRequestLine(
       <category term="blog" scheme="http://yoursite.com/categories/blog/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
-    
       <category term="文章" scheme="http://yoursite.com/tags/%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   

@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java虚拟机,编译openjdk," />
+  <meta name="keywords" content="Guinguo" />
 
 
 
@@ -59,18 +59,16 @@
 
 
 
-<meta name="description" content="自己编译JDK">
+<meta name="description" content="guinguo的博客,记录生活中的点点滴滴">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM学习之OpenJDK源码编译">
-<meta property="og:url" content="http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/index.html">
+<meta property="og:title" content="Hadoop-Cluster-Set-Up-P4_HBase">
+<meta property="og:url" content="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
-<meta property="og:description" content="自己编译JDK">
-<meta property="og:image" content="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg">
-<meta property="og:updated_time" content="2016-05-03T15:19:14.987Z">
+<meta property="og:description" content="guinguo的博客,记录生活中的点点滴滴">
+<meta property="og:updated_time" content="2016-07-23T15:50:32.612Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM学习之OpenJDK源码编译">
-<meta name="twitter:description" content="自己编译JDK">
-<meta name="twitter:image" content="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg">
+<meta name="twitter:title" content="Hadoop-Cluster-Set-Up-P4_HBase">
+<meta name="twitter:description" content="guinguo的博客,记录生活中的点点滴滴">
 
 
 
@@ -88,7 +86,7 @@
   };
 </script>
 
-  <title> JVM学习之OpenJDK源码编译 | Guinguo's blog </title>
+  <title> Hadoop-Cluster-Set-Up-P4_HBase | Guinguo's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +266,7 @@
             
             
               
-                JVM学习之OpenJDK源码编译
+                Hadoop-Cluster-Set-Up-P4_HBase
               
             
           </h1>
@@ -280,38 +278,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-03T10:26:26+08:00" content="2016-05-03">
-              2016-05-03
+            <time itemprop="dateCreated" datetime="2016-07-23T23:50:32+08:00" content="2016-07-23">
+              2016-07-23
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JVM学习/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM学习</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/03/JVM学习之OpenJDK源码编译/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/JVM学习之OpenJDK源码编译/" itemprop="commentsCount"></span>
+                <a href="/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -331,71 +310,9 @@
 
       
       
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg" rel="gallery_ciqzd04xe000d6gkaa3o4hw9r"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xsve9.com2.z0.glb.clouddn.com/OpenJDK-logo.jpg" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <p>在centos7下进行编译<br>具体步骤：</p>
-<ul>
-<li>获取openjdk源码</li>
-<li>安装openjdk6–BoostrapJK</li>
-<li>安装编译时的依赖</li>
-<li>配置环境变量</li>
-<li>编译</li>
-</ul>
-<h3>1. 获取openjdk源码</h3><br>可以到这里去下载，<a href="https://jdk7.java.net/source.html" target="_blank" rel="external">OpenJDK Source Releases</a><br>我下载的是openjdk-7u40版本，openjdk7，update40，build43<br><h3>2. 下载jdk6–BoostrapJDK</h3>
-
-<blockquote>
-<p>我使用jdk6来辅助编译。可以到oracle官网下载，<a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html" target="_blank" rel="external">jdk-6u45-linux-x64.bin</a></p>
-</blockquote>
-<p></p><h3>3.安装编译时的依赖</h3><br>可以使用以下命令一次安装完成<p></p>
-<blockquote>
-<pre><code>yum -y install build-essential gawk m4
-openjkd-6-jkd libasound2-dev libcups2-dev 
-libxrender-dev xorg-dev xutils-dev
-xllproto-print-dev binutils libmotif3
-libmotif-dev ant
-</code></pre></blockquote>
-<p></p><h3>3.配置环境变量,编译</h3><br>OpenJKD在编译时读取的环境变量很多，但是大多数都有默认值，必须设置的只有两个：LANG和ALT_BOOTDIR。分别为C跟bootJDK的路径<br>所有的环境变量可以使用下面的脚本设置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">export LANG=C</span><br><span class="line">#Bootstrap JDK 安装位置</span><br><span class="line">export ALT_BOOTDIR=/opt/openJDK/jdk1.6.0_45</span><br><span class="line"></span><br><span class="line">#允许自动下载</span><br><span class="line">export ALLOW_DOWNLOADS=true</span><br><span class="line">#并行编译的线程数，和CPU内核数量一致即可</span><br><span class="line">export HOTSPOT_BUILD_JOBS=2</span><br><span class="line">export ALT_PARALLEL_COMPILE_JOBS=2</span><br><span class="line"></span><br><span class="line">#比较本次build出来的映像与先前版本的差异，对于我们没哟意义，</span><br><span class="line">#必须设置为false</span><br><span class="line">export SKIP_COMPARE_IMAGES=true</span><br><span class="line"></span><br><span class="line">#使用预编译头文件，不加这个编译会更慢一些</span><br><span class="line">export USE_PRECOMPILED_HEADER=true</span><br><span class="line"></span><br><span class="line">#要编译的内容</span><br><span class="line">export BUILD_LANGTOOLS=true</span><br><span class="line">export BUILD_HOTSPOT=true</span><br><span class="line">export BUILD_JDK=true</span><br><span class="line"></span><br><span class="line">#把它设置为false，可以避开javaws和浏览器java插件的build</span><br><span class="line">BUILD_DEPLOY=false</span><br><span class="line"></span><br><span class="line">#把它设置为false就不会build出安装包。因为安装包里有些奇怪的依赖</span><br><span class="line">BUILD_INSTALL=false</span><br><span class="line"></span><br><span class="line">#编译结果所存放的路径</span><br><span class="line">export ALT_OUTPUTDIR=/opt/openJDK/openjdk/build</span><br><span class="line"></span><br><span class="line">#这两个变量必须去掉</span><br><span class="line">unset CLASSPATH</span><br><span class="line">unset JAVA_HOME</span><br><span class="line">unset LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure><p></p>
-<p>全部设置结束之后，可以输入 make sanity 检测是否正确，如果一切顺利，会输出：Sanity check passed.就可以编译了。<br>输入make(不加参数默认为make all)，我的虚拟机配置比较低，整个编译的过程用了一个多钟。</p>
-<p><strong>结果如下：</strong><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/build.jpg"><br>我在虚拟机中编译的，而且配置不高，所以有点慢.</p>
-<p><strong>那么问题来了，如何看结果ne？</strong></p>
-<p>　　编译完成之后，进入OpenJDK源码下的build/j2sdk-image目录,(或者build-debug、build-fastdebug这两个目录)，这是整个JDK完整编译结果，内容为debug版jdk，将其复制到%JAVA_HOME%下，替换Oracle JDK。就可以作为一个完整的JDK使用，编译出来的虚拟机，在-version命令中带有用户的机器名。</p>
-<pre><code>[root@localhost ~]# java -version
-openjdk version &quot;1.7.0-internal-debug&quot;
-OpenJDK Runtime Environment (build 1.7.0-internal-debug-root_2016_04_25_20_00-b00)
-OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
-</code></pre><p>　　大多数情况我们只关心Hotspot虚拟机，只想单独编译它的话，那么使用hotspot/make目录下的MakeFile进行替换即可，其他参数与前面一致，这时候虚拟机的输出结果存放在<br>    <code>build/hotspot/outputdir/linux_amd64_compiler2</code> 中，里面对应了不同的优化级别的目录。</p>
-<p>进入 目录jvmg，在运行虚拟机前，还要手工编辑目录下的env.sh文件，这个文件由编译脚本自动产生，用于设置虚拟机的环境变量，里面已经发布了”JAVA_HOME，CLASSPATH，HOTSPOT_BUILD_USER” 3个环境变量，还需要增加一个“LD_LIBRSRY_CLASSPATH”：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LD_LIBRARY_PATH=.:$&#123;JAVA_HOME&#125;/jre/lib/amd64/native_threads:$&#123;JAVA_HOME&#125;/jre/lib/amd64:/opt/openJDK/openjdk/build/hotspot/outputdir/linux_amd64_compiler2/product</span><br><span class="line">export LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
-<p>然后执行</p>
-<blockquote>
-<pre><code>. ./env.sh
-./gama -version   #有可能是test_gamma,这是自带的一段八皇后代码
-</code></pre></blockquote>
-<p><strong>结果如下</strong><br><img src="http://7xsve9.com1.z0.glb.clouddn.com/jvm.jpg"></p>
-<p>　　自己编译的虚拟机成功运行起来，哈哈哈~<br><img src="/images/acmusume/32.png" height="50px" ,="" width="50px" style="margin:0 0"></p>
-<hr>
-<p>编译过程中有可能报错：</p>
-<blockquote>
-<p>Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org</p>
-</blockquote>
-<p>通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可<br>Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties<br>把2006改掉就可以<del>重新编译了</del><img src="/images/acmusume/01.png" height="50px" ,="" width="50px" style="margin:0 0"></p>
-
+        
       
     </div>
     
@@ -413,30 +330,18 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/java虚拟机/" rel="tag">#java虚拟机</a>
-          
-            <a href="/tags/编译openjdk/" rel="tag">#编译openjdk</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/30/解除网页内容复制限制/" rel="next" title="解除网页内容复制限制">
-                <i class="fa fa-chevron-left"></i> 解除网页内容复制限制
+              <a href="/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/" rel="next" title="Hadoop-Cluster-Set-Up-P3_Hadoop">
+                <i class="fa fa-chevron-left"></i> Hadoop-Cluster-Set-Up-P3_Hadoop
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/09/CentOS-开启http-端口-80/" rel="prev" title="CentOS 开启http 端口(80)">
-                CentOS 开启http 端口(80) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -485,8 +390,8 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/03/JVM学习之OpenJDK源码编译/"
-           data-title="JVM学习之OpenJDK源码编译" data-url="http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/">
+      <div class="ds-thread" data-thread-key="2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/"
+           data-title="Hadoop-Cluster-Set-Up-P4_HBase" data-url="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/">
       </div>
     
   </div>
@@ -595,7 +500,7 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">1. 获取openjdk源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">2. 下载jdk6–BoostrapJDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">3.安装编译时的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">3.配置环境变量,编译</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
