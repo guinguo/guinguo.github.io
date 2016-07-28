@@ -1,0 +1,894 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HBase," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Guinguo's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="HBase shell的基本操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hbase-Shell_Base-Use">
+<meta property="og:url" content="http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/index.html">
+<meta property="og:site_name" content="Guinguo's blog">
+<meta property="og:description" content="HBase shell的基本操作">
+<meta property="og:updated_time" content="2016-07-28T12:25:23.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hbase-Shell_Base-Use">
+<meta name="twitter:description" content="HBase shell的基本操作">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Hbase-Shell_Base-Use | Guinguo's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?651f6694a8a016ae53eaffce893df97d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Guinguo's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Just try it</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Qh7UfB7sRNYosLvQWNGP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hbase-Shell_Base-Use
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-25T17:20:40+08:00" content="2016-07-25">
+              2016-07-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/25/Hbase-Shell_Base-Use/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/25/Hbase-Shell_Base-Use/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>HBase shell支持Tab键自动补全</strong><br>基于hdfs，所以底层只有put，即增删改都是增加一行记录。</p>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><p>status 查看集群数据库状态</p>
+<pre><code>hbase(main):001:0&gt; status
+1 active master, 0 backup masters, 3 servers, 0 dead, 0.6667 average load
+</code></pre><p>查看HBase 版本信息</p>
+<pre><code>version
+hbase(main):002:0&gt; version
+1.2.2, r3f671c1ead70d249ea4598f1bbcc5151322b3a13, Fri Jul  1 08:28:55 CDT 2016
+</code></pre><p>list 查看数据表</p>
+<pre><code>hbase(main):003:0&gt; list
+TABLE                                                                                      
+0 row(s) in 0.1270 seconds
+
+=&gt; []
+</code></pre><p>create 创建数据表user，有user_id，info两列</p>
+<pre><code>hbase(main):002:0&gt; create &apos;user&apos;,&apos;user_id&apos;,&apos;username&apos;,&apos;address&apos;,&apos;info&apos;
+0 row(s) in 4.8590 seconds
+
+=&gt; Hbase::Table - user
+hbase(main):003:0&gt; list
+TABLE                                                                                      
+user                                                                                       
+1 row(s) in 0.0650 seconds
+
+=&gt; [&quot;user&quot;]
+</code></pre><p>describe 查看表信息，对每列的描述</p>
+<pre><code>hbase(main):010:0&gt; describe &apos;user&apos;
+Table user is ENABLED                                                                      
+user                                                                                       
+COLUMN FAMILIES DESCRIPTION                                                                
+{NAME =&gt; &apos;address&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, REPLICATION_SCOPE 
+=&gt; &apos;0&apos;, VERSIONS =&gt; &apos;1&apos;, COMPRESSION =&gt; &apos;NONE&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, TTL =&gt; &apos;FOREVER&apos;, KEEP
+_DELETED_CELLS =&gt; &apos;FALSE&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, IN_MEMORY =&gt; &apos;false&apos;, BLOCKCACHE =&gt; &apos;true&apos;
+}                                                                                          
+{NAME =&gt; &apos;info&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, REPLICATION_SCOPE =&gt; 
+&apos;0&apos;, VERSIONS =&gt; &apos;1&apos;, COMPRESSION =&gt; &apos;NONE&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, TTL =&gt; &apos;FOREVER&apos;, KEEP_DE
+LETED_CELLS =&gt; &apos;FALSE&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, IN_MEMORY =&gt; &apos;false&apos;, BLOCKCACHE =&gt; &apos;true&apos;}  
+{NAME =&gt; &apos;user_id&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, REPLICATION_SCOPE 
+=&gt; &apos;0&apos;, VERSIONS =&gt; &apos;1&apos;, COMPRESSION =&gt; &apos;NONE&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, TTL =&gt; &apos;FOREVER&apos;, KEEP
+_DELETED_CELLS =&gt; &apos;FALSE&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, IN_MEMORY =&gt; &apos;false&apos;, BLOCKCACHE =&gt; &apos;true&apos;
+}                                                                                          
+{NAME =&gt; &apos;username&apos;, DATA_BLOCK_ENCODING =&gt; &apos;NONE&apos;, BLOOMFILTER =&gt; &apos;ROW&apos;, REPLICATION_SCOPE
+ =&gt; &apos;0&apos;, VERSIONS =&gt; &apos;1&apos;, COMPRESSION =&gt; &apos;NONE&apos;, MIN_VERSIONS =&gt; &apos;0&apos;, TTL =&gt; &apos;FOREVER&apos;, KEE
+P_DELETED_CELLS =&gt; &apos;FALSE&apos;, BLOCKSIZE =&gt; &apos;65536&apos;, IN_MEMORY =&gt; &apos;false&apos;, BLOCKCACHE =&gt; &apos;true
+&apos;}                                                                                         
+4 row(s) in 0.0520 seconds   
+</code></pre><p>alter 修改表结构</p>
+<pre><code>hbase(main):012:0&gt; alter &apos;user&apos;,{NAME=&gt;&apos;username&apos;,METHOD=&gt;&apos;delete&apos;}
+Updating all regions with the new schema...
+0/1 regions updated.
+0/1 regions updated.
+1/1 regions updated.
+Done.
+0 row(s) in 4.5440 seconds
+</code></pre><p>drop 删除表(先disable 再 drop)</p>
+<pre><code>hbase(main):006:0&gt; drop &apos;temp_table&apos;
+
+ERROR: Table temp_table is enabled. Disable it first.
+
+Here is some help for this command:
+Drop the named table. Table must first be disabled:
+  hbase&gt; drop &apos;t1&apos;
+  hbase&gt; drop &apos;ns1:t1&apos;
+
+hbase(main):007:0&gt; disable &apos;temp_table&apos;
+0 row(s) in 19.6310 seconds
+
+hbase(main):008:0&gt; drop &apos;temp_table&apos;
+0 row(s) in 1.4960 seconds
+</code></pre><p>is_(dis)enabled 判断表状态</p>
+<pre><code>hbase(main):010:0&gt; is_enabled &apos;user&apos;
+true                                                                                       
+0 row(s) in 0.0260 seconds
+
+hbase(main):011:0&gt; is_disabled &apos;user&apos;
+false                                                                                      
+0 row(s) in 0.0170 seconds
+</code></pre><p>put hbase不用add，使用put添加数据</p>
+<pre><code>hbase(main):013:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:age&apos;,&apos;22&apos;
+0 row(s) in 0.2990 seconds
+
+hbase(main):014:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:birthday&apos;,&apos;1995-01-01&apos;
+0 row(s) in 0.1280 seconds
+
+hbase(main):015:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:school&apos;,&apos;scau&apos;
+0 row(s) in 0.0280 seconds
+
+hbase(main):016:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:contry&apos;,&apos;china&apos;
+0 row(s) in 0.0080 seconds
+
+hbase(main):017:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:name&apos;,&apos;guinguo&apos;
+0 row(s) in 0.2350 seconds
+
+hbase(main):018:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;address:province&apos;,&apos;guangdong&apos;
+0 row(s) in 0.0600 seconds
+
+hbase(main):019:0&gt; put &apos;user&apos;,&apos;2&apos;,&apos;info:birthday&apos;,&apos;1990-11-01&apos;
+0 row(s) in 0.0170 seconds
+
+hbase(main):025:0&gt; put &apos;user&apos;,&apos;2&apos;,&apos;info:hight&apos;,&apos;173+&apos;
+0 row(s) in 0.1230 seconds
+</code></pre><p>get 查询数据，不使用select，根据行健获取</p>
+<pre><code>hbase(main):027:0&gt; get &apos;user&apos;,&apos;1&apos;
+COLUMN                   CELL                                                                
+ address:province        timestamp=1469463433805, value=guangdong                            
+ info:age                timestamp=1469463216059, value=22                                   
+ info:birthday           timestamp=1469463335389, value=1995-01-01                           
+ info:contry             timestamp=1469463377085, value=china                                
+ info:name               timestamp=1469463403556, value=guinguo                              
+ info:school             timestamp=1469463361228, value=scau                                 
+6 row(s) in 0.0340 seconds
+</code></pre><p>get 根据行健+列名获取</p>
+<pre><code>hbase(main):013:0&gt; get &apos;user&apos;,&apos;1&apos;,&apos;info&apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+ info:birthday          timestamp=1469690067239, value=1995-01-01                          
+ info:contry            timestamp=1469690081381, value=china                               
+ info:name              timestamp=1469690089676, value=guinguo                             
+ info:school            timestamp=1469690076309, value=scau
+
+hbase(main):014:0&gt; get &apos;user&apos;,&apos;1&apos;,&apos;address&apos;
+COLUMN                  CELL                                                               
+ address:province       timestamp=1469690096718, value=guangdong                           
+1 row(s) in 0.0070 seconds
+</code></pre><p>get 根据行健+列名+key获取value</p>
+<pre><code>hbase(main):015:0&gt; get &apos;user&apos;,&apos;1&apos;,&apos;info:age&apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+1 row(s) in 0.0210 seconds
+</code></pre><p>hbase使用时间戳存数据，get的是最近的数据，可以通过时间戳获取</p>
+<pre><code>hbase(main):016:0&gt; put &apos;user&apos;,&apos;1&apos;,&apos;info:age&apos;,&apos;20&apos;
+0 row(s) in 0.1520 seconds
+
+hbase(main):003:0&gt; get &apos;user&apos;,&apos;1&apos;,&apos;info:age&apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690524575, value=20                                  
+1 row(s) in 0.0410 seconds
+
+hbase(main):004:0&gt; get &apos;user&apos;,&apos;1&apos;,{COLUMN=&gt;&apos;info:age&apos;,TIMESTAMP=&gt;1469690058926}
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+1 row(s) in 0.0060 seconds
+</code></pre><p>scan 全表扫描</p>
+<pre><code>hbase(main):006:0&gt; scan &apos;user&apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+ 2                      column=info:birthday, timestamp=1469690105292, value=1990-11-01    
+ 2                      column=info:hight, timestamp=1469690138930, value=173+             
+2 row(s) in 0.0630 seconds
+</code></pre><p>delete 删除，格式是通过 table row column 然后通过key定位</p>
+<pre><code>hbase(main):007:0&gt; put &apos;user&apos;,&apos;3&apos;,&apos;address:contry&apos;,&apos;USA&apos;
+0 row(s) in 0.2130 seconds
+
+hbase(main):009:0&gt; get &apos;user&apos;,&apos;3&apos;
+COLUMN                  CELL                                                               
+ address:contry         timestamp=1469691253773, value=USA                                 
+1 row(s) in 0.0090 seconds
+
+hbase(main):011:0&gt; delete &apos;user&apos;,&apos;3&apos;,&apos;address:contry&apos;
+0 row(s) in 0.0950 seconds
+
+hbase(main):012:0&gt; get &apos;user&apos;,&apos;3&apos;
+COLUMN                  CELL                                                               
+0 row(s) in 0.0480 seconds
+</code></pre><p>deleteall 删除整个行健</p>
+<pre><code>hbase(main):017:0&gt; deleteall &apos;user&apos;,&apos;2&apos;
+0 row(s) in 0.1820 seconds
+
+hbase(main):018:0&gt; scan &apos;user&apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+ 3                      column=address:contr, timestamp=1469691478971, value=USA           
+2 row(s) in 0.0630 seconds
+</code></pre><p>count 统计多少个行健，注意是行健，不是行</p>
+<pre><code>hbase(main):028:0&gt; scan &apos;user&apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+1 row(s) in 0.0240 seconds
+
+hbase(main):029:0&gt; count &apos;user&apos;
+1 row(s) in 0.0170 seconds
+
+=&gt; 1
+hbase(main):030:0&gt; 
+</code></pre><p>truncate 清空表</p>
+<pre><code>hbase(main):030:0&gt; truncate &apos;user&apos;
+Truncating &apos;user&apos; table (it may take a while):
+ - Disabling table...
+ - Truncating table...
+0 row(s) in 30.3090 seconds
+
+=&gt; [&quot;user&quot;]
+hbase(main):032:0&gt; scan &apos;user&apos;
+ROW                     COLUMN+CELL                                                        
+0 row(s) in 0.4280 seconds
+</code></pre><h1 id="日常维护命令"><a href="#日常维护命令" class="headerlink" title="日常维护命令"></a>日常维护命令</h1><p>flush table,将所有memstore刷新到hdfs，这个操作会造成hbase的storefile数量剧增，应尽量避免这个操作</p>
+<pre><code>hbase(main):001:0&gt; flush &apos;user&apos;
+0 row(s) in 1.6950 seconds
+
+hbase(main):002:0&gt; 
+</code></pre><h1 id="重启一个regionserver"><a href="#重启一个regionserver" class="headerlink" title="重启一个regionserver"></a>重启一个regionserver</h1><p>bin/graceful_stop.sh –restart –reload –debug nodename</p>
+<blockquote>
+<p>这个操作是平滑的重启regionserver进程，对服务不会有影响，他会先将需要重启的regionserver上面的所有region迁移到其它的服务器，然后重启，最后又会将之前的region迁移回来，但我们修改一个配置时，可以用这种方式重启每一台机子，这个命令会关闭balancer，所以最后我们要在hbase shell里面执行一下balance_switch true，对于hbase regionserver重启，不要直接kill进程，这样会造成在zookeeper.session.timeout这个时间长的中断，也不要通过bin/hbase-daemon.sh stop regionserver去重启，如果运气不太好，-ROOT-或者.META.表在上面的话，所有的请求会全部失败。</p>
+</blockquote>
+<pre><code>graceful_stop.sh --restart --debug server3
+
+hbase(main):001:0&gt; balance_switch true
+true                                                                                       
+0 row(s) in 0.2650 seconds
+</code></pre><h1 id="关闭下线一台regionserver"><a href="#关闭下线一台regionserver" class="headerlink" title="关闭下线一台regionserver"></a>关闭下线一台regionserver</h1><p>bin/graceful_stop.sh –stop  nodename</p>
+<blockquote>
+<p>和上面一样，系统会在关闭之前迁移所有region，然后stop进程，同样最后我们要手工balance_switch true，开启master的region均衡。</p>
+</blockquote>
+<h1 id="检查region是否正常以及修复"><a href="#检查region是否正常以及修复" class="headerlink" title="检查region是否正常以及修复"></a>检查region是否正常以及修复</h1><p>bin/hbase hbck  (检查)<br>bin/hbase hbck -fix  （修复）</p>
+<p>参考 <a href="http://www.w2bc.com/article/123398" target="_blank" rel="external">http://www.w2bc.com/article/123398</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HBase/" rel="tag">#HBase</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/" rel="next" title="Hadoop-Cluster-Set-Up-P4_HBase">
+                <i class="fa fa-chevron-left"></i> Hadoop-Cluster-Set-Up-P4_HBase
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/25/Hbase-Shell_Base-Use/"
+           data-title="Hbase-Shell_Base-Use" data-url="http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="guinguo" />
+          <p class="site-author-name" itemprop="name">guinguo</p>
+          <p class="site-description motion-element" itemprop="description">guinguo的博客,记录生活中的点点滴滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiblogs.cc" target="_blank">黄奇blogs</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日常维护命令"><span class="nav-number">2.</span> <span class="nav-text">日常维护命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重启一个regionserver"><span class="nav-number">3.</span> <span class="nav-text">重启一个regionserver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关闭下线一台regionserver"><span class="nav-number">4.</span> <span class="nav-text">关闭下线一台regionserver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查region是否正常以及修复"><span class="nav-number">5.</span> <span class="nav-text">检查region是否正常以及修复</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guinguo</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guinguo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

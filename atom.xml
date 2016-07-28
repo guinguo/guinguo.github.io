@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-24T10:22:27.758Z</updated>
+  <updated>2016-07-28T12:25:23.301Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,258 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hbase-Shell_Base-Use</title>
+    <link href="http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/"/>
+    <id>http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/</id>
+    <published>2016-07-25T09:20:40.000Z</published>
+    <updated>2016-07-28T12:25:23.301Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;HBase shell支持Tab键自动补全&lt;/strong&gt;&lt;br&gt;基于hdfs，所以底层只有put，即增删改都是增加一行记录。&lt;/p&gt;
+&lt;h1 id=&quot;常用命令&quot;&gt;&lt;a href=&quot;#常用命令&quot; class=&quot;headerlink&quot; title=&quot;常用命令&quot;&gt;&lt;/a&gt;常用命令&lt;/h1&gt;&lt;p&gt;status 查看集群数据库状态&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):001:0&amp;gt; status
+1 active master, 0 backup masters, 3 servers, 0 dead, 0.6667 average load
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看HBase 版本信息&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;version
+hbase(main):002:0&amp;gt; version
+1.2.2, r3f671c1ead70d249ea4598f1bbcc5151322b3a13, Fri Jul  1 08:28:55 CDT 2016
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;list 查看数据表&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):003:0&amp;gt; list
+TABLE                                                                                      
+0 row(s) in 0.1270 seconds
+
+=&amp;gt; []
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;create 创建数据表user，有user_id，info两列&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):002:0&amp;gt; create &amp;apos;user&amp;apos;,&amp;apos;user_id&amp;apos;,&amp;apos;username&amp;apos;,&amp;apos;address&amp;apos;,&amp;apos;info&amp;apos;
+0 row(s) in 4.8590 seconds
+
+=&amp;gt; Hbase::Table - user
+hbase(main):003:0&amp;gt; list
+TABLE                                                                                      
+user                                                                                       
+1 row(s) in 0.0650 seconds
+
+=&amp;gt; [&amp;quot;user&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;describe 查看表信息，对每列的描述&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):010:0&amp;gt; describe &amp;apos;user&amp;apos;
+Table user is ENABLED                                                                      
+user                                                                                       
+COLUMN FAMILIES DESCRIPTION                                                                
+{NAME =&amp;gt; &amp;apos;address&amp;apos;, DATA_BLOCK_ENCODING =&amp;gt; &amp;apos;NONE&amp;apos;, BLOOMFILTER =&amp;gt; &amp;apos;ROW&amp;apos;, REPLICATION_SCOPE 
+=&amp;gt; &amp;apos;0&amp;apos;, VERSIONS =&amp;gt; &amp;apos;1&amp;apos;, COMPRESSION =&amp;gt; &amp;apos;NONE&amp;apos;, MIN_VERSIONS =&amp;gt; &amp;apos;0&amp;apos;, TTL =&amp;gt; &amp;apos;FOREVER&amp;apos;, KEEP
+_DELETED_CELLS =&amp;gt; &amp;apos;FALSE&amp;apos;, BLOCKSIZE =&amp;gt; &amp;apos;65536&amp;apos;, IN_MEMORY =&amp;gt; &amp;apos;false&amp;apos;, BLOCKCACHE =&amp;gt; &amp;apos;true&amp;apos;
+}                                                                                          
+{NAME =&amp;gt; &amp;apos;info&amp;apos;, DATA_BLOCK_ENCODING =&amp;gt; &amp;apos;NONE&amp;apos;, BLOOMFILTER =&amp;gt; &amp;apos;ROW&amp;apos;, REPLICATION_SCOPE =&amp;gt; 
+&amp;apos;0&amp;apos;, VERSIONS =&amp;gt; &amp;apos;1&amp;apos;, COMPRESSION =&amp;gt; &amp;apos;NONE&amp;apos;, MIN_VERSIONS =&amp;gt; &amp;apos;0&amp;apos;, TTL =&amp;gt; &amp;apos;FOREVER&amp;apos;, KEEP_DE
+LETED_CELLS =&amp;gt; &amp;apos;FALSE&amp;apos;, BLOCKSIZE =&amp;gt; &amp;apos;65536&amp;apos;, IN_MEMORY =&amp;gt; &amp;apos;false&amp;apos;, BLOCKCACHE =&amp;gt; &amp;apos;true&amp;apos;}  
+{NAME =&amp;gt; &amp;apos;user_id&amp;apos;, DATA_BLOCK_ENCODING =&amp;gt; &amp;apos;NONE&amp;apos;, BLOOMFILTER =&amp;gt; &amp;apos;ROW&amp;apos;, REPLICATION_SCOPE 
+=&amp;gt; &amp;apos;0&amp;apos;, VERSIONS =&amp;gt; &amp;apos;1&amp;apos;, COMPRESSION =&amp;gt; &amp;apos;NONE&amp;apos;, MIN_VERSIONS =&amp;gt; &amp;apos;0&amp;apos;, TTL =&amp;gt; &amp;apos;FOREVER&amp;apos;, KEEP
+_DELETED_CELLS =&amp;gt; &amp;apos;FALSE&amp;apos;, BLOCKSIZE =&amp;gt; &amp;apos;65536&amp;apos;, IN_MEMORY =&amp;gt; &amp;apos;false&amp;apos;, BLOCKCACHE =&amp;gt; &amp;apos;true&amp;apos;
+}                                                                                          
+{NAME =&amp;gt; &amp;apos;username&amp;apos;, DATA_BLOCK_ENCODING =&amp;gt; &amp;apos;NONE&amp;apos;, BLOOMFILTER =&amp;gt; &amp;apos;ROW&amp;apos;, REPLICATION_SCOPE
+ =&amp;gt; &amp;apos;0&amp;apos;, VERSIONS =&amp;gt; &amp;apos;1&amp;apos;, COMPRESSION =&amp;gt; &amp;apos;NONE&amp;apos;, MIN_VERSIONS =&amp;gt; &amp;apos;0&amp;apos;, TTL =&amp;gt; &amp;apos;FOREVER&amp;apos;, KEE
+P_DELETED_CELLS =&amp;gt; &amp;apos;FALSE&amp;apos;, BLOCKSIZE =&amp;gt; &amp;apos;65536&amp;apos;, IN_MEMORY =&amp;gt; &amp;apos;false&amp;apos;, BLOCKCACHE =&amp;gt; &amp;apos;true
+&amp;apos;}                                                                                         
+4 row(s) in 0.0520 seconds   
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;alter 修改表结构&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):012:0&amp;gt; alter &amp;apos;user&amp;apos;,{NAME=&amp;gt;&amp;apos;username&amp;apos;,METHOD=&amp;gt;&amp;apos;delete&amp;apos;}
+Updating all regions with the new schema...
+0/1 regions updated.
+0/1 regions updated.
+1/1 regions updated.
+Done.
+0 row(s) in 4.5440 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;drop 删除表(先disable 再 drop)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):006:0&amp;gt; drop &amp;apos;temp_table&amp;apos;
+
+ERROR: Table temp_table is enabled. Disable it first.
+
+Here is some help for this command:
+Drop the named table. Table must first be disabled:
+  hbase&amp;gt; drop &amp;apos;t1&amp;apos;
+  hbase&amp;gt; drop &amp;apos;ns1:t1&amp;apos;
+
+hbase(main):007:0&amp;gt; disable &amp;apos;temp_table&amp;apos;
+0 row(s) in 19.6310 seconds
+
+hbase(main):008:0&amp;gt; drop &amp;apos;temp_table&amp;apos;
+0 row(s) in 1.4960 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;is_(dis)enabled 判断表状态&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):010:0&amp;gt; is_enabled &amp;apos;user&amp;apos;
+true                                                                                       
+0 row(s) in 0.0260 seconds
+
+hbase(main):011:0&amp;gt; is_disabled &amp;apos;user&amp;apos;
+false                                                                                      
+0 row(s) in 0.0170 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;put hbase不用add，使用put添加数据&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):013:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:age&amp;apos;,&amp;apos;22&amp;apos;
+0 row(s) in 0.2990 seconds
+
+hbase(main):014:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:birthday&amp;apos;,&amp;apos;1995-01-01&amp;apos;
+0 row(s) in 0.1280 seconds
+
+hbase(main):015:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:school&amp;apos;,&amp;apos;scau&amp;apos;
+0 row(s) in 0.0280 seconds
+
+hbase(main):016:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:contry&amp;apos;,&amp;apos;china&amp;apos;
+0 row(s) in 0.0080 seconds
+
+hbase(main):017:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:name&amp;apos;,&amp;apos;guinguo&amp;apos;
+0 row(s) in 0.2350 seconds
+
+hbase(main):018:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;address:province&amp;apos;,&amp;apos;guangdong&amp;apos;
+0 row(s) in 0.0600 seconds
+
+hbase(main):019:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;2&amp;apos;,&amp;apos;info:birthday&amp;apos;,&amp;apos;1990-11-01&amp;apos;
+0 row(s) in 0.0170 seconds
+
+hbase(main):025:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;2&amp;apos;,&amp;apos;info:hight&amp;apos;,&amp;apos;173+&amp;apos;
+0 row(s) in 0.1230 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;get 查询数据，不使用select，根据行健获取&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):027:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;
+COLUMN                   CELL                                                                
+ address:province        timestamp=1469463433805, value=guangdong                            
+ info:age                timestamp=1469463216059, value=22                                   
+ info:birthday           timestamp=1469463335389, value=1995-01-01                           
+ info:contry             timestamp=1469463377085, value=china                                
+ info:name               timestamp=1469463403556, value=guinguo                              
+ info:school             timestamp=1469463361228, value=scau                                 
+6 row(s) in 0.0340 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;get 根据行健+列名获取&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):013:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info&amp;apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+ info:birthday          timestamp=1469690067239, value=1995-01-01                          
+ info:contry            timestamp=1469690081381, value=china                               
+ info:name              timestamp=1469690089676, value=guinguo                             
+ info:school            timestamp=1469690076309, value=scau
+
+hbase(main):014:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;address&amp;apos;
+COLUMN                  CELL                                                               
+ address:province       timestamp=1469690096718, value=guangdong                           
+1 row(s) in 0.0070 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;get 根据行健+列名+key获取value&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):015:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:age&amp;apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+1 row(s) in 0.0210 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hbase使用时间戳存数据，get的是最近的数据，可以通过时间戳获取&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):016:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:age&amp;apos;,&amp;apos;20&amp;apos;
+0 row(s) in 0.1520 seconds
+
+hbase(main):003:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,&amp;apos;info:age&amp;apos;
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690524575, value=20                                  
+1 row(s) in 0.0410 seconds
+
+hbase(main):004:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;1&amp;apos;,{COLUMN=&amp;gt;&amp;apos;info:age&amp;apos;,TIMESTAMP=&amp;gt;1469690058926}
+COLUMN                  CELL                                                               
+ info:age               timestamp=1469690058926, value=22                                  
+1 row(s) in 0.0060 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;scan 全表扫描&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):006:0&amp;gt; scan &amp;apos;user&amp;apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+ 2                      column=info:birthday, timestamp=1469690105292, value=1990-11-01    
+ 2                      column=info:hight, timestamp=1469690138930, value=173+             
+2 row(s) in 0.0630 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;delete 删除，格式是通过 table row column 然后通过key定位&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):007:0&amp;gt; put &amp;apos;user&amp;apos;,&amp;apos;3&amp;apos;,&amp;apos;address:contry&amp;apos;,&amp;apos;USA&amp;apos;
+0 row(s) in 0.2130 seconds
+
+hbase(main):009:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;3&amp;apos;
+COLUMN                  CELL                                                               
+ address:contry         timestamp=1469691253773, value=USA                                 
+1 row(s) in 0.0090 seconds
+
+hbase(main):011:0&amp;gt; delete &amp;apos;user&amp;apos;,&amp;apos;3&amp;apos;,&amp;apos;address:contry&amp;apos;
+0 row(s) in 0.0950 seconds
+
+hbase(main):012:0&amp;gt; get &amp;apos;user&amp;apos;,&amp;apos;3&amp;apos;
+COLUMN                  CELL                                                               
+0 row(s) in 0.0480 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;deleteall 删除整个行健&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):017:0&amp;gt; deleteall &amp;apos;user&amp;apos;,&amp;apos;2&amp;apos;
+0 row(s) in 0.1820 seconds
+
+hbase(main):018:0&amp;gt; scan &amp;apos;user&amp;apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+ 3                      column=address:contr, timestamp=1469691478971, value=USA           
+2 row(s) in 0.0630 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;count 统计多少个行健，注意是行健，不是行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):028:0&amp;gt; scan &amp;apos;user&amp;apos;
+ROW                     COLUMN+CELL                                                        
+ 1                      column=address:province, timestamp=1469690096718, value=guangdong  
+ 1                      column=info:age, timestamp=1469690524575, value=20                 
+ 1                      column=info:birthday, timestamp=1469690067239, value=1995-01-01    
+ 1                      column=info:contry, timestamp=1469690081381, value=china           
+ 1                      column=info:name, timestamp=1469690089676, value=guinguo           
+ 1                      column=info:school, timestamp=1469690076309, value=scau            
+1 row(s) in 0.0240 seconds
+
+hbase(main):029:0&amp;gt; count &amp;apos;user&amp;apos;
+1 row(s) in 0.0170 seconds
+
+=&amp;gt; 1
+hbase(main):030:0&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;truncate 清空表&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):030:0&amp;gt; truncate &amp;apos;user&amp;apos;
+Truncating &amp;apos;user&amp;apos; table (it may take a while):
+ - Disabling table...
+ - Truncating table...
+0 row(s) in 30.3090 seconds
+
+=&amp;gt; [&amp;quot;user&amp;quot;]
+hbase(main):032:0&amp;gt; scan &amp;apos;user&amp;apos;
+ROW                     COLUMN+CELL                                                        
+0 row(s) in 0.4280 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;日常维护命令&quot;&gt;&lt;a href=&quot;#日常维护命令&quot; class=&quot;headerlink&quot; title=&quot;日常维护命令&quot;&gt;&lt;/a&gt;日常维护命令&lt;/h1&gt;&lt;p&gt;flush table,将所有memstore刷新到hdfs，这个操作会造成hbase的storefile数量剧增，应尽量避免这个操作&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase(main):001:0&amp;gt; flush &amp;apos;user&amp;apos;
+0 row(s) in 1.6950 seconds
+
+hbase(main):002:0&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;重启一个regionserver&quot;&gt;&lt;a href=&quot;#重启一个regionserver&quot; class=&quot;headerlink&quot; title=&quot;重启一个regionserver&quot;&gt;&lt;/a&gt;重启一个regionserver&lt;/h1&gt;&lt;p&gt;bin/graceful_stop.sh –restart –reload –debug nodename&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这个操作是平滑的重启regionserver进程，对服务不会有影响，他会先将需要重启的regionserver上面的所有region迁移到其它的服务器，然后重启，最后又会将之前的region迁移回来，但我们修改一个配置时，可以用这种方式重启每一台机子，这个命令会关闭balancer，所以最后我们要在hbase shell里面执行一下balance_switch true，对于hbase regionserver重启，不要直接kill进程，这样会造成在zookeeper.session.timeout这个时间长的中断，也不要通过bin/hbase-daemon.sh stop regionserver去重启，如果运气不太好，-ROOT-或者.META.表在上面的话，所有的请求会全部失败。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;graceful_stop.sh --restart --debug server3
+
+hbase(main):001:0&amp;gt; balance_switch true
+true                                                                                       
+0 row(s) in 0.2650 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;关闭下线一台regionserver&quot;&gt;&lt;a href=&quot;#关闭下线一台regionserver&quot; class=&quot;headerlink&quot; title=&quot;关闭下线一台regionserver&quot;&gt;&lt;/a&gt;关闭下线一台regionserver&lt;/h1&gt;&lt;p&gt;bin/graceful_stop.sh –stop  nodename&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;和上面一样，系统会在关闭之前迁移所有region，然后stop进程，同样最后我们要手工balance_switch true，开启master的region均衡。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;检查region是否正常以及修复&quot;&gt;&lt;a href=&quot;#检查region是否正常以及修复&quot; class=&quot;headerlink&quot; title=&quot;检查region是否正常以及修复&quot;&gt;&lt;/a&gt;检查region是否正常以及修复&lt;/h1&gt;&lt;p&gt;bin/hbase hbck  (检查)&lt;br&gt;bin/hbase hbck -fix  （修复）&lt;/p&gt;
+&lt;p&gt;参考 &lt;a href=&quot;http://www.w2bc.com/article/123398&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.w2bc.com/article/123398&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      HBase shell的基本操作
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+    
+    
+      <category term="HBase" scheme="http://yoursite.com/tags/HBase/"/>
+    
+  </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P4_HBase</title>
