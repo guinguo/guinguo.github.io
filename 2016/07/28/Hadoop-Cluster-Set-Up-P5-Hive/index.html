@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Guinguo" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Guinguo's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="SQL-on-Hadoop 之 Hive1.2.1的安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop-Cluster-Set-Up-P5_Hive">
+<meta property="og:url" content="http://yoursite.com/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/index.html">
+<meta property="og:site_name" content="Guinguo's blog">
+<meta property="og:description" content="SQL-on-Hadoop 之 Hive1.2.1的安装">
+<meta property="og:updated_time" content="2016-08-05T04:57:32.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop-Cluster-Set-Up-P5_Hive">
+<meta name="twitter:description" content="SQL-on-Hadoop 之 Hive1.2.1的安装">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Hadoop-Cluster-Set-Up-P5_Hive | Guinguo's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?651f6694a8a016ae53eaffce893df97d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Guinguo's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Just try it</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Qh7UfB7sRNYosLvQWNGP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hadoop-Cluster-Set-Up-P5_Hive
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T20:39:36+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hive原则上可以安装在集群上的任何一台机器上面，如果 master节点的负荷比较大，可以选择一台机器性能较好的datanode来安装hive。这里我选择master来安装hive，因为另一台namenode的配置跟datanode差不多，而且我的master配置相比其他node好一点。另外，在我们的安装中采用 MySQL来存放hive的meta数据</p>
+<h2 id="Centos7-install-mysql-server"><a href="#Centos7-install-mysql-server" class="headerlink" title="Centos7 install mysql-server"></a>Centos7 install mysql-server</h2><p>Centos 使用mariadb 作为默认数据库，mariadb是MySQL一个分支，而且是开源的。不过我们仍可以安装mysql,使用RPM包进行安装</p>
+<h3 id="下载MySQL的rpm包"><a href="#下载MySQL的rpm包" class="headerlink" title="下载MySQL的rpm包"></a>下载MySQL的rpm包</h3><p>yum install wget <a href="http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm" target="_blank" rel="external">http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</a></p>
+<h3 id="安装mysql-community-release-el75-noarch-rpm-包"><a href="#安装mysql-community-release-el75-noarch-rpm-包" class="headerlink" title="安装mysql-community-release-el75.noarch.rpm 包"></a>安装mysql-community-release-el75.noarch.rpm 包</h3><p>rpm -ivh mysql-community-release-el7-5.noarch.rpm</p>
+<pre><code>－ivh：安装显示安装进度--install--verbose--hash
+</code></pre><p>安装后就会有两个yum源</p>
+<pre><code>[root@ ~]# ls -1 /etc/yum.repos.d/mysql-community*
+/etc/yum.repos.d/mysql-community.repo
+/etc/yum.repos.d/mysql-community-source.repo
+[root@server1 ~]#
+</code></pre><h3 id="安装MySQL-Server"><a href="#安装MySQL-Server" class="headerlink" title="安装MySQL Server"></a>安装MySQL Server</h3><p>yum install mysql-server</p>
+<h3 id="启动-停止-重启-状态命令"><a href="#启动-停止-重启-状态命令" class="headerlink" title="启动 停止 重启 状态命令"></a>启动 停止 重启 状态命令</h3><ul>
+<li>systemctl start mysqld</li>
+<li>systemctl stop mysqld</li>
+<li>systemctl restart mysqld</li>
+<li>systemctl status mysqld</li>
+</ul>
+<h3 id="更改root密码"><a href="#更改root密码" class="headerlink" title="更改root密码"></a>更改root密码</h3><p>mysql_secure_installation</p>
+<pre><code>Enter current password for root (enter for none):   //当前密码,第一次使用为null
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MySQL
+root user without the proper authorisation.
+
+Set root password? [Y/n] Y      //设置密码
+New password:                   /root
+Re-enter new password:          //root
+Password updated successfully!
+Reloading privilege tables..
+... Success!
+
+By default, a MySQL installation has an anonymous user, allowing anyone
+to log into MySQL without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] n     //是否删除匿名用户
+... skipping.
+
+Normally, root should only be allowed to connect from &apos;localhost&apos;.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] n       //不允许root远程登录
+... skipping.
+
+By default, MySQL comes with a database named &apos;test&apos; that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] n  //是否删除测试数据库
+... skipping.
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] Y        //重新加载权限表
+... Success!
+
+Cleaning up...
+
+All done!  If you&apos;ve completed all of the above steps, your MySQL
+installation should now be secure.
+
+Thanks for using MySQL!
+</code></pre><h3 id="登录验证"><a href="#登录验证" class="headerlink" title="登录验证"></a>登录验证</h3><p>mysql -uroot -proot</p>
+<h3 id="创建数据库并授权"><a href="#创建数据库并授权" class="headerlink" title="创建数据库并授权"></a>创建数据库并授权</h3><pre><code>mysql -uroot -proot
+mysql&gt; create database hive;
+[授权hive在任何位置(%)远程可以登陆]
+mysql&gt; grant all on hive.* to &apos;hive&apos;@&apos;%&apos; identified by &apos;hive&apos;; 
+mysql&gt; grant all on hive.* to &apos;hive&apos;@&apos;server1&apos; identified by &apos;hive&apos;;
+mysql&gt; flush privileges;    [刷新权限]
+</code></pre><h2 id="下载hive1-2-1并解压"><a href="#下载hive1-2-1并解压" class="headerlink" title="下载hive1.2.1并解压"></a>下载hive1.2.1并解压</h2><blockquote>
+<pre><code>wget http://archive.apache.org/dist/hive/stable/apache-hive-1.2.1-bin.tar.gz
+
+tar -zxvf apache-hive-1.2.1-bin.tar.gz -C /usr/local/
+</code></pre></blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
+<li><strong>环境变量</strong></li>
+</ul>
+<blockquote>
+<pre><code>[root@server1 hive-1.2.1]# vi /etc/profile
+#HIVE
+export HIVE_HOME=/usr/local/hive-1.2.1
+export PATH=$PATH:$HIVE_HOME/bin
+</code></pre><p>   [root@server1 hive-1.2.1]# source /etc/profile</p>
+</blockquote>
+<p>修改bin/hive-config.sh</p>
+<blockquote>
+<pre><code>vi /usr/local/hive-1.2.1/bin/hive-config.sh
+#Install add
+export JAVA_HOME=/usr/local/jdk1.7.0_79
+export HIVE_HOME=/usr/local/hive-1.2.1
+export HADOOP_HOME=/usr/local/hadoop-2.7.2
+</code></pre></blockquote>
+<p>复制配置文件</p>
+<blockquote>
+<pre><code>[root@server1 hive-1.2.1]# cd conf/
+[root@server1 conf]# ls
+beeline-log4j.properties.template  hive-exec-log4j.properties.template
+hive-default.xml.template          hive-log4j.properties.template
+hive-env.sh.template               ivysettings.xml
+[root@server1 conf]# cp hive-exec-log4j.properties.template hive-exec-log4j.properties      
+[root@server1 conf]# cp hive-log4j.properties.template hive-log4j.properties          
+[root@server1 conf]# cp hive-env.sh.template hive-env.sh          
+[root@server1 conf]# cp hive-default.xml.template hive-site.xml
+</code></pre></blockquote>
+<ul>
+<li><strong>修改hbase-site.xml</strong></li>
+</ul>
+<p>修改hive-site.xml 以MySQL做metastore</p>
+<pre><code>&lt;property&gt;
+&lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;
+&lt;value&gt;jdbc:mysql://server1:3306/hive?createDatabaseIfNotExist=true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+//mysql驱动
+&lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;
+&lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;
+&lt;/property&gt;
+//用户名
+&lt;property&gt;
+&lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;
+&lt;value&gt;hive&lt;/value&gt;
+&lt;/property&gt;
+//用户密码
+&lt;property&gt;
+&lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;
+&lt;value&gt;hive&lt;/value&gt;
+&lt;/property&gt;
+//默认数据库位置
+&lt;property&gt;
+    &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;
+    &lt;value&gt;/user/hive/warehouse&lt;/value&gt;
+    &lt;description&gt;location of default database for the warehouse&lt;/description&gt;
+&lt;/property&gt;
+
+//hive远程metastore的thrift地址        
+&lt;property&gt;
+  &lt;name&gt;hive.metastore.uris&lt;/name&gt;
+  &lt;value&gt;thrift://server1:9083&lt;/value&gt;
+&lt;/property&gt;
+
+
+//hiveserver2的配置
+&lt;property&gt;  
+    &lt;name&gt;hive.support.concurrency&lt;/name&gt;   
+    &lt;description&gt;Enable Hive&apos;s Table Lock Manager Service&lt;/description&gt;   
+    &lt;value&gt;true&lt;/value&gt;  
+&lt;/property&gt; 
+&lt;property&gt;  
+    &lt;name&gt;hive.zookeeper.quorum&lt;/name&gt;  
+    &lt;description&gt;Zookeeper quorum used by Hive&apos;s Table Lock Manager&lt;/description&gt;
+    &lt;value&gt;server1,server2,server3&lt;/value&gt;
+&lt;/property&gt; 
+&lt;property&gt;
+  &lt;name&gt;hive.zookeeper.client.port&lt;/name&gt;
+  &lt;value&gt;2181&lt;/value&gt;
+  &lt;description&gt;The port of zookeeper servers to talk to. This is only needed for read/write locks.&lt;/description&gt;
+&lt;/property&gt;
+&lt;property&gt;  
+    &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;
+    &lt;value&gt;server1&lt;/value&gt;
+    &lt;description&gt;Bind host on which to run the HiveServer2 Thrift interface. Can    be overridden by setting $HIVE_SERVER2_THRIFT_BIND_HOST&lt;/description&gt;  
+&lt;/property&gt; 
+
+//关闭推测式执行,一些优化项
+&lt;property&gt;
+ &lt;name&gt;hive.mapred.reduce.tasks.speculative.execution&lt;/name&gt;
+ &lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+ &lt;name&gt;mapreduce.reduce.speculative&lt;/name&gt;
+ &lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+小表mapjoin
+&lt;property&gt;
+ &lt;name&gt;hive.ignore.mapjoin.hint&lt;/name&gt;
+ &lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+ &lt;name&gt;hive.mapjoin.smalltable.filesize&lt;/name&gt;
+ &lt;value&gt;500000000&lt;/value&gt;
+&lt;/property&gt;
+并行执行
+&lt;property&gt;
+ &lt;name&gt;hive.exec.parallel&lt;/name&gt;
+ &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+ &lt;name&gt;hive.exec.parallel.thread.number&lt;/name&gt;
+ &lt;value&gt;16&lt;/value&gt;
+&lt;/property&gt;
+客户端显示
+&lt;property&gt;
+ &lt;name&gt;hive.cli.print.current.db&lt;/name&gt;
+ &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+ &lt;name&gt;hive.cli.print.header&lt;/name&gt;
+ &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+关闭自动统计
+&lt;property&gt;
+ &lt;name&gt;hive.stats.autogather&lt;/name&gt;
+ &lt;value&gt;false&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><p>复制mysql-connector</p>
+<pre><code>[root@server1 ~]# wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.39.tar.gz
+--2016-08-04 09:20:40--  https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.39.tar.gz
+Resolving dev.mysql.com (dev.mysql.com)... 137.254.60.11
+Connecting to dev.mysql.com (dev.mysql.com)|137.254.60.11|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.39.tar.gz [following]
+--2016-08-04 09:20:45--  http://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.39.tar.gz
+Resolving cdn.mysql.com (cdn.mysql.com)... 23.213.79.98
+Connecting to cdn.mysql.com (cdn.mysql.com)|23.213.79.98|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3899019 (3.7M) [application/x-tar-gz]
+Saving to: &apos;mysql-connector-java-5.1.39.tar.gz&apos;
+
+100%[===================================================&gt;] 3,899,019   1.93MB/s   in 1.9s   
+
+2016-08-04 09:20:47 (1.93 MB/s) - &apos;mysql-connector-java-5.1.39.tar.gz&apos; saved [3899019/3899019]
+
+[root@server1 ~]# tar -zxvf mysql-connector-java-5.1.39.tar.gz 
+[root@server1 ~]# cd mysql-connector-java-5.1.39
+[root@server1 mysql-connector-java-5.1.39]# cp mysql-connector-java-5.1.39-bin.jar /usr/local/hive-1.2.1/lib/
+</code></pre><p>文件夹权限问题，由于permition，可能会报错。所以做如下修改</p>
+<pre><code>[root@server1 hive-1.2.1]# hdfs dfs -mkdir /user/hive/
+[root@server1 hive-1.2.1]# hdfs dfs -mkdir /user/hive/warehouse
+[root@server1 hive-1.2.1]# hdfs dfs -chmod g+w /user/hive/warehouse   
+[root@server1 hive-1.2.1]# hdfs dfs -chmod 777 /tmp
+</code></pre><p>如果启动报jline包错误，执行下面的语句</p>
+<pre><code>[root@server1 hive-1.2.1]# export HADOOP_USER_CLASSPATH_FIRST=true
+</code></pre><ul>
+<li><strong>启动</strong></li>
+</ul>
+<p>启动metastore</p>
+<pre><code># hive-1.2.1/bin/hive --service metastore &amp;       [jobs查看]
+</code></pre><p>启动hive</p>
+<pre><code># hive-1.2.1/bin/hive
+</code></pre><p>启动hiveserver2 [jdbc服务]</p>
+<pre><code>hive-1.2.1/bin/hive --service hiveserver2 --hiveconf hive.server2.thrift.port=14000 start &amp;
+
+[root@server1 bin]#  lsof -i :14000
+COMMAND   PID USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
+java    23747 root  316u  IPv4 3330453723      0t0  TCP server1:scotty-ft (LISTEN)
+</code></pre><ul>
+<li><strong>测试</strong></li>
+</ul>
+<p>测试 hiverserver2</p>
+<pre><code>[root@server1 bin]# beeline 
+Beeline version 1.2.1 by Apache Hive
+beeline&gt; !connect jdbc:hive2://server1:14000 root admin org.apache.hive.jdbc.HiveDriver
+Connecting to jdbc:hive2://server1:14000
+Connected to: Apache Hive (version 1.2.1)
+Driver: Hive JDBC (version 1.2.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://server1:14000&gt; create table test(id int);
+No rows affected (0.184 seconds)
+0: jdbc:hive2://server1:14000&gt; insert into table test values (1),(2),(3);
+INFO  : Number of reduce tasks is set to 0 since there&apos;s no reduce operator
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1469961992051_0003
+INFO  : The url to track the job: http://server1:23188/proxy/application_1469961992051_0003/
+INFO  : Starting Job = job_1469961992051_0003, Tracking URL = http://server1:23188/proxy/application_1469961992051_0003/
+INFO  : Kill Command = /usr/local/hadoop-2.7.2/bin/hadoop job  -kill job_1469961992051_0003
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+INFO  : 2016-08-04 21:35:49,284 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2016-08-04 21:35:56,766 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.32 sec
+INFO  : MapReduce Total cumulative CPU time: 2 seconds 320 msec
+INFO  : Ended Job = job_1469961992051_0003
+INFO  : Stage-3 is selected by condition resolver.
+INFO  : Stage-2 is filtered out by condition resolver.
+INFO  : Stage-4 is filtered out by condition resolver.
+INFO  : Moving data to: hdfs://mycluster/user/hive/warehouse/test/.hive-staging_hive_2016-08-04_21-35-12_875_2422159926076678033-1/-ext-10000 from hdfs://mycluster/user/hive/warehouse/test/.hive-staging_hive_2016-08-04_21-35-12_875_2422159926076678033-1/-ext-10002
+INFO  : Loading data to table default.test from hdfs://mycluster/user/hive/warehouse/test/.hive-staging_hive_2016-08-04_21-35-12_875_2422159926076678033-1/-ext-10000
+No rows affected (48.918 seconds)
+0: jdbc:hive2://server1:14000&gt; 
+0: jdbc:hive2://server1:14000&gt; select * from test;
++----------+--+
+| test.id  |
++----------+--+
+| 1        |
+| 2        |
+| 3        |
++----------+--+
+3 rows selected (0.178 seconds)
+</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.91ri.org/13896.html" target="_blank" rel="external">https://www.91ri.org/13896.html</a><br><a href="http://www.itweet.cn/2015/07/10/hive0.13.1-install/" target="_blank" rel="external">http://www.itweet.cn/2015/07/10/hive0.13.1-install/</a><br><a href="http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/" target="_blank" rel="external">http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/25/Hbase-Shell_Base-Use/" rel="next" title="Hbase-Shell_Base-Use">
+                <i class="fa fa-chevron-left"></i> Hbase-Shell_Base-Use
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/"
+           data-title="Hadoop-Cluster-Set-Up-P5_Hive" data-url="http://yoursite.com/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="guinguo" />
+          <p class="site-author-name" itemprop="name">guinguo</p>
+          <p class="site-description motion-element" itemprop="description">guinguo的博客,记录生活中的点点滴滴</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiblogs.cc" target="_blank">黄奇blogs</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Centos7-install-mysql-server"><span class="nav-number">1.</span> <span class="nav-text">Centos7 install mysql-server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载MySQL的rpm包"><span class="nav-number">1.1.</span> <span class="nav-text">下载MySQL的rpm包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql-community-release-el75-noarch-rpm-包"><span class="nav-number">1.2.</span> <span class="nav-text">安装mysql-community-release-el75.noarch.rpm 包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MySQL-Server"><span class="nav-number">1.3.</span> <span class="nav-text">安装MySQL Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-停止-重启-状态命令"><span class="nav-number">1.4.</span> <span class="nav-text">启动 停止 重启 状态命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改root密码"><span class="nav-number">1.5.</span> <span class="nav-text">更改root密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录验证"><span class="nav-number">1.6.</span> <span class="nav-text">登录验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库并授权"><span class="nav-number">1.7.</span> <span class="nav-text">创建数据库并授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载hive1-2-1并解压"><span class="nav-number">2.</span> <span class="nav-text">下载hive1.2.1并解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">guinguo</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"guinguo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
