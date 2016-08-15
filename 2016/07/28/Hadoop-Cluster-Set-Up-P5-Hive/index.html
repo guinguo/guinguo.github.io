@@ -65,7 +65,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
 <meta property="og:description" content="SQL-on-Hadoop 之 Hive1.2.1的安装">
-<meta property="og:updated_time" content="2016-08-05T04:57:32.182Z">
+<meta property="og:updated_time" content="2016-08-15T06:46:26.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop-Cluster-Set-Up-P5_Hive">
 <meta name="twitter:description" content="SQL-on-Hadoop 之 Hive1.2.1的安装">
@@ -566,23 +566,25 @@ Saving to: &apos;mysql-connector-java-5.1.39.tar.gz&apos;
 [root@server1 hive-1.2.1]# hdfs dfs -chmod 777 /tmp
 </code></pre><p>如果启动报jline包错误，执行下面的语句</p>
 <pre><code>[root@server1 hive-1.2.1]# export HADOOP_USER_CLASSPATH_FIRST=true
-</code></pre><ul>
-<li><strong>启动</strong></li>
+</code></pre><h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><ul>
+<li>启动metastore</li>
 </ul>
-<p>启动metastore</p>
 <pre><code># hive-1.2.1/bin/hive --service metastore &amp;       [jobs查看]
-</code></pre><p>启动hive</p>
+</code></pre><ul>
+<li>启动hive</li>
+</ul>
 <pre><code># hive-1.2.1/bin/hive
-</code></pre><p>启动hiveserver2 [jdbc服务]</p>
+</code></pre><ul>
+<li>启动hiveserver2 [jdbc服务]</li>
+</ul>
 <pre><code>hive-1.2.1/bin/hive --service hiveserver2 --hiveconf hive.server2.thrift.port=14000 start &amp;
 
 [root@server1 bin]#  lsof -i :14000
 COMMAND   PID USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
 java    23747 root  316u  IPv4 3330453723      0t0  TCP server1:scotty-ft (LISTEN)
-</code></pre><ul>
-<li><strong>测试</strong></li>
+</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ul>
+<li>测试 hiverserver2</li>
 </ul>
-<p>测试 hiverserver2</p>
 <pre><code>[root@server1 bin]# beeline 
 Beeline version 1.2.1 by Apache Hive
 beeline&gt; !connect jdbc:hive2://server1:14000 root admin org.apache.hive.jdbc.HiveDriver
@@ -620,7 +622,7 @@ No rows affected (48.918 seconds)
 | 3        |
 +----------+--+
 3 rows selected (0.178 seconds)
-</code></pre><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.91ri.org/13896.html" target="_blank" rel="external">https://www.91ri.org/13896.html</a><br><a href="http://www.itweet.cn/2015/07/10/hive0.13.1-install/" target="_blank" rel="external">http://www.itweet.cn/2015/07/10/hive0.13.1-install/</a><br><a href="http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/" target="_blank" rel="external">http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/</a></p>
+</code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.91ri.org/13896.html" target="_blank" rel="external">https://www.91ri.org/13896.html</a><br><a href="http://www.itweet.cn/2015/07/10/hive0.13.1-install/" target="_blank" rel="external">http://www.itweet.cn/2015/07/10/hive0.13.1-install/</a><br><a href="http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/" target="_blank" rel="external">http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/</a></p>
 
       
     </div>
@@ -809,7 +811,7 @@ No rows affected (48.918 seconds)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Centos7-install-mysql-server"><span class="nav-number">1.</span> <span class="nav-text">Centos7 install mysql-server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载MySQL的rpm包"><span class="nav-number">1.1.</span> <span class="nav-text">下载MySQL的rpm包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql-community-release-el75-noarch-rpm-包"><span class="nav-number">1.2.</span> <span class="nav-text">安装mysql-community-release-el75.noarch.rpm 包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MySQL-Server"><span class="nav-number">1.3.</span> <span class="nav-text">安装MySQL Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-停止-重启-状态命令"><span class="nav-number">1.4.</span> <span class="nav-text">启动 停止 重启 状态命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改root密码"><span class="nav-number">1.5.</span> <span class="nav-text">更改root密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录验证"><span class="nav-number">1.6.</span> <span class="nav-text">登录验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库并授权"><span class="nav-number">1.7.</span> <span class="nav-text">创建数据库并授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载hive1-2-1并解压"><span class="nav-number">2.</span> <span class="nav-text">下载hive1.2.1并解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Centos7-install-mysql-server"><span class="nav-number">1.</span> <span class="nav-text">Centos7 install mysql-server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载MySQL的rpm包"><span class="nav-number">1.1.</span> <span class="nav-text">下载MySQL的rpm包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql-community-release-el75-noarch-rpm-包"><span class="nav-number">1.2.</span> <span class="nav-text">安装mysql-community-release-el75.noarch.rpm 包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装MySQL-Server"><span class="nav-number">1.3.</span> <span class="nav-text">安装MySQL Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-停止-重启-状态命令"><span class="nav-number">1.4.</span> <span class="nav-text">启动 停止 重启 状态命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改root密码"><span class="nav-number">1.5.</span> <span class="nav-text">更改root密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录验证"><span class="nav-number">1.6.</span> <span class="nav-text">登录验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建数据库并授权"><span class="nav-number">1.7.</span> <span class="nav-text">创建数据库并授权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载hive1-2-1并解压"><span class="nav-number">2.</span> <span class="nav-text">下载hive1.2.1并解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">4.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

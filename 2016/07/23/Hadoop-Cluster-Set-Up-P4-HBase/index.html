@@ -65,7 +65,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
 <meta property="og:description" content="SQL-on-Hadoop 之 Hbase1.2.2的安装">
-<meta property="og:updated_time" content="2016-07-24T10:22:27.758Z">
+<meta property="og:updated_time" content="2016-08-15T07:17:03.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop-Cluster-Set-Up-P4_HBase">
 <meta name="twitter:description" content="SQL-on-Hadoop 之 Hbase1.2.2的安装">
@@ -395,7 +395,6 @@ export HBASE_CLASSPATH=/usr/local/hadoop-1.2.2/conf
 </ul>
 <blockquote>
 <pre><code>[root@server1 conf]# vi regionservers 
-server1
 server2
 server3
 server4
@@ -460,7 +459,20 @@ TABLE
 3951 Jps
 676 DataNode
 793 NodeManager
-</code></pre>
+</code></pre><h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><p>启动后，hregionserver 日志打印出如下，然后过一两个钟，regionserver全部挂掉，这个问题困扰了我挺久的。</p>
+<figure class="highlight java"><figcaption><span>log</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">07</span>-<span class="number">27</span> <span class="number">21</span>:<span class="number">29</span>:<span class="number">55</span>,<span class="number">122</span> WARN [ResponseProcessor <span class="keyword">for</span> block BP-<span class="number">1601089490</span>-xx.xx.xx.xx-<span class="number">1469276064635</span>:</span><br><span class="line">blk_1073742337_1586] hdfs.DFSClient: DFSOutputStream ResponseProcessor exception <span class="keyword">for</span> block BP-<span class="number">1601089490</span></span><br><span class="line">-xx.xx.xx.xx-<span class="number">1469276064635</span>:blk_1073742337_1586 java.io.EOFException: Premature EOF: no length prefix available </span><br><span class="line">at org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed(PBHelper.java:<span class="number">2000</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.protocol.datatransfer.PipelineAck.readFields(PipelineAck.java:<span class="number">176</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run(DFSOutputStream.java:<span class="number">798</span>) </span><br><span class="line"><span class="number">2016</span>-<span class="number">07</span>-<span class="number">27</span> <span class="number">21</span>:<span class="number">29</span>:<span class="number">55</span>,<span class="number">223</span> WARN [DataStreamer <span class="keyword">for</span> file /hbase/WALs/server2,<span class="number">16020</span>,<span class="number">1469669327730</span>/server2%<span class="number">2</span>C16020%<span class="number">2</span>C1469669327730.<span class="keyword">default</span>.1469669334510 </span><br><span class="line">block BP-<span class="number">1601089490</span>-xx.xx.xx.xx-<span class="number">1469276064635</span>:blk_1073742337_1586] hdfs.DFSClient: Error Recovery <span class="keyword">for</span> block BP-<span class="number">1601089490</span>-xx.xx.xx.xx-<span class="number">1469276064635</span>:blk_1073742337_1586 </span><br><span class="line">in pipeline xx.xx.xx.200:<span class="number">50010</span>, xx.xx.xx.20:<span class="number">50010</span>: bad datanode xx.xx.xx.200:<span class="number">50010</span> </span><br><span class="line"><span class="number">2016</span>-<span class="number">07</span>-<span class="number">27</span> <span class="number">21</span>:<span class="number">29</span>:<span class="number">55</span>,<span class="number">247</span> WARN [DataStreamer <span class="keyword">for</span> file /hbase/WALs/server2,<span class="number">16020</span>,<span class="number">1469669327730</span>/server2%<span class="number">2</span>C16020%<span class="number">2</span>C1469669327730.<span class="keyword">default</span>.1469669334510 </span><br><span class="line">block BP-<span class="number">1601089490</span>-xx.xx.xx.xx-<span class="number">1469276064635</span>:blk_1073742337_1586] </span><br><span class="line">hdfs.DFSClient: DataStreamer Exception java.io.IOException: Failed to replace a bad datanode on the existing pipeline </span><br><span class="line">due to no more good datanodes being available to <span class="keyword">try</span>. (Nodes: current=[xx.xx.xx.20:<span class="number">50010</span>], original=[xx.xx.xx.20:<span class="number">50010</span>]). </span><br><span class="line">The current failed datanode replacement policy is DEFAULT, </span><br><span class="line">and a client may configure <span class="keyword">this</span> via <span class="string">'dfs.client.block.write.replace-datanode-on-failure.policy'</span> in its configuration. </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.findNewDatanode(DFSOutputStream.java:<span class="number">969</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.addDatanode2ExistingPipeline(DFSOutputStream.java:<span class="number">1035</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.setupPipelineForAppendOrRecovery(DFSOutputStream.java:<span class="number">1184</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.processDatanodeError(DFSOutputStream.java:<span class="number">933</span>) </span><br><span class="line">at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:<span class="number">487</span>)</span><br></pre></td></tr></table></figure>
+<p>上网查了好久资料还是不能解决，最后发现可能是timeout的配置<br>在hbase-site.xml</p>
+<pre><code>&lt;property&gt;  
+      &lt;name&gt;dfs.client.socket-timeout&lt;/name&gt;  
+      &lt;value&gt;600000&lt;/value&gt;  
+&lt;/property&gt;
+</code></pre><p>但是在hdfs-site.xml 我没有设置，然后hdfs可能使用了默认值，所以在同步操作是可能就出现异常了<br><strong>解决</strong>在hdfs-site.xml添加同样配置</p>
+<pre><code>&lt;property&gt;  
+  &lt;name&gt;dfs.client.socket-timeout&lt;/name&gt;  
+  &lt;value&gt;600000&lt;/value&gt;  
+&lt;/property&gt;
+</code></pre><p>这里介绍了超时原因–&gt; <a href="http://blog.csdn.net/zhaokunwu/article/details/7336892" target="_blank" rel="external">http://blog.csdn.net/zhaokunwu/article/details/7336892</a></p>
+
       
     </div>
     
@@ -658,7 +670,7 @@ TABLE
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载并解压"><span class="nav-number">1.</span> <span class="nav-text">下载并解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行测试"><span class="nav-number">3.</span> <span class="nav-text">运行测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载并解压"><span class="nav-number">1.</span> <span class="nav-text">下载并解压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行测试"><span class="nav-number">3.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报错"><span class="nav-number">4.</span> <span class="nav-text">报错</span></a></li></ol></div>
             
           </div>
         </section>
