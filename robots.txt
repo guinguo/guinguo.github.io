@@ -1,4 +1,5 @@
 User-agent: *
+
 Allow: /
 Allow: /archives/
 Allow: /categories/
@@ -10,5 +11,6 @@ Disallow: /css/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
+
 Sitemap: http://www.guinguo.top/sitemap.xml
 Sitemap: http://www.guinguo.top/baidusitemap.xml
