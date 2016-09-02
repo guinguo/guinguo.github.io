@@ -4,9 +4,9 @@
   <subtitle>Just try it</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2016-08-24T13:12:37.588Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="http://www.guinguo.top/"/>
+  <updated>2016-08-29T13:15:20.254Z</updated>
+  <id>http://www.guinguo.top/</id>
   
   <author>
     <name>guinguo</name>
@@ -16,9 +16,31 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Flume Use</title>
+    <link href="http://www.guinguo.top/2016/08/29/Flume-Use/"/>
+    <id>http://www.guinguo.top/2016/08/29/Flume-Use/</id>
+    <published>2016-08-29T09:45:13.000Z</published>
+    <updated>2016-08-29T13:15:20.254Z</updated>
+    
+    <content type="html">&lt;p&gt;　　Apache Flume是一个分布式，可靠性，可用性的系统，可以有效地从不同的数据源收集，整合，和移动大量日志数据到其他的存储（HDFS，HBase etc…）&lt;br&gt;&lt;img src=&quot;http://flume.apache.org/_images/UserGuide_image00.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;Flume event是一个有效字节数据单元和一组可选的字符串属性组成.&lt;br&gt;Flume agent是一个JVM进程，控制组件事件流从外部流向目的地.&lt;br&gt;Flume的数据源可是web server，&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://flume.apache.org/FlumeUserGuide.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.aboutyun.com/thread-8984-1-1.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.aboutyun.com/thread-8984-1-1.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.csdn.net/lnho2015/article/details/52035145&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/lnho2015/article/details/52035145&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.cnblogs.com/lishouguang/p/4560862.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/lishouguang/p/4560862.html&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      Apache Flume 1.6.0 的安装与使用
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Storm-BaseUsed_demon</title>
-    <link href="http://yoursite.com/2016/08/24/Storm-BaseUsed-demon/"/>
-    <id>http://yoursite.com/2016/08/24/Storm-BaseUsed-demon/</id>
+    <link href="http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/"/>
+    <id>http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/</id>
     <published>2016-08-24T11:37:27.000Z</published>
     <updated>2016-08-24T13:12:37.588Z</updated>
     
@@ -79,17 +101,17 @@ Bolt[0] String recieved: marry:I&amp;apos;m angry,hi guin_guo~
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
+      <category term="Storm" scheme="http://www.guinguo.top/tags/Storm/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P7-Storm</title>
-    <link href="http://yoursite.com/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/"/>
-    <id>http://yoursite.com/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/</id>
+    <link href="http://www.guinguo.top/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/"/>
+    <id>http://www.guinguo.top/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/</id>
     <published>2016-08-23T16:00:35.000Z</published>
     <updated>2016-08-24T11:38:55.524Z</updated>
     
@@ -200,17 +222,17 @@ scp -rq apache-storm-1.0.2 server3:~/
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Storm" scheme="http://yoursite.com/tags/Storm/"/>
+      <category term="Storm" scheme="http://www.guinguo.top/tags/Storm/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P6-Sqoop</title>
-    <link href="http://yoursite.com/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/"/>
-    <id>http://yoursite.com/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/</id>
+    <link href="http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/"/>
+    <id>http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/</id>
     <published>2016-08-16T15:17:16.000Z</published>
     <updated>2016-08-18T16:37:11.574Z</updated>
     
@@ -293,17 +315,17 @@ mv sqoop-1.99.7-bin-hadoop200 sqoop-1.99.7
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Sqoop2" scheme="http://yoursite.com/tags/Sqoop2/"/>
+      <category term="Sqoop2" scheme="http://www.guinguo.top/tags/Sqoop2/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P5_Hive</title>
-    <link href="http://yoursite.com/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/"/>
-    <id>http://yoursite.com/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/</id>
+    <link href="http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/"/>
+    <id>http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/</id>
     <published>2016-07-28T12:39:36.000Z</published>
     <updated>2016-08-15T06:46:26.278Z</updated>
     
@@ -607,15 +629,15 @@ No rows affected (48.918 seconds)
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
   </entry>
   
   <entry>
     <title>Hbase-Shell_Base-Use</title>
-    <link href="http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/"/>
-    <id>http://yoursite.com/2016/07/25/Hbase-Shell_Base-Use/</id>
+    <link href="http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/"/>
+    <id>http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/</id>
     <published>2016-07-25T09:20:40.000Z</published>
     <updated>2016-07-28T12:25:23.301Z</updated>
     
@@ -857,17 +879,17 @@ true
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="HBase" scheme="http://yoursite.com/tags/HBase/"/>
+      <category term="HBase" scheme="http://www.guinguo.top/tags/HBase/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P4_HBase</title>
-    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/"/>
-    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</id>
+    <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/"/>
+    <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</id>
     <published>2016-07-23T15:50:32.000Z</published>
     <updated>2016-08-16T00:35:31.996Z</updated>
     
@@ -1033,17 +1055,17 @@ TABLE
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Hbase" scheme="http://yoursite.com/tags/Hbase/"/>
+      <category term="Hbase" scheme="http://www.guinguo.top/tags/Hbase/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P3_Hadoop</title>
-    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/"/>
-    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</id>
+    <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/"/>
+    <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</id>
     <published>2016-07-23T07:27:44.000Z</published>
     <updated>2016-07-23T15:46:45.983Z</updated>
     
@@ -1461,17 +1483,17 @@ hadoop jar hadoop-mapreduce-examples-2.7.2.jar wordcount /test /output
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://www.guinguo.top/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-Cluster-Set-Up-P1_Prepare</title>
-    <link href="http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/"/>
-    <id>http://yoursite.com/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</id>
+    <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/"/>
+    <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</id>
     <published>2016-07-23T00:49:23.000Z</published>
     <updated>2016-07-23T14:25:17.285Z</updated>
     
@@ -1548,17 +1570,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="BigData" scheme="http://yoursite.com/categories/BigData/"/>
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://www.guinguo.top/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
     <title>VMware 增加磁盘容量-Centos6</title>
-    <link href="http://yoursite.com/2016/06/06/VMware-%E5%A2%9E%E5%8A%A0%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F-Centos6/"/>
-    <id>http://yoursite.com/2016/06/06/VMware-增加磁盘容量-Centos6/</id>
+    <link href="http://www.guinguo.top/2016/06/06/VMware-%E5%A2%9E%E5%8A%A0%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F-Centos6/"/>
+    <id>http://www.guinguo.top/2016/06/06/VMware-增加磁盘容量-Centos6/</id>
     <published>2016-06-05T16:09:33.000Z</published>
     <updated>2016-06-05T16:16:44.120Z</updated>
     
@@ -1573,17 +1595,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.guinguo.top/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://www.guinguo.top/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>周总结--Hadoop HA</title>
-    <link href="http://yoursite.com/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/"/>
-    <id>http://yoursite.com/2016/06/05/周总结-Hadoop-HA/</id>
+    <link href="http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/"/>
+    <id>http://www.guinguo.top/2016/06/05/周总结-Hadoop-HA/</id>
     <published>2016-06-05T15:26:23.000Z</published>
     <updated>2016-06-07T10:46:05.890Z</updated>
     
@@ -1616,17 +1638,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+      <category term="周总结" scheme="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://www.guinguo.top/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
     <title>汇编实现快排，选择，插入等5种常用排序</title>
-    <link href="http://yoursite.com/2016/05/29/%E6%B1%87%E7%BC%96%E5%AE%9E%E7%8E%B0%E5%BF%AB%E6%8E%92%EF%BC%8C%E9%80%89%E6%8B%A9%EF%BC%8C%E6%8F%92%E5%85%A5%E7%AD%895%E7%A7%8D%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F/"/>
-    <id>http://yoursite.com/2016/05/29/汇编实现快排，选择，插入等5种常用排序/</id>
+    <link href="http://www.guinguo.top/2016/05/29/%E6%B1%87%E7%BC%96%E5%AE%9E%E7%8E%B0%E5%BF%AB%E6%8E%92%EF%BC%8C%E9%80%89%E6%8B%A9%EF%BC%8C%E6%8F%92%E5%85%A5%E7%AD%895%E7%A7%8D%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F/"/>
+    <id>http://www.guinguo.top/2016/05/29/汇编实现快排，选择，插入等5种常用排序/</id>
     <published>2016-05-29T15:05:43.000Z</published>
     <updated>2016-05-30T05:03:21.561Z</updated>
     
@@ -1669,17 +1691,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+      <category term="周总结" scheme="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="ASM" scheme="http://yoursite.com/tags/ASM/"/>
+      <category term="ASM" scheme="http://www.guinguo.top/tags/ASM/"/>
     
   </entry>
   
   <entry>
     <title>Zookeeper集群安装于部署</title>
-    <link href="http://yoursite.com/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2016/05/26/Zookeeper集群安装于部署/</id>
+    <link href="http://www.guinguo.top/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/"/>
+    <id>http://www.guinguo.top/2016/05/26/Zookeeper集群安装于部署/</id>
     <published>2016-05-26T06:48:17.000Z</published>
     <updated>2016-06-07T10:47:03.679Z</updated>
     
@@ -1730,19 +1752,19 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+      <category term="Hadoop" scheme="http://www.guinguo.top/categories/Hadoop/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://www.guinguo.top/tags/Hadoop/"/>
     
-      <category term="Zookeeper" scheme="http://yoursite.com/tags/Zookeeper/"/>
+      <category term="Zookeeper" scheme="http://www.guinguo.top/tags/Zookeeper/"/>
     
   </entry>
   
   <entry>
     <title>VMware桥接模式下无法ping通网关</title>
-    <link href="http://yoursite.com/2016/05/18/VMware%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E6%97%A0%E6%B3%95ping%E9%80%9A%E7%BD%91%E5%85%B3/"/>
-    <id>http://yoursite.com/2016/05/18/VMware桥接模式下无法ping通网关/</id>
+    <link href="http://www.guinguo.top/2016/05/18/VMware%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E6%97%A0%E6%B3%95ping%E9%80%9A%E7%BD%91%E5%85%B3/"/>
+    <id>http://www.guinguo.top/2016/05/18/VMware桥接模式下无法ping通网关/</id>
     <published>2016-05-18T01:55:14.000Z</published>
     <updated>2016-05-18T03:08:46.198Z</updated>
     
@@ -1790,17 +1812,17 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.guinguo.top/categories/Linux/"/>
     
     
-      <category term="VMware网卡配置" scheme="http://yoursite.com/tags/VMware%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
+      <category term="VMware网卡配置" scheme="http://www.guinguo.top/tags/VMware%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
     
   </entry>
   
   <entry>
     <title>JVM中几大垃圾收集器</title>
-    <link href="http://yoursite.com/2016/05/16/JVM%E4%B8%AD%E5%87%A0%E5%A4%A7%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
-    <id>http://yoursite.com/2016/05/16/JVM中几大垃圾收集器/</id>
+    <link href="http://www.guinguo.top/2016/05/16/JVM%E4%B8%AD%E5%87%A0%E5%A4%A7%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
+    <id>http://www.guinguo.top/2016/05/16/JVM中几大垃圾收集器/</id>
     <published>2016-05-16T00:59:28.000Z</published>
     <updated>2016-05-16T13:45:03.460Z</updated>
     
@@ -1886,19 +1908,19 @@ GC线程运行在另一个CPU
     
     </summary>
     
-      <category term="JVM学习" scheme="http://yoursite.com/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
+      <category term="JVM学习" scheme="http://www.guinguo.top/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="垃圾收集器" scheme="http://yoursite.com/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
+      <category term="垃圾收集器" scheme="http://www.guinguo.top/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/"/>
     
-      <category term="GC" scheme="http://yoursite.com/tags/GC/"/>
+      <category term="GC" scheme="http://www.guinguo.top/tags/GC/"/>
     
   </entry>
   
   <entry>
     <title>Java中的枚举类Enum</title>
-    <link href="http://yoursite.com/2016/05/15/Java%E4%B8%AD%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%B1%BBEnum/"/>
-    <id>http://yoursite.com/2016/05/15/Java中的枚举类Enum/</id>
+    <link href="http://www.guinguo.top/2016/05/15/Java%E4%B8%AD%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%B1%BBEnum/"/>
+    <id>http://www.guinguo.top/2016/05/15/Java中的枚举类Enum/</id>
     <published>2016-05-15T03:00:59.000Z</published>
     <updated>2016-05-15T09:03:18.068Z</updated>
     
@@ -1924,17 +1946,17 @@ GC线程运行在另一个CPU
     
     </summary>
     
-      <category term="Java基础" scheme="http://yoursite.com/categories/Java%E5%9F%BA%E7%A1%80/"/>
+      <category term="Java基础" scheme="http://www.guinguo.top/categories/Java%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="Enum类" scheme="http://yoursite.com/tags/Enum%E7%B1%BB/"/>
+      <category term="Enum类" scheme="http://www.guinguo.top/tags/Enum%E7%B1%BB/"/>
     
   </entry>
   
   <entry>
     <title>Linux系统配置ssh免密码登录</title>
-    <link href="http://yoursite.com/2016/05/14/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
-    <id>http://yoursite.com/2016/05/14/Linux系统配置ssh免密码登录/</id>
+    <link href="http://www.guinguo.top/2016/05/14/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/"/>
+    <id>http://www.guinguo.top/2016/05/14/Linux系统配置ssh免密码登录/</id>
     <published>2016-05-14T02:51:24.000Z</published>
     <updated>2016-05-14T05:17:30.126Z</updated>
     
@@ -1972,17 +1994,17 @@ Last login: Fri May 13 22:29:27 2016 from xx.xx.xx.xx
     
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.guinguo.top/categories/Linux/"/>
     
     
-      <category term="ssh" scheme="http://yoursite.com/tags/ssh/"/>
+      <category term="ssh" scheme="http://www.guinguo.top/tags/ssh/"/>
     
   </entry>
   
   <entry>
     <title>CentOS 开启http 端口(80)</title>
-    <link href="http://yoursite.com/2016/05/09/CentOS-%E5%BC%80%E5%90%AFhttp-%E7%AB%AF%E5%8F%A3-80/"/>
-    <id>http://yoursite.com/2016/05/09/CentOS-开启http-端口-80/</id>
+    <link href="http://www.guinguo.top/2016/05/09/CentOS-%E5%BC%80%E5%90%AFhttp-%E7%AB%AF%E5%8F%A3-80/"/>
+    <id>http://www.guinguo.top/2016/05/09/CentOS-开启http-端口-80/</id>
     <published>2016-05-09T04:47:59.000Z</published>
     <updated>2016-05-11T03:14:56.873Z</updated>
     
@@ -2048,17 +2070,17 @@ service iptables save
     
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://www.guinguo.top/categories/Linux/"/>
     
     
-      <category term="CentOS开启端口" scheme="http://yoursite.com/tags/CentOS%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3/"/>
+      <category term="CentOS开启端口" scheme="http://www.guinguo.top/tags/CentOS%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3/"/>
     
   </entry>
   
   <entry>
     <title>JVM学习之OpenJDK源码编译</title>
-    <link href="http://yoursite.com/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"/>
-    <id>http://yoursite.com/2016/05/03/JVM学习之OpenJDK源码编译/</id>
+    <link href="http://www.guinguo.top/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"/>
+    <id>http://www.guinguo.top/2016/05/03/JVM学习之OpenJDK源码编译/</id>
     <published>2016-05-03T02:26:26.000Z</published>
     <updated>2016-05-03T15:19:14.987Z</updated>
     
@@ -2116,19 +2138,19 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
     
     </summary>
     
-      <category term="JVM学习" scheme="http://yoursite.com/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
+      <category term="JVM学习" scheme="http://www.guinguo.top/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="java虚拟机" scheme="http://yoursite.com/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+      <category term="java虚拟机" scheme="http://www.guinguo.top/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
-      <category term="编译openjdk" scheme="http://yoursite.com/tags/%E7%BC%96%E8%AF%91openjdk/"/>
+      <category term="编译openjdk" scheme="http://www.guinguo.top/tags/%E7%BC%96%E8%AF%91openjdk/"/>
     
   </entry>
   
   <entry>
     <title>解除网页内容复制限制</title>
-    <link href="http://yoursite.com/2016/04/30/%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
-    <id>http://yoursite.com/2016/04/30/解除网页内容复制限制/</id>
+    <link href="http://www.guinguo.top/2016/04/30/%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
+    <id>http://www.guinguo.top/2016/04/30/解除网页内容复制限制/</id>
     <published>2016-04-30T10:44:23.000Z</published>
     <updated>2016-04-30T11:26:45.520Z</updated>
     
@@ -2150,129 +2172,12 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
     
     </summary>
     
-      <category term="小技巧" scheme="http://yoursite.com/categories/%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+      <category term="小技巧" scheme="http://www.guinguo.top/categories/%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
     
     
-      <category term="网页复制内容" scheme="http://yoursite.com/tags/%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9/"/>
+      <category term="网页复制内容" scheme="http://www.guinguo.top/tags/%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9/"/>
     
-      <category term="解除复制限制" scheme="http://yoursite.com/tags/%E8%A7%A3%E9%99%A4%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>dtd基础入门</title>
-    <link href="http://yoursite.com/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
-    <id>http://yoursite.com/2016/04/24/dtd入门/</id>
-    <published>2016-04-24T10:54:04.000Z</published>
-    <updated>2016-04-30T11:15:34.764Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;二、How-to-use-it&quot;&gt;&lt;a href=&quot;#二、How-to-use-it&quot; class=&quot;headerlink&quot; title=&quot;二、How to use it&quot;&gt;&lt;/a&gt;二、How to use it&lt;/h2&gt;&lt;p&gt;直接举一个栗子，比如现在我定义了一个Person对象，&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;person&amp;gt;
-    &amp;lt;id&amp;gt;&amp;lt;/id&amp;gt;
-    &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
-    &amp;lt;password&amp;gt;&amp;lt;/password&amp;gt;
-    &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
-&amp;lt;/person&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;对应的dtd类型定义如下&lt;br&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;figcaption&gt;&lt;span&gt;对应dtd&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;lt;!DOCTYPE persons [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT persons (person+)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person (id,name,password,age)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person id ID #REQUIRED&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT id (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT name (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT password (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT age (#PCDATA)&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;其中persons 是根元素，每个元素都要说明，persons中有person就如第二行，+号表示1次或者多次，跟正则语法一样&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;用修饰符，(正则)，?表示0次或者1次，*表示0次或者多次，+号表示1次或者动词，默认表示1次&lt;br&gt;其中person中，逗号的属性是必须按照顺序写的，即引用了次dtd的xml的person节点的name节点不能出现在id节点前&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以把id设置为属性&lt;br&gt;声明属性,使用下列语法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&amp;lt;!ATTLIST 元素名称 属性名称 属性类型 默认值&amp;gt;&lt;br&gt;&amp;lt;!ATTLIST person id ID #REQUIRED&amp;gt;&lt;br&gt;&lt;strong&gt;其中类型有&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;类型                 描述 
-CDATA        值为字符数据 (character data) 
-(en1|en2|..) 此值是枚举列表中的一个值 
-ID           值为唯一的 id 
-IDREF        值为另外一个元素的 id 
-IDREFS       值为其他 id 的列表 
-NMTOKEN      值为合法的 XML 名称 
-NMTOKENS     值为合法的 XML 名称的列表 
-ENTITY       值是一个实体 
-ENTITIES     值是一个实体列表 
-NOTATION     此值是符号的名称 
-xml:         值是一个预定义的 XML 值 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;默认值参数可使用下列值：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;值              解释
-值              属性的默认值
-#REQUIRED       属性值是必需的
-#IMPLIED        属性不是必需的
-#FIXED value    属性值是固定的 
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;如果把sex设置为属性，就可以写：默认为男性&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&amp;lt;!ATTLIST person sex PCDATA 男&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;但是，&lt;strong&gt;为person增加id属性，为必须的,id不能以数字开头…&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;三、Why-Use-a-DTD&quot;&gt;&lt;a href=&quot;#三、Why-Use-a-DTD&quot; class=&quot;headerlink&quot; title=&quot;三、Why Use a DTD?&quot;&gt;&lt;/a&gt;三、Why Use a DTD?&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;使用DTD，每个XML文件可以携带自己的格式的描述。&lt;/li&gt;
-&lt;li&gt;使用DTD，团体中的每个人可以使用标准的DTD交换数据。&lt;/li&gt;
-&lt;li&gt;应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。&lt;/li&gt;
-&lt;li&gt;另外您可以使用DTD，以验证自己的数据。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;四、Using-in-XML&quot;&gt;&lt;a href=&quot;#四、Using-in-XML&quot; class=&quot;headerlink&quot; title=&quot;四、Using in XML&quot;&gt;&lt;/a&gt;四、Using in XML&lt;/h2&gt;&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE SYSTEM 是引用内部文件的
-&amp;lt;!DOCTYPE PUBLIC 是引用网络文件的
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如：引入内部文件person.dtd&lt;br&gt;    &amp;lt;!DOCTYPE persons SYSTEM “person.dtd”&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;五、Practice&quot;&gt;&lt;a href=&quot;#五、Practice&quot; class=&quot;headerlink&quot; title=&quot;五、Practice&quot;&gt;&lt;/a&gt;五、Practice&lt;/h2&gt;&lt;p&gt;下面给出两道练习题：&lt;br&gt;1,&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;persons&amp;gt;
- &amp;lt;person id=&amp;quot;p1&amp;quot;&amp;gt;
-  &amp;lt;sex&amp;gt;&amp;lt;/sex&amp;gt;
-  &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
-  &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
-  &amp;lt;messages&amp;gt;
-   &amp;lt;message&amp;gt;
-    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
-    &amp;lt;content&amp;gt;&amp;lt;/content&amp;gt;
-   &amp;lt;/message&amp;gt;
-  &amp;lt;/messages&amp;gt;
- &amp;lt;/person&amp;gt;
-&amp;lt;/persons&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;2,&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;classroom id=&amp;quot;c1&amp;quot;&amp;gt;
- &amp;lt;claName&amp;gt;网工3班&amp;lt;/claName&amp;gt;
- &amp;lt;grade&amp;gt;2014&amp;lt;/grade&amp;gt;
- &amp;lt;students&amp;gt;
-  &amp;lt;student&amp;gt;
-   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
-   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
-   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
-  &amp;lt;/student&amp;gt;
-  &amp;lt;student&amp;gt;
-   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
-   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
-   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
-  &amp;lt;/student&amp;gt;
- &amp;lt;/students&amp;gt;
-&amp;lt;/classroom&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;但是，使用dtd会出现一些&lt;strong&gt;问题&lt;/strong&gt;，&lt;br&gt;1，名称会冲突，如果person有name，message也有name就有问题&lt;br&gt;2，控制精度不够，比如sex应该为枚举类型，只有男跟女&lt;br&gt;导致dtd并不能适应很多场合，跟xml进行互换&lt;br&gt;在09年出现了schema，慢慢在xml的定义中替代了dtd&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;br&gt;1，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg&quot; alt=&quot;classroom.dtd&quot; title=&quot;classroom.dtd&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/person.dtd.jpg&quot; alt=&quot;person.dtd&quot; title=&quot;person.dtd&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      简单介绍一下dtd
-    
-    </summary>
-    
-      <category term="周总结" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="WebService" scheme="http://yoursite.com/categories/%E5%91%A8%E6%80%BB%E7%BB%93/WebService/"/>
-    
-    
-      <category term="dtd" scheme="http://yoursite.com/tags/dtd/"/>
+      <category term="解除复制限制" scheme="http://www.guinguo.top/tags/%E8%A7%A3%E9%99%A4%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
     
   </entry>
   
