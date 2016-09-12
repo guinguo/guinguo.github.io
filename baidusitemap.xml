@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/</loc>
-    <lastmod>2016-08-24T13:12:37.588Z</lastmod>
+    <lastmod>2016-09-12T03:24:17.364Z</lastmod>
     <data>
         <display>
-        <title>Storm-BaseUsed_demon</title>
+        <title>Storm Base Used demon</title>
         <pubTime>2016-08-24T11:37:27.000Z</pubTime>
         
         <tag>Storm</tag>
@@ -25,10 +25,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/</loc>
-    <lastmod>2016-08-24T11:38:55.524Z</lastmod>
+    <lastmod>2016-09-12T03:24:08.923Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P7-Storm</title>
+        <title>Hadoop Cluster Set Up P7 Storm</title>
         <pubTime>2016-08-23T16:00:35.000Z</pubTime>
         
         <tag>Storm</tag>
@@ -45,10 +45,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/</loc>
-    <lastmod>2016-08-18T16:37:11.574Z</lastmod>
+    <lastmod>2016-09-12T03:23:57.014Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P6-Sqoop</title>
+        <title>Hadoop Cluster Set Up P6 Sqoop</title>
         <pubTime>2016-08-16T15:17:16.000Z</pubTime>
         
         <tag>Sqoop2</tag>
@@ -65,10 +65,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</loc>
-    <lastmod>2016-08-16T00:35:31.996Z</lastmod>
+    <lastmod>2016-09-12T03:23:43.590Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P4_HBase</title>
+        <title>Hadoop Cluster Set Up P4 HBase</title>
         <pubTime>2016-07-23T15:50:32.000Z</pubTime>
         
         <tag>Hbase</tag>
@@ -83,13 +83,12 @@
     </url>
 
     
-    
   <url>
     <loc>http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/</loc>
-    <lastmod>2016-08-15T06:46:26.278Z</lastmod>
+    <lastmod>2016-09-12T03:23:33.518Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P5_Hive</title>
+        <title>Hadoop Cluster Set Up P5 Hive</title>
         <pubTime>2016-07-28T12:39:36.000Z</pubTime>
         
          
@@ -104,10 +103,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/</loc>
-    <lastmod>2016-07-28T12:25:23.301Z</lastmod>
+    <lastmod>2016-09-12T03:23:19.760Z</lastmod>
     <data>
         <display>
-        <title>Hbase-Shell_Base-Use</title>
+        <title>Hbase Shell Base Use</title>
         <pubTime>2016-07-25T09:20:40.000Z</pubTime>
         
         <tag>HBase</tag>
@@ -124,10 +123,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</loc>
-    <lastmod>2016-07-23T15:46:45.983Z</lastmod>
+    <lastmod>2016-09-12T03:23:10.374Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P3_Hadoop</title>
+        <title>Hadoop Cluster Set Up P3_Hadoop</title>
         <pubTime>2016-07-23T07:27:44.000Z</pubTime>
         
         <tag>Hadoop</tag>
@@ -144,10 +143,10 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</loc>
-    <lastmod>2016-07-23T14:25:17.285Z</lastmod>
+    <lastmod>2016-09-12T03:23:01.981Z</lastmod>
     <data>
         <display>
-        <title>Hadoop-Cluster-Set-Up-P1_Prepare</title>
+        <title>Hadoop Cluster Set Up P1_Prepare</title>
         <pubTime>2016-07-23T00:49:23.000Z</pubTime>
         
         <tag>Hadoop</tag>
@@ -161,6 +160,25 @@
     </data>
     </url>
 
+    
+  <url>
+    <loc>http://www.guinguo.top/2016/08/29/Flume-Use/</loc>
+    <lastmod>2016-09-12T03:21:36.104Z</lastmod>
+    <data>
+        <display>
+        <title>Flume Use</title>
+        <pubTime>2016-08-29T09:45:13.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="BigData" url="http://www.guinguo.top/categories/BigData/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.guinguo.top/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/</loc>
@@ -334,9 +352,9 @@
         <title>hello hexo</title>
         <pubTime>2016-04-06T02:02:01.000Z</pubTime>
         
-        <tag>hexo</tag>
-         
         <tag>文章</tag>
+         
+        <tag>hexo</tag>
          
          
            

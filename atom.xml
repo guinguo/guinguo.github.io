@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.guinguo.top/"/>
-  <updated>2016-08-24T13:12:37.588Z</updated>
+  <updated>2016-09-12T03:21:36.104Z</updated>
   <id>http://www.guinguo.top/</id>
   
   <author>
@@ -16,11 +16,104 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Storm-BaseUsed_demon</title>
+    <title>Flume Use</title>
+    <link href="http://www.guinguo.top/2016/08/29/Flume-Use/"/>
+    <id>http://www.guinguo.top/2016/08/29/Flume-Use/</id>
+    <published>2016-08-29T09:45:13.000Z</published>
+    <updated>2016-09-12T03:21:36.104Z</updated>
+    
+    <content type="html">&lt;p&gt;　　Apache Flume是一个分布式，可靠性，可用性的系统，可以有效地从不同的数据源收集，整合，和移动大量日志数据到其他的存储（HDFS，HBase etc…）&lt;br&gt;flume其实没有集群概念,每个flume都是一个独立的个体，每个flume agent收集数据汇总到flume collector，由collector写入flume storage。&lt;br&gt;&lt;img src=&quot;http://flume.apache.org/_images/UserGuide_image00.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;　　Flume event是一个有效字节数据单元和一组可选的字符串属性组成.Flume agent是一个JVM进程，控制组件事件流从外部流向目的地.Flume消费外部源传送给它的数据，像web server。外部数据源以Flume Source认可的形式传递给flume，例如，Avro Flume 源可以用来从Avro客户端或者从Flume代理的Avro 槽(sink) 流出的事件流接收Avro事件。类似的流可以使用第一Thrift Sink或者一个Flume Thrift Rpc 客户端，或者用任意语言编写的遵循Thrift协议栈的Thrift客户端。&lt;br&gt;  当一个Sink 源接收到一个事件时，它可以存储到一个或者多个渠道(channel)。channel是存储事件直到事件被sink消费。文件渠道(channel)，就是一种，它支持本地文件系统，Sink 从channel移除一个事件并把它放到外部仓库像HDFS(通过Flume HDFS sink)，或者直接（转发）流向下一个数据源被其使用。指定agent中的source和sink 在channel上进行异步事件处理&lt;/p&gt;
+&lt;p&gt;&lt;hr&gt;以上翻译自flume官网，措辞不对请见谅！&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;server1作为collector，server2 作为agent。实现agent连接collector然后想collector发送日志，最终collector将日志写到HDFS。
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;系统要求&quot;&gt;&lt;a href=&quot;#系统要求&quot; class=&quot;headerlink&quot; title=&quot;系统要求&quot;&gt;&lt;/a&gt;系统要求&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;jdk 大于1.6，最好是1.7&lt;/li&gt;
+&lt;li&gt;内存 足够的内存配置以使用source，channels，sinks&lt;/li&gt;
+&lt;li&gt;磁盘空间 足够的磁盘空间使用source，channels，sinks&lt;/li&gt;
+&lt;li&gt;目录权限 agent可以直接读写响应目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;下载安装&quot;&gt;&lt;a href=&quot;#下载安装&quot; class=&quot;headerlink&quot; title=&quot;下载安装&quot;&gt;&lt;/a&gt;下载安装&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;[hadoop@server1 ~]$ wget http://www-us.apache.org/dist/flume/stable/apache-flume-1.6.0-bin.tar.gz
+
+[hadoop@server1 ~]$ tar -zxvf apache-flume-1.6.0-bin.tar.gz 
+[hadoop@server1 ~]$ mv apache-flume-1.6.0-bin flume-1.6.0
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;修改配置文件&quot;&gt;&lt;a href=&quot;#修改配置文件&quot; class=&quot;headerlink&quot; title=&quot;修改配置文件&quot;&gt;&lt;/a&gt;修改配置文件&lt;/h2&gt;&lt;h3 id=&quot;jdk环境变量&quot;&gt;&lt;a href=&quot;#jdk环境变量&quot; class=&quot;headerlink&quot; title=&quot;jdk环境变量&quot;&gt;&lt;/a&gt;jdk环境变量&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;[hadoop@server1 ~]$ mv flume-1.6.0/conf/flume-env.sh.template flume-1.6.0/conf/flume-env.sh          
+[hadoop@server1 ~]$ vi flume-1.6.0/conf/flume-env.sh 
+#把jdk目录填上去
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;复制到server2&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server1 ~]$ scp -r flume-1.6.0/ hadoop@server2:~/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;agent启动文件&quot;&gt;&lt;a href=&quot;#agent启动文件&quot; class=&quot;headerlink&quot; title=&quot;agent启动文件&quot;&gt;&lt;/a&gt;agent启动文件&lt;/h3&gt;&lt;p&gt;在server1节点，conf目录下，将flume-conf.properties.template 重命名一份出来&lt;br&gt;用于启动配置。关于三大组件的详细配置，请参考&lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html#configuration&quot; title=&quot;flumeUserGuide&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;创建server2事件监听目录/home/hadoop/flume-test&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;server1上的配置&lt;/p&gt;
+&lt;p&gt;  [hadoop@server1 flume-1.6.0]$ cp conf/flume-conf.properties.template conf/avro.conf&lt;/p&gt;
+&lt;p&gt;  [hadoop@server1 flume-1.6.0]$ cat conf/avro.conf&lt;br&gt;  #defind source sink channel&lt;br&gt;  a1.sources = r1&lt;br&gt;  a1.sinks = k1&lt;br&gt;  a1.channels = c1&lt;/p&gt;
+&lt;p&gt;  #specify configure&lt;br&gt;  #r1的类型是Avro&lt;br&gt;  a1.sources.r1.type = avro&lt;br&gt;  #channel为c1，注意，这里是r1.channels&lt;br&gt;  a1.sources.r1.channels = c1&lt;br&gt;  #绑定本机端口4141&lt;br&gt;  a1.sources.r1.bind = 0.0.0.0&lt;br&gt;  a1.sources.r1.port = 4141&lt;/p&gt;
+&lt;p&gt;  #sink k1的类型为HDFS&lt;br&gt;  #see &lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html#hdfs-sink&quot; title=&quot;hdfs-sink&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://flume.apache.org/FlumeUserGuide.html#hdfs-sink&lt;/a&gt;&lt;br&gt;  a1.sinks.k1.type = hdfs&lt;br&gt;  a1.sinks.k1.hdfs.path = hdfs://server1:9000/flume-test/&lt;br&gt;  a1.sinks.k1.hdfs.fileType = DataStream&lt;br&gt;  a1.sinks.k1.hdfs.writeFormat = TEXT&lt;br&gt;  a1.sinks.k1.hdfs.round = true&lt;br&gt;  a1.sinks.k1.hdfs.roundValue = 5&lt;br&gt;  a1.sinks.k1.hdfs.roundUnit = minute&lt;br&gt;  a1.sinks.k1.hdfs.useLocalTimeStamp = true&lt;br&gt;  a1.sinks.k1.hdfs.filePrefix = events-&lt;br&gt;  #而这里是k1.channel&lt;br&gt;  a1.sinks.k1.channel = c1&lt;/p&gt;
+&lt;p&gt;  #使用内存作为channel&lt;br&gt;  a1.channels.c1.type = memory&lt;br&gt;  a1.channels.c1.capacity = 1000&lt;br&gt;  a1.channels.c1.transactionCapacity = 100&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;server2上的配置&lt;/p&gt;
+&lt;p&gt;  [hadoop@server2 flume-1.6.0]$ cat conf/avro.conf&lt;br&gt;  a1.sources = r1&lt;br&gt;  a1.channels = c1&lt;br&gt;  a1.sinks = k1&lt;/p&gt;
+&lt;h1 id=&quot;For-each-one-of-the-sources-the-type-is-defined&quot;&gt;&lt;a href=&quot;#For-each-one-of-the-sources-the-type-is-defined&quot; class=&quot;headerlink&quot; title=&quot;For each one of the sources, the type is defined&quot;&gt;&lt;/a&gt;For each one of the sources, the type is defined&lt;/h1&gt;&lt;p&gt;  a1.sources.r1.type = spooldir&lt;br&gt;  a1.sources.r1.spoolDir = /home/hadoop/flume-test&lt;br&gt;  a1.sources.r1.channels = c1&lt;/p&gt;
+&lt;h1 id=&quot;Each-sink’s-type-must-be-defined&quot;&gt;&lt;a href=&quot;#Each-sink’s-type-must-be-defined&quot; class=&quot;headerlink&quot; title=&quot;Each sink’s type must be defined&quot;&gt;&lt;/a&gt;Each sink’s type must be defined&lt;/h1&gt;&lt;p&gt;  a1.sinks.k1.type = avro&lt;br&gt;  a1.sinks.k1.hostname = server1&lt;br&gt;  a1.sinks.k1.port = 4141&lt;br&gt;  a1.sinks.k1.channel = c1&lt;/p&gt;
+&lt;h1 id=&quot;Each-channel’s-type-is-defined&quot;&gt;&lt;a href=&quot;#Each-channel’s-type-is-defined&quot; class=&quot;headerlink&quot; title=&quot;Each channel’s type is defined.&quot;&gt;&lt;/a&gt;Each channel’s type is defined.&lt;/h1&gt;&lt;p&gt;  a1.channels.c1.type = memory&lt;br&gt;  a1.channels.c1.capacity = 1000&lt;br&gt;  a1.channels.c1.transcationCapacity = 100&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;启动测试&quot;&gt;&lt;a href=&quot;#启动测试&quot; class=&quot;headerlink&quot; title=&quot;启动测试&quot;&gt;&lt;/a&gt;启动测试&lt;/h2&gt;&lt;p&gt;　　&lt;br&gt;　　以上Avro配置是：server2监听目录/home/hadoop/flume-test，如果有文件变化，就把事件传递到server1的4141端口上，server1监听本机的4141端口，如果有事件接收，就传递到hdfs hdfs://server1:9000/flume-test/上存储下来 文件名前缀events-&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先启动server1：&lt;/p&gt;
+&lt;p&gt; cd bin&lt;br&gt; bin/flume-ng agent -n agent -c conf -f conf/avro.conf -Dflume.root.logger=DEBUG,console&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后是server2：&lt;br&gt; bin/flume-ng agent -n agent -c conf -f conf/avro.conf -Dflume.root.logger=DEBUG,console&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;进入目录&lt;br&gt; [hadoop@server2 flume-test]$ cd /home/hadoop/flume-test&lt;br&gt; [hadoop@server2 flume-test]$ echo “hello flume source is avro and write to hdfs” &amp;gt; test.txt&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;查看结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后可以看到server2打印出：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2016-08-29 22:22:12,724 (pool-4-thread-1) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.readEvents(ReliableSpoolingFileEventReader.java:258)] Last read took us just up to a file boundary. Rolling to the next file, if there is one.
+2016-08-29 22:22:12,730 (pool-4-thread-1) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.rollCurrentFile(ReliableSpoolingFileEventReader.java:348)] Preparing to move file /home/hadoop/flume-test/test.txt to /home/hadoop/flume-test/test.txt.COMPLETED
+2016-08-29 22:22:12,735 (pool-4-thread-1) [DEBUG - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.rollCurrentFile(ReliableSpoolingFileEventReader.java:384)] Successfully rolled file /home/hadoop/flume-test/test.txt to /home/hadoop/flume-test/test.txt.COMPLETED
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;server1打印出：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2016-08-29 22:34:00,734 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.HDFSDataStream.configure(HDFSDataStream.java:58)] Serializer = TEXT, UseRawLocalFileSystem = false
+2016-08-29 22:34:01,602 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.BucketWriter.open(BucketWriter.java:234)] Creating hdfs://server1:9000/flume-test//events-.1473647640735.tmp
+2016-08-29 22:34:32,796 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter.close(BucketWriter.java:363)] Closing hdfs://server1:9000/flume-test//events-.1473647640735.tmp
+2016-08-29 22:34:35,975 (hdfs-k1-call-runner-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter$8.call(BucketWriter.java:629)] Renaming hdfs://server1:9000/flume-test/events-.1473647640735.tmp to hdfs://server1:9000/flume-test/events-.1473647640735
+2016-08-29 22:34:36,067 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.HDFSEventSink$1.run(HDFSEventSink.java:394)] Writer callback called.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看hdfs&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server2 flume-test]$ hadoop fs -ls /flume-test/
+Found 1 items
+-rw-r--r--   3 hadoop supergroup         45 2016-09-11 22:23 /flume-test/events-.1473646940947
+[hadoop@server2 flume-test]$ hadoop fs -cat /flume-test/events-.1473646940947
+hello flume source is avro and write to hdfs
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://flume.apache.org/FlumeUserGuide.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://my.oschina.net/u/2000675/blog/604267&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://my.oschina.net/u/2000675/blog/604267&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/u010022051/article/details/42522441&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/u010022051/article/details/42522441&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/lishouguang/p/4560862.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/lishouguang/p/4560862.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      Apache Flume 1.6.0 的安装与使用
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Storm Base Used demon</title>
     <link href="http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/"/>
     <id>http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/</id>
     <published>2016-08-24T11:37:27.000Z</published>
-    <updated>2016-08-24T13:12:37.588Z</updated>
+    <updated>2016-09-12T03:24:17.364Z</updated>
     
     <content type="html">&lt;h2 id=&quot;栗子介绍&quot;&gt;&lt;a href=&quot;#栗子介绍&quot; class=&quot;headerlink&quot; title=&quot;栗子介绍&quot;&gt;&lt;/a&gt;栗子介绍&lt;/h2&gt;&lt;p&gt;spout：它会随机发射一系列的句子，句子的格式是 谁：说的话&lt;br&gt;    RandomSpout&lt;br&gt;bolt：处理源流出来的数据，末尾添加”, hi guinguo~”，然后打印。两个功能，两个Bolt。&lt;br&gt;    ExclaimBasicBolt&lt;br&gt;    PrintBolt&lt;br&gt;Topology:用于启动&lt;/p&gt;
 &lt;h2 id=&quot;建立MAVEN项目&quot;&gt;&lt;a href=&quot;#建立MAVEN项目&quot; class=&quot;headerlink&quot; title=&quot;建立MAVEN项目&quot;&gt;&lt;/a&gt;建立MAVEN项目&lt;/h2&gt;&lt;p&gt;　　基本的pom.xml&lt;/p&gt;
@@ -87,11 +180,11 @@ Bolt[0] String recieved: marry:I&amp;apos;m angry,hi guin_guo~
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P7-Storm</title>
+    <title>Hadoop Cluster Set Up P7 Storm</title>
     <link href="http://www.guinguo.top/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/"/>
     <id>http://www.guinguo.top/2016/08/24/Hadoop-Cluster-Set-Up-P7-Storm/</id>
     <published>2016-08-23T16:00:35.000Z</published>
-    <updated>2016-08-24T11:38:55.524Z</updated>
+    <updated>2016-09-12T03:24:08.923Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;h3 id=&quot;术语&quot;&gt;&lt;a href=&quot;#术语&quot; class=&quot;headerlink&quot; title=&quot;术语&quot;&gt;&lt;/a&gt;术语&lt;/h3&gt;&lt;p&gt;　　Storm相关术语都用斜体英文表示。 这些术语的字面意义翻译如下，由于这个工具的名字叫Storm，这些术语一律按照气象名词解释&lt;/p&gt;
 &lt;ul&gt;
@@ -208,11 +301,11 @@ scp -rq apache-storm-1.0.2 server3:~/
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P6-Sqoop</title>
+    <title>Hadoop Cluster Set Up P6 Sqoop</title>
     <link href="http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/"/>
     <id>http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/</id>
     <published>2016-08-16T15:17:16.000Z</published>
-    <updated>2016-08-18T16:37:11.574Z</updated>
+    <updated>2016-09-12T03:23:57.014Z</updated>
     
     <content type="html">&lt;p&gt;Sqoop1.99.7 暂时只支持mysql到hdfs或者hdfs到mysql，不支持hive或者hbase。&lt;a href=&quot;sqoop.apache.org&quot;&gt;官网&lt;/a&gt;也说了不用与生产环境。这里我只是先装 &lt;del&gt;(踩)&lt;/del&gt; 着 &lt;del&gt;(坑)&lt;/del&gt;&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
 &lt;h2 id=&quot;下载并解压&quot;&gt;&lt;a href=&quot;#下载并解压&quot; class=&quot;headerlink&quot; title=&quot;下载并解压&quot;&gt;&lt;/a&gt;下载并解压&lt;/h2&gt;&lt;p&gt;由于服务器在美国，所以我换了一个镜像,大家如果在国内的话，可以使用北理工的&lt;a href=&quot;http://mirror.bit.edu.cn&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://mirror.bit.edu.cn&lt;/a&gt;&lt;/p&gt;
@@ -301,11 +394,11 @@ mv sqoop-1.99.7-bin-hadoop200 sqoop-1.99.7
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P5_Hive</title>
+    <title>Hadoop Cluster Set Up P5 Hive</title>
     <link href="http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/"/>
     <id>http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/</id>
     <published>2016-07-28T12:39:36.000Z</published>
-    <updated>2016-08-15T06:46:26.278Z</updated>
+    <updated>2016-09-12T03:23:33.518Z</updated>
     
     <content type="html">&lt;p&gt;Hive原则上可以安装在集群上的任何一台机器上面，如果 master节点的负荷比较大，可以选择一台机器性能较好的datanode来安装hive。这里我选择master来安装hive，因为另一台namenode的配置跟datanode差不多，而且我的master配置相比其他node好一点。另外，在我们的安装中采用 MySQL来存放hive的meta数据&lt;/p&gt;
 &lt;h2 id=&quot;Centos7-install-mysql-server&quot;&gt;&lt;a href=&quot;#Centos7-install-mysql-server&quot; class=&quot;headerlink&quot; title=&quot;Centos7 install mysql-server&quot;&gt;&lt;/a&gt;Centos7 install mysql-server&lt;/h2&gt;&lt;p&gt;Centos 使用mariadb 作为默认数据库，mariadb是MySQL一个分支，而且是开源的。不过我们仍可以安装mysql,使用RPM包进行安装&lt;/p&gt;
@@ -613,11 +706,11 @@ No rows affected (48.918 seconds)
   </entry>
   
   <entry>
-    <title>Hbase-Shell_Base-Use</title>
+    <title>Hbase Shell Base Use</title>
     <link href="http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/"/>
     <id>http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/</id>
     <published>2016-07-25T09:20:40.000Z</published>
-    <updated>2016-07-28T12:25:23.301Z</updated>
+    <updated>2016-09-12T03:23:19.760Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;HBase shell支持Tab键自动补全&lt;/strong&gt;&lt;br&gt;基于hdfs，所以底层只有put，即增删改都是增加一行记录。&lt;/p&gt;
 &lt;h1 id=&quot;常用命令&quot;&gt;&lt;a href=&quot;#常用命令&quot; class=&quot;headerlink&quot; title=&quot;常用命令&quot;&gt;&lt;/a&gt;常用命令&lt;/h1&gt;&lt;p&gt;status 查看集群数据库状态&lt;/p&gt;
@@ -865,11 +958,11 @@ true
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P4_HBase</title>
+    <title>Hadoop Cluster Set Up P4 HBase</title>
     <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/"/>
     <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</id>
     <published>2016-07-23T15:50:32.000Z</published>
-    <updated>2016-08-16T00:35:31.996Z</updated>
+    <updated>2016-09-12T03:23:43.590Z</updated>
     
     <content type="html">&lt;p&gt;　　HBase是一个开源的非关系型分布式数据库（NoSQL），它参考了谷歌的BigTable建模，实现的编程语言为 Java。它是Apache软件基金会的Hadoop项目的一部分，运行于HDFS文件系统之上，为 Hadoop 提供类似于BigTable 规模的服务。因此，它可以容错地存储海量稀疏的数据。&lt;/p&gt;
 &lt;p&gt;　　HBase在列上实现了BigTable论文提到的压缩算法、内存操作和布隆过滤器。HBase的表能够作为MapReduce任务的输入和输出，可以通过Java API来访问数据，也可以通过REST、Avro或者Thrift的API来访问。&lt;/p&gt;
@@ -1041,11 +1134,11 @@ TABLE
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P3_Hadoop</title>
+    <title>Hadoop Cluster Set Up P3_Hadoop</title>
     <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/"/>
     <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</id>
     <published>2016-07-23T07:27:44.000Z</published>
-    <updated>2016-07-23T15:46:45.983Z</updated>
+    <updated>2016-09-12T03:23:10.374Z</updated>
     
     <content type="html">&lt;h1 id=&quot;获取安装包&quot;&gt;&lt;a href=&quot;#获取安装包&quot; class=&quot;headerlink&quot; title=&quot;获取安装包&quot;&gt;&lt;/a&gt;获取安装包&lt;/h1&gt;&lt;p&gt;　　你可以拿到源码包然后重新编译一次，我直接下载解压版&lt;br&gt;使用&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget http://archive.apache.org/dist/hadoop/core/current/hadoop-2.7.2.tar.gz
@@ -1469,11 +1562,11 @@ hadoop jar hadoop-mapreduce-examples-2.7.2.jar wordcount /test /output
   </entry>
   
   <entry>
-    <title>Hadoop-Cluster-Set-Up-P1_Prepare</title>
+    <title>Hadoop Cluster Set Up P1_Prepare</title>
     <link href="http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/"/>
     <id>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</id>
     <published>2016-07-23T00:49:23.000Z</published>
-    <updated>2016-07-23T14:25:17.285Z</updated>
+    <updated>2016-09-12T03:23:01.981Z</updated>
     
     <content type="html">&lt;p&gt;前几天买了4台vps来搭建集群，具体情况如下：&lt;br&gt;本来要进行分区，存储数据的，但是这个类型的vps居然不支持重新分区。。。&lt;br&gt;Centos7&lt;/p&gt;
 &lt;p&gt;Server1        master(NameNode)&lt;br&gt;Server2        master(SecondaryNameNode)&lt;br&gt;Server3        slave1(DataNode)&lt;br&gt;Server4        slave2(DataNode)&lt;/p&gt;
@@ -2156,123 +2249,6 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
       <category term="网页复制内容" scheme="http://www.guinguo.top/tags/%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9/"/>
     
       <category term="解除复制限制" scheme="http://www.guinguo.top/tags/%E8%A7%A3%E9%99%A4%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>dtd基础入门</title>
-    <link href="http://www.guinguo.top/2016/04/24/dtd%E5%85%A5%E9%97%A8/"/>
-    <id>http://www.guinguo.top/2016/04/24/dtd入门/</id>
-    <published>2016-04-24T10:54:04.000Z</published>
-    <updated>2016-04-30T11:15:34.764Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;一、What-is-DTD&quot;&gt;&lt;a href=&quot;#一、What-is-DTD&quot; class=&quot;headerlink&quot; title=&quot;一、What is DTD&quot;&gt;&lt;/a&gt;一、What is DTD&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;DTD (Document type definition)文档类型定义, &lt;a href=&quot;https://en.wikipedia.org/wiki/Document_type_definition&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;wiki&lt;/a&gt;&lt;br&gt;用于规定xml或者html之类的标记性文档的类型&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;二、How-to-use-it&quot;&gt;&lt;a href=&quot;#二、How-to-use-it&quot; class=&quot;headerlink&quot; title=&quot;二、How to use it&quot;&gt;&lt;/a&gt;二、How to use it&lt;/h2&gt;&lt;p&gt;直接举一个栗子，比如现在我定义了一个Person对象，&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;person&amp;gt;
-    &amp;lt;id&amp;gt;&amp;lt;/id&amp;gt;
-    &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
-    &amp;lt;password&amp;gt;&amp;lt;/password&amp;gt;
-    &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
-&amp;lt;/person&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;对应的dtd类型定义如下&lt;br&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;figcaption&gt;&lt;span&gt;对应dtd&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;lt;!DOCTYPE persons [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT persons (person+)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person (id,name,password,age)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT person id ID #REQUIRED&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT id (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT name (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT password (#PCDATA)&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;!ELEMENT age (#PCDATA)&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;其中persons 是根元素，每个元素都要说明，persons中有person就如第二行，+号表示1次或者多次，跟正则语法一样&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;用修饰符，(正则)，?表示0次或者1次，*表示0次或者多次，+号表示1次或者动词，默认表示1次&lt;br&gt;其中person中，逗号的属性是必须按照顺序写的，即引用了次dtd的xml的person节点的name节点不能出现在id节点前&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以把id设置为属性&lt;br&gt;声明属性,使用下列语法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&amp;lt;!ATTLIST 元素名称 属性名称 属性类型 默认值&amp;gt;&lt;br&gt;&amp;lt;!ATTLIST person id ID #REQUIRED&amp;gt;&lt;br&gt;&lt;strong&gt;其中类型有&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;类型                 描述 
-CDATA        值为字符数据 (character data) 
-(en1|en2|..) 此值是枚举列表中的一个值 
-ID           值为唯一的 id 
-IDREF        值为另外一个元素的 id 
-IDREFS       值为其他 id 的列表 
-NMTOKEN      值为合法的 XML 名称 
-NMTOKENS     值为合法的 XML 名称的列表 
-ENTITY       值是一个实体 
-ENTITIES     值是一个实体列表 
-NOTATION     此值是符号的名称 
-xml:         值是一个预定义的 XML 值 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;默认值参数可使用下列值：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;值              解释
-值              属性的默认值
-#REQUIRED       属性值是必需的
-#IMPLIED        属性不是必需的
-#FIXED value    属性值是固定的 
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;如果把sex设置为属性，就可以写：默认为男性&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&amp;lt;!ATTLIST person sex PCDATA 男&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;但是，&lt;strong&gt;为person增加id属性，为必须的,id不能以数字开头…&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;三、Why-Use-a-DTD&quot;&gt;&lt;a href=&quot;#三、Why-Use-a-DTD&quot; class=&quot;headerlink&quot; title=&quot;三、Why Use a DTD?&quot;&gt;&lt;/a&gt;三、Why Use a DTD?&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;使用DTD，每个XML文件可以携带自己的格式的描述。&lt;/li&gt;
-&lt;li&gt;使用DTD，团体中的每个人可以使用标准的DTD交换数据。&lt;/li&gt;
-&lt;li&gt;应用程序可以使用标准的DTD来验证从外界接收到的数据是有效的。&lt;/li&gt;
-&lt;li&gt;另外您可以使用DTD，以验证自己的数据。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;四、Using-in-XML&quot;&gt;&lt;a href=&quot;#四、Using-in-XML&quot; class=&quot;headerlink&quot; title=&quot;四、Using in XML&quot;&gt;&lt;/a&gt;四、Using in XML&lt;/h2&gt;&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE SYSTEM 是引用内部文件的
-&amp;lt;!DOCTYPE PUBLIC 是引用网络文件的
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如：引入内部文件person.dtd&lt;br&gt;    &amp;lt;!DOCTYPE persons SYSTEM “person.dtd”&amp;gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;五、Practice&quot;&gt;&lt;a href=&quot;#五、Practice&quot; class=&quot;headerlink&quot; title=&quot;五、Practice&quot;&gt;&lt;/a&gt;五、Practice&lt;/h2&gt;&lt;p&gt;下面给出两道练习题：&lt;br&gt;1,&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;persons&amp;gt;
- &amp;lt;person id=&amp;quot;p1&amp;quot;&amp;gt;
-  &amp;lt;sex&amp;gt;&amp;lt;/sex&amp;gt;
-  &amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
-  &amp;lt;age&amp;gt;&amp;lt;/age&amp;gt;
-  &amp;lt;messages&amp;gt;
-   &amp;lt;message&amp;gt;
-    &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
-    &amp;lt;content&amp;gt;&amp;lt;/content&amp;gt;
-   &amp;lt;/message&amp;gt;
-  &amp;lt;/messages&amp;gt;
- &amp;lt;/person&amp;gt;
-&amp;lt;/persons&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;2,&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;classroom id=&amp;quot;c1&amp;quot;&amp;gt;
- &amp;lt;claName&amp;gt;网工3班&amp;lt;/claName&amp;gt;
- &amp;lt;grade&amp;gt;2014&amp;lt;/grade&amp;gt;
- &amp;lt;students&amp;gt;
-  &amp;lt;student&amp;gt;
-   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
-   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
-   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
-  &amp;lt;/student&amp;gt;
-  &amp;lt;student&amp;gt;
-   &amp;lt;id&amp;gt;s1&amp;lt;/id&amp;gt;
-   &amp;lt;stuName&amp;gt;guin&amp;lt;/stuName&amp;gt;
-   &amp;lt;age&amp;gt;21&amp;lt;/age&amp;gt;
-  &amp;lt;/student&amp;gt;
- &amp;lt;/students&amp;gt;
-&amp;lt;/classroom&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;但是，使用dtd会出现一些&lt;strong&gt;问题&lt;/strong&gt;，&lt;br&gt;1，名称会冲突，如果person有name，message也有name就有问题&lt;br&gt;2，控制精度不够，比如sex应该为枚举类型，只有男跟女&lt;br&gt;导致dtd并不能适应很多场合，跟xml进行互换&lt;br&gt;在09年出现了schema，慢慢在xml的定义中替代了dtd&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;br&gt;1，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/classroom.dtd.jpg&quot; alt=&quot;classroom.dtd&quot; title=&quot;classroom.dtd&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2，&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/person.dtd.jpg&quot; alt=&quot;person.dtd&quot; title=&quot;person.dtd&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      简单介绍一下dtd
-    
-    </summary>
-    
-      <category term="周总结" scheme="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
-    
-      <category term="WebService" scheme="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/WebService/"/>
-    
-    
-      <category term="dtd" scheme="http://www.guinguo.top/tags/dtd/"/>
     
   </entry>
   

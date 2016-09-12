@@ -66,7 +66,7 @@
 <meta property="og:site_name" content="Guinguo's blog">
 <meta property="og:description" content="Apache Flume 1.6.0 的安装与使用">
 <meta property="og:image" content="http://flume.apache.org/_images/UserGuide_image00.png">
-<meta property="og:updated_time" content="2016-08-29T13:15:20.254Z">
+<meta property="og:updated_time" content="2016-09-12T03:21:36.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flume Use">
 <meta name="twitter:description" content="Apache Flume 1.6.0 的安装与使用">
@@ -333,8 +333,79 @@
       
 
       
-        <p>　　Apache Flume是一个分布式，可靠性，可用性的系统，可以有效地从不同的数据源收集，整合，和移动大量日志数据到其他的存储（HDFS，HBase etc…）<br><img src="http://flume.apache.org/_images/UserGuide_image00.png" alt=""><br>Flume event是一个有效字节数据单元和一组可选的字符串属性组成.<br>Flume agent是一个JVM进程，控制组件事件流从外部流向目的地.<br>Flume的数据源可是web server，</p>
-<p><a href="http://flume.apache.org/FlumeUserGuide.html" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html</a><br><a href="http://www.aboutyun.com/thread-8984-1-1.html" target="_blank" rel="external">http://www.aboutyun.com/thread-8984-1-1.html</a><br><a href="http://blog.csdn.net/lnho2015/article/details/52035145" target="_blank" rel="external">http://blog.csdn.net/lnho2015/article/details/52035145</a><br><a href="http://www.cnblogs.com/lishouguang/p/4560862.html" target="_blank" rel="external">http://www.cnblogs.com/lishouguang/p/4560862.html</a></p>
+        <p>　　Apache Flume是一个分布式，可靠性，可用性的系统，可以有效地从不同的数据源收集，整合，和移动大量日志数据到其他的存储（HDFS，HBase etc…）<br>flume其实没有集群概念,每个flume都是一个独立的个体，每个flume agent收集数据汇总到flume collector，由collector写入flume storage。<br><img src="http://flume.apache.org/_images/UserGuide_image00.png" alt=""></p>
+<p>　　Flume event是一个有效字节数据单元和一组可选的字符串属性组成.Flume agent是一个JVM进程，控制组件事件流从外部流向目的地.Flume消费外部源传送给它的数据，像web server。外部数据源以Flume Source认可的形式传递给flume，例如，Avro Flume 源可以用来从Avro客户端或者从Flume代理的Avro 槽(sink) 流出的事件流接收Avro事件。类似的流可以使用第一Thrift Sink或者一个Flume Thrift Rpc 客户端，或者用任意语言编写的遵循Thrift协议栈的Thrift客户端。<br>  当一个Sink 源接收到一个事件时，它可以存储到一个或者多个渠道(channel)。channel是存储事件直到事件被sink消费。文件渠道(channel)，就是一种，它支持本地文件系统，Sink 从channel移除一个事件并把它放到外部仓库像HDFS(通过Flume HDFS sink)，或者直接（转发）流向下一个数据源被其使用。指定agent中的source和sink 在channel上进行异步事件处理</p>
+<p><hr>以上翻译自flume官网，措辞不对请见谅！</p>
+<hr>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><pre><code>server1作为collector，server2 作为agent。实现agent连接collector然后想collector发送日志，最终collector将日志写到HDFS。
+</code></pre><h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><ol>
+<li>jdk 大于1.6，最好是1.7</li>
+<li>内存 足够的内存配置以使用source，channels，sinks</li>
+<li>磁盘空间 足够的磁盘空间使用source，channels，sinks</li>
+<li>目录权限 agent可以直接读写响应目录</li>
+</ol>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><pre><code>[hadoop@server1 ~]$ wget http://www-us.apache.org/dist/flume/stable/apache-flume-1.6.0-bin.tar.gz
+
+[hadoop@server1 ~]$ tar -zxvf apache-flume-1.6.0-bin.tar.gz 
+[hadoop@server1 ~]$ mv apache-flume-1.6.0-bin flume-1.6.0
+</code></pre><h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><h3 id="jdk环境变量"><a href="#jdk环境变量" class="headerlink" title="jdk环境变量"></a>jdk环境变量</h3><pre><code>[hadoop@server1 ~]$ mv flume-1.6.0/conf/flume-env.sh.template flume-1.6.0/conf/flume-env.sh          
+[hadoop@server1 ~]$ vi flume-1.6.0/conf/flume-env.sh 
+#把jdk目录填上去
+</code></pre><blockquote>
+<p>复制到server2</p>
+</blockquote>
+<pre><code>[hadoop@server1 ~]$ scp -r flume-1.6.0/ hadoop@server2:~/
+</code></pre><h3 id="agent启动文件"><a href="#agent启动文件" class="headerlink" title="agent启动文件"></a>agent启动文件</h3><p>在server1节点，conf目录下，将flume-conf.properties.template 重命名一份出来<br>用于启动配置。关于三大组件的详细配置，请参考<a href="http://flume.apache.org/FlumeUserGuide.html#configuration" title="flumeUserGuide" target="_blank" rel="external">官方文档</a></p>
+<p>创建server2事件监听目录/home/hadoop/flume-test</p>
+<ul>
+<li><p>server1上的配置</p>
+<p>  [hadoop@server1 flume-1.6.0]$ cp conf/flume-conf.properties.template conf/avro.conf</p>
+<p>  [hadoop@server1 flume-1.6.0]$ cat conf/avro.conf<br>  #defind source sink channel<br>  a1.sources = r1<br>  a1.sinks = k1<br>  a1.channels = c1</p>
+<p>  #specify configure<br>  #r1的类型是Avro<br>  a1.sources.r1.type = avro<br>  #channel为c1，注意，这里是r1.channels<br>  a1.sources.r1.channels = c1<br>  #绑定本机端口4141<br>  a1.sources.r1.bind = 0.0.0.0<br>  a1.sources.r1.port = 4141</p>
+<p>  #sink k1的类型为HDFS<br>  #see <a href="http://flume.apache.org/FlumeUserGuide.html#hdfs-sink" title="hdfs-sink" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html#hdfs-sink</a><br>  a1.sinks.k1.type = hdfs<br>  a1.sinks.k1.hdfs.path = hdfs://server1:9000/flume-test/<br>  a1.sinks.k1.hdfs.fileType = DataStream<br>  a1.sinks.k1.hdfs.writeFormat = TEXT<br>  a1.sinks.k1.hdfs.round = true<br>  a1.sinks.k1.hdfs.roundValue = 5<br>  a1.sinks.k1.hdfs.roundUnit = minute<br>  a1.sinks.k1.hdfs.useLocalTimeStamp = true<br>  a1.sinks.k1.hdfs.filePrefix = events-<br>  #而这里是k1.channel<br>  a1.sinks.k1.channel = c1</p>
+<p>  #使用内存作为channel<br>  a1.channels.c1.type = memory<br>  a1.channels.c1.capacity = 1000<br>  a1.channels.c1.transactionCapacity = 100</p>
+</li>
+<li><p>server2上的配置</p>
+<p>  [hadoop@server2 flume-1.6.0]$ cat conf/avro.conf<br>  a1.sources = r1<br>  a1.channels = c1<br>  a1.sinks = k1</p>
+<h1 id="For-each-one-of-the-sources-the-type-is-defined"><a href="#For-each-one-of-the-sources-the-type-is-defined" class="headerlink" title="For each one of the sources, the type is defined"></a>For each one of the sources, the type is defined</h1><p>  a1.sources.r1.type = spooldir<br>  a1.sources.r1.spoolDir = /home/hadoop/flume-test<br>  a1.sources.r1.channels = c1</p>
+<h1 id="Each-sink’s-type-must-be-defined"><a href="#Each-sink’s-type-must-be-defined" class="headerlink" title="Each sink’s type must be defined"></a>Each sink’s type must be defined</h1><p>  a1.sinks.k1.type = avro<br>  a1.sinks.k1.hostname = server1<br>  a1.sinks.k1.port = 4141<br>  a1.sinks.k1.channel = c1</p>
+<h1 id="Each-channel’s-type-is-defined"><a href="#Each-channel’s-type-is-defined" class="headerlink" title="Each channel’s type is defined."></a>Each channel’s type is defined.</h1><p>  a1.channels.c1.type = memory<br>  a1.channels.c1.capacity = 1000<br>  a1.channels.c1.transcationCapacity = 100</p>
+</li>
+</ul>
+<h2 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h2><p>　　<br>　　以上Avro配置是：server2监听目录/home/hadoop/flume-test，如果有文件变化，就把事件传递到server1的4141端口上，server1监听本机的4141端口，如果有事件接收，就传递到hdfs hdfs://server1:9000/flume-test/上存储下来 文件名前缀events-</p>
+<ol>
+<li><p>先启动server1：</p>
+<p> cd bin<br> bin/flume-ng agent -n agent -c conf -f conf/avro.conf -Dflume.root.logger=DEBUG,console</p>
+</li>
+<li><p>然后是server2：<br> bin/flume-ng agent -n agent -c conf -f conf/avro.conf -Dflume.root.logger=DEBUG,console</p>
+</li>
+<li><p>进入目录<br> [hadoop@server2 flume-test]$ cd /home/hadoop/flume-test<br> [hadoop@server2 flume-test]$ echo “hello flume source is avro and write to hdfs” &gt; test.txt</p>
+</li>
+<li><p>查看结果</p>
+</li>
+</ol>
+<p>然后可以看到server2打印出：</p>
+<pre><code>2016-08-29 22:22:12,724 (pool-4-thread-1) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.readEvents(ReliableSpoolingFileEventReader.java:258)] Last read took us just up to a file boundary. Rolling to the next file, if there is one.
+2016-08-29 22:22:12,730 (pool-4-thread-1) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.rollCurrentFile(ReliableSpoolingFileEventReader.java:348)] Preparing to move file /home/hadoop/flume-test/test.txt to /home/hadoop/flume-test/test.txt.COMPLETED
+2016-08-29 22:22:12,735 (pool-4-thread-1) [DEBUG - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.rollCurrentFile(ReliableSpoolingFileEventReader.java:384)] Successfully rolled file /home/hadoop/flume-test/test.txt to /home/hadoop/flume-test/test.txt.COMPLETED
+</code></pre><p>server1打印出：</p>
+<pre><code>2016-08-29 22:34:00,734 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.HDFSDataStream.configure(HDFSDataStream.java:58)] Serializer = TEXT, UseRawLocalFileSystem = false
+2016-08-29 22:34:01,602 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.BucketWriter.open(BucketWriter.java:234)] Creating hdfs://server1:9000/flume-test//events-.1473647640735.tmp
+2016-08-29 22:34:32,796 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter.close(BucketWriter.java:363)] Closing hdfs://server1:9000/flume-test//events-.1473647640735.tmp
+2016-08-29 22:34:35,975 (hdfs-k1-call-runner-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter$8.call(BucketWriter.java:629)] Renaming hdfs://server1:9000/flume-test/events-.1473647640735.tmp to hdfs://server1:9000/flume-test/events-.1473647640735
+2016-08-29 22:34:36,067 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.HDFSEventSink$1.run(HDFSEventSink.java:394)] Writer callback called.
+</code></pre><p>查看hdfs</p>
+<pre><code>[hadoop@server2 flume-test]$ hadoop fs -ls /flume-test/
+Found 1 items
+-rw-r--r--   3 hadoop supergroup         45 2016-09-11 22:23 /flume-test/events-.1473646940947
+[hadoop@server2 flume-test]$ hadoop fs -cat /flume-test/events-.1473646940947
+hello flume source is avro and write to hdfs
+</code></pre><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a href="http://flume.apache.org/FlumeUserGuide.html" target="_blank" rel="external">http://flume.apache.org/FlumeUserGuide.html</a></li>
+<li><a href="http://my.oschina.net/u/2000675/blog/604267" target="_blank" rel="external">http://my.oschina.net/u/2000675/blog/604267</a></li>
+<li><a href="http://blog.csdn.net/u010022051/article/details/42522441" target="_blank" rel="external">http://blog.csdn.net/u010022051/article/details/42522441</a></li>
+<li><a href="http://www.cnblogs.com/lishouguang/p/4560862.html" target="_blank" rel="external">http://www.cnblogs.com/lishouguang/p/4560862.html</a></li>
+</ul>
 
       
     </div>
@@ -358,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/24/Storm-BaseUsed-demon/" rel="next" title="Storm-BaseUsed_demon">
-                <i class="fa fa-chevron-left"></i> Storm-BaseUsed_demon
+              <a href="/2016/08/24/Storm-BaseUsed-demon/" rel="next" title="Storm Base Used demon">
+                <i class="fa fa-chevron-left"></i> Storm Base Used demon
               </a>
             
           </div>
@@ -523,7 +594,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统要求"><span class="nav-number">2.</span> <span class="nav-text">系统要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载安装"><span class="nav-number">3.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">4.</span> <span class="nav-text">修改配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk环境变量"><span class="nav-number">4.1.</span> <span class="nav-text">jdk环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent启动文件"><span class="nav-number">4.2.</span> <span class="nav-text">agent启动文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#For-each-one-of-the-sources-the-type-is-defined"><span class="nav-number"></span> <span class="nav-text">For each one of the sources, the type is defined</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Each-sink’s-type-must-be-defined"><span class="nav-number"></span> <span class="nav-text">Each sink’s type must be defined</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Each-channel’s-type-is-defined"><span class="nav-number"></span> <span class="nav-text">Each channel’s type is defined.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动测试"><span class="nav-number">1.</span> <span class="nav-text">启动测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
             
           </div>
         </section>
