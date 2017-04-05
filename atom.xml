@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.guinguo.top/"/>
-  <updated>2016-09-12T03:21:36.104Z</updated>
+  <updated>2016-09-14T16:47:59.185Z</updated>
   <id>http://www.guinguo.top/</id>
   
   <author>
@@ -16,25 +16,139 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Kafka Use</title>
+    <link href="http://www.guinguo.top/2016/09/13/Kafka-Use/"/>
+    <id>http://www.guinguo.top/2016/09/13/Kafka-Use/</id>
+    <published>2016-09-13T03:03:55.000Z</published>
+    <updated>2016-09-14T16:47:59.185Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Kafka简介&quot;&gt;&lt;a href=&quot;#Kafka简介&quot; class=&quot;headerlink&quot; title=&quot;Kafka简介&quot;&gt;&lt;/a&gt;Kafka简介&lt;/h2&gt;&lt;p&gt;　　Kafka是一个高吞吐量的分布式消息订阅发布系统，它采用独特的设计提供消息传递系统的功能。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;术语&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt; Kafka维护的消息流称为topic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;物理上不同的topic的消息分开存储，逻辑上一个topic的消息虽然保存于一个或多个broker上，
+但用户只需指定消息的topic即可生产或者消费数据而不必担心数据存于何处
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;producer&lt;/strong&gt; 消息发布者称为producer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;consumer&lt;/strong&gt; 订阅并消费消息的称为consumer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;broker&lt;/strong&gt; Kafka集群中的每个节点称为broker&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;partition&lt;/strong&gt; 物理概念，每个topic包含一个或者多个partition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://kafka.apache.org/images/producer_consumer.png&quot; alt=&quot;Kafka&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;下载解压&quot;&gt;&lt;a href=&quot;#下载解压&quot; class=&quot;headerlink&quot; title=&quot;下载解压&quot;&gt;&lt;/a&gt;下载解压&lt;/h2&gt;&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;wget  http://archive.apache.org/dist/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz
+tar -zxvf kafka_2.11-0.10.0.0.tgz
+mv kafka_2.11-0.10.0.0 kafka
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;h2 id=&quot;配置分发&quot;&gt;&lt;a href=&quot;#配置分发&quot; class=&quot;headerlink&quot; title=&quot;配置分发&quot;&gt;&lt;/a&gt;配置分发&lt;/h2&gt;&lt;p&gt;kafka自带zookeeper，但是我们使用我们自己的,找到zookeeper.connect 这一配置项，修改&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;cd kafka/config
+vi server.properties
+     zookeeper.connect=server1:2181,server2:2181,server3:2181
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;创建一个启动脚本用于启动Kafka&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;vi kafka/start.sh
+nohup bin/kafka-server-start.sh     config/server.properties &amp;gt; kafka.log 2&amp;gt;&amp;amp;1 &amp;amp;
+:wq
+chmod +x kafka/start.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;复制到其他节点&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;scp -r kafka server2:~/
+scp -r kafka server3:~/
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;h2 id=&quot;启动测试&quot;&gt;&lt;a href=&quot;#启动测试&quot; class=&quot;headerlink&quot; title=&quot;启动测试&quot;&gt;&lt;/a&gt;启动测试&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;首先启动zookeeper&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;zkServer.sh start
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;再启动Kafka&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;./kafka/start.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用jps命令查看&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;   [hadoop@server1 ~]$ jps&lt;br&gt; 19114 JournalNode&lt;br&gt; 19979 Jps&lt;br&gt; 18400 JobHistoryServer&lt;br&gt; 18479 ResourceManager&lt;br&gt; 18331 DFSZKFailoverController&lt;br&gt; 18277 QuorumPeerMain&lt;br&gt; 11797 NameNode&lt;br&gt; 12485 Kafka&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt; 可以看到已经启动了&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建topic&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server3 ~]$ cd kafka
+[hadoop@server3 ~]$ bin/kafka-topics.sh --zookeeper server1:2181 --create --topic test-kafka --replication-factor 2 --partitions 2
+Created topic &amp;quot;test-kafka&amp;quot;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt; 这条命令指定了zookeeper节点为server1(随便指定一个都行，因为zk是一个集群) 创建一个名为test-kafka的topic，副本数为2&lt;/p&gt;
+&lt;p&gt; 可以查看zk上面是否已经有了这个topic&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server3 kafka]$ bin/kafka-topics.sh --zookeeper server1:2181 --list
+test-kafka
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;查看topic描述&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server3 kafka]$ bin/kafka-topics.sh --zookeeper server1:2181 --describe --topic test-kafka
+Topic:test-kafka    PartitionCount:2    ReplicationFactor:2    Configs:
+Topic: test-kafka    Partition: 0    Leader: 2    Replicas: 2,3    Isr: 2,3
+Topic: test-kafka    Partition: 1    Leader: 3    Replicas: 3,1    Isr: 3,1
+[hadoop@server3 kafka]$
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt; 可以看到test-kafka 有两个partition， partition 0 上 存在Leader 2 (Broker2)，因为副本数为2，所以Broker3也存了一份，&lt;br&gt; 这个Leader表示，我在Broker2这个节点找不到就到Broker3那里去找，提高了可靠性，不会因为某台机子宕掉了而停止工作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;启动消费者与生产者&lt;/p&gt;
+&lt;p&gt; server2为生产者，server3消费者–zookeeper 后面跟zk集群中某一台机子就行&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[hadoop@server2 kafka]$ bin/kafka-console-producer.sh --broker-list server3:9092 --topic test-kafka 
+test kafka 
+hello  I&amp;apos;m guin_guo
+[hadoop@server3 kafka]$ bin/kafka-console-consumer.sh --zookeeper server1:2181 --topic test-kafka
+test kafka 
+hello  I&amp;apos;m guin_guo
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在server2上输入(生产)内容，server3就显示(消费)出来了&lt;/p&gt;
+&lt;h2 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://kafka.apache.org/documentation.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://kafka.apache.org/documentation.html&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      Kafka集群的安装
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
+    
+    
+      <category term="kafka" scheme="http://www.guinguo.top/tags/kafka/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Flume Use</title>
     <link href="http://www.guinguo.top/2016/08/29/Flume-Use/"/>
     <id>http://www.guinguo.top/2016/08/29/Flume-Use/</id>
     <published>2016-08-29T09:45:13.000Z</published>
-    <updated>2016-09-12T03:21:36.104Z</updated>
+    <updated>2016-09-12T05:02:06.576Z</updated>
     
     <content type="html">&lt;p&gt;　　Apache Flume是一个分布式，可靠性，可用性的系统，可以有效地从不同的数据源收集，整合，和移动大量日志数据到其他的存储（HDFS，HBase etc…）&lt;br&gt;flume其实没有集群概念,每个flume都是一个独立的个体，每个flume agent收集数据汇总到flume collector，由collector写入flume storage。&lt;br&gt;&lt;img src=&quot;http://flume.apache.org/_images/UserGuide_image00.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;　　Flume event是一个有效字节数据单元和一组可选的字符串属性组成.Flume agent是一个JVM进程，控制组件事件流从外部流向目的地.Flume消费外部源传送给它的数据，像web server。外部数据源以Flume Source认可的形式传递给flume，例如，Avro Flume 源可以用来从Avro客户端或者从Flume代理的Avro 槽(sink) 流出的事件流接收Avro事件。类似的流可以使用第一Thrift Sink或者一个Flume Thrift Rpc 客户端，或者用任意语言编写的遵循Thrift协议栈的Thrift客户端。&lt;br&gt;  当一个Sink 源接收到一个事件时，它可以存储到一个或者多个渠道(channel)。channel是存储事件直到事件被sink消费。文件渠道(channel)，就是一种，它支持本地文件系统，Sink 从channel移除一个事件并把它放到外部仓库像HDFS(通过Flume HDFS sink)，或者直接（转发）流向下一个数据源被其使用。指定agent中的source和sink 在channel上进行异步事件处理&lt;/p&gt;
 &lt;p&gt;&lt;hr&gt;以上翻译自flume官网，措辞不对请见谅！&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;server1作为collector，server2 作为agent。实现agent连接collector然后想collector发送日志，最终collector将日志写到HDFS。
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;系统要求&quot;&gt;&lt;a href=&quot;#系统要求&quot; class=&quot;headerlink&quot; title=&quot;系统要求&quot;&gt;&lt;/a&gt;系统要求&lt;/h2&gt;&lt;ol&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;  server1作为collector，server2 作为agent。实现agent连接collector然后想collector发送日志，最终collector将日志写到HDFS。&lt;/p&gt;
+&lt;h2 id=&quot;系统要求&quot;&gt;&lt;a href=&quot;#系统要求&quot; class=&quot;headerlink&quot; title=&quot;系统要求&quot;&gt;&lt;/a&gt;系统要求&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;jdk 大于1.6，最好是1.7&lt;/li&gt;
 &lt;li&gt;内存 足够的内存配置以使用source，channels，sinks&lt;/li&gt;
 &lt;li&gt;磁盘空间 足够的磁盘空间使用source，channels，sinks&lt;/li&gt;
 &lt;li&gt;目录权限 agent可以直接读写响应目录&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;下载安装&quot;&gt;&lt;a href=&quot;#下载安装&quot; class=&quot;headerlink&quot; title=&quot;下载安装&quot;&gt;&lt;/a&gt;下载安装&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;[hadoop@server1 ~]$ wget http://www-us.apache.org/dist/flume/stable/apache-flume-1.6.0-bin.tar.gz
-
 [hadoop@server1 ~]$ tar -zxvf apache-flume-1.6.0-bin.tar.gz 
 [hadoop@server1 ~]$ mv apache-flume-1.6.0-bin flume-1.6.0
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;修改配置文件&quot;&gt;&lt;a href=&quot;#修改配置文件&quot; class=&quot;headerlink&quot; title=&quot;修改配置文件&quot;&gt;&lt;/a&gt;修改配置文件&lt;/h2&gt;&lt;h3 id=&quot;jdk环境变量&quot;&gt;&lt;a href=&quot;#jdk环境变量&quot; class=&quot;headerlink&quot; title=&quot;jdk环境变量&quot;&gt;&lt;/a&gt;jdk环境变量&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;[hadoop@server1 ~]$ mv flume-1.6.0/conf/flume-env.sh.template flume-1.6.0/conf/flume-env.sh          
@@ -56,9 +170,9 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;server2上的配置&lt;/p&gt;
 &lt;p&gt;  [hadoop@server2 flume-1.6.0]$ cat conf/avro.conf&lt;br&gt;  a1.sources = r1&lt;br&gt;  a1.channels = c1&lt;br&gt;  a1.sinks = k1&lt;/p&gt;
-&lt;h1 id=&quot;For-each-one-of-the-sources-the-type-is-defined&quot;&gt;&lt;a href=&quot;#For-each-one-of-the-sources-the-type-is-defined&quot; class=&quot;headerlink&quot; title=&quot;For each one of the sources, the type is defined&quot;&gt;&lt;/a&gt;For each one of the sources, the type is defined&lt;/h1&gt;&lt;p&gt;  a1.sources.r1.type = spooldir&lt;br&gt;  a1.sources.r1.spoolDir = /home/hadoop/flume-test&lt;br&gt;  a1.sources.r1.channels = c1&lt;/p&gt;
-&lt;h1 id=&quot;Each-sink’s-type-must-be-defined&quot;&gt;&lt;a href=&quot;#Each-sink’s-type-must-be-defined&quot; class=&quot;headerlink&quot; title=&quot;Each sink’s type must be defined&quot;&gt;&lt;/a&gt;Each sink’s type must be defined&lt;/h1&gt;&lt;p&gt;  a1.sinks.k1.type = avro&lt;br&gt;  a1.sinks.k1.hostname = server1&lt;br&gt;  a1.sinks.k1.port = 4141&lt;br&gt;  a1.sinks.k1.channel = c1&lt;/p&gt;
-&lt;h1 id=&quot;Each-channel’s-type-is-defined&quot;&gt;&lt;a href=&quot;#Each-channel’s-type-is-defined&quot; class=&quot;headerlink&quot; title=&quot;Each channel’s type is defined.&quot;&gt;&lt;/a&gt;Each channel’s type is defined.&lt;/h1&gt;&lt;p&gt;  a1.channels.c1.type = memory&lt;br&gt;  a1.channels.c1.capacity = 1000&lt;br&gt;  a1.channels.c1.transcationCapacity = 100&lt;/p&gt;
+&lt;p&gt;  #For each one of the sources, the type is defined&lt;br&gt;  a1.sources.r1.type = spooldir&lt;br&gt;  a1.sources.r1.spoolDir = /home/hadoop/flume-test&lt;br&gt;  a1.sources.r1.channels = c1&lt;/p&gt;
+&lt;p&gt;  #Each sink’s type must be defined&lt;br&gt;  a1.sinks.k1.type = avro&lt;br&gt;  a1.sinks.k1.hostname = server1&lt;br&gt;  a1.sinks.k1.port = 4141&lt;br&gt;  a1.sinks.k1.channel = c1&lt;/p&gt;
+&lt;p&gt;  #Each channel’s type is defined.&lt;br&gt;  a1.channels.c1.type = memory&lt;br&gt;  a1.channels.c1.capacity = 1000&lt;br&gt;  a1.channels.c1.transcationCapacity = 100&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;启动测试&quot;&gt;&lt;a href=&quot;#启动测试&quot; class=&quot;headerlink&quot; title=&quot;启动测试&quot;&gt;&lt;/a&gt;启动测试&lt;/h2&gt;&lt;p&gt;　　&lt;br&gt;　　以上Avro配置是：server2监听目录/home/hadoop/flume-test，如果有文件变化，就把事件传递到server1的4141端口上，server1监听本机的4141端口，如果有事件接收，就传递到hdfs hdfs://server1:9000/flume-test/上存储下来 文件名前缀events-&lt;/p&gt;
@@ -83,18 +197,13 @@
 2016-08-29 22:34:32,796 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter.close(BucketWriter.java:363)] Closing hdfs://server1:9000/flume-test//events-.1473647640735.tmp
 2016-08-29 22:34:35,975 (hdfs-k1-call-runner-0) [INFO - org.apache.flume.sink.hdfs.BucketWriter$8.call(BucketWriter.java:629)] Renaming hdfs://server1:9000/flume-test/events-.1473647640735.tmp to hdfs://server1:9000/flume-test/events-.1473647640735
 2016-08-29 22:34:36,067 (hdfs-k1-roll-timer-0) [INFO - org.apache.flume.sink.hdfs.HDFSEventSink$1.run(HDFSEventSink.java:394)] Writer callback called.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看hdfs&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看hdfs 发现已经有了文件，flume测试成功！&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[hadoop@server2 flume-test]$ hadoop fs -ls /flume-test/
 Found 1 items
--rw-r--r--   3 hadoop supergroup         45 2016-09-11 22:23 /flume-test/events-.1473646940947
+-rw-r--r--   3 hadoop supergroup         45 2016-08-29 22:23 /flume-test/events-.1473646940947
 [hadoop@server2 flume-test]$ hadoop fs -cat /flume-test/events-.1473646940947
 hello flume source is avro and write to hdfs
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://flume.apache.org/FlumeUserGuide.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://my.oschina.net/u/2000675/blog/604267&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://my.oschina.net/u/2000675/blog/604267&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/u010022051/article/details/42522441&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/u010022051/article/details/42522441&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/lishouguang/p/4560862.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/lishouguang/p/4560862.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;参考文档&quot;&gt;&lt;a href=&quot;#参考文档&quot; class=&quot;headerlink&quot; title=&quot;参考文档&quot;&gt;&lt;/a&gt;参考文档&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://flume.apache.org/FlumeUserGuide.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://flume.apache.org/FlumeUserGuide.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://my.oschina.net/u/2000675/blog/604267&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://my.oschina.net/u/2000675/blog/604267&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.csdn.net/u010022051/article/details/42522441&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/u010022051/article/details/42522441&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.cnblogs.com/lishouguang/p/4560862.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/lishouguang/p/4560862.html&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -2215,40 +2324,6 @@ OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
       <category term="java虚拟机" scheme="http://www.guinguo.top/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
       <category term="编译openjdk" scheme="http://www.guinguo.top/tags/%E7%BC%96%E8%AF%91openjdk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解除网页内容复制限制</title>
-    <link href="http://www.guinguo.top/2016/04/30/%E8%A7%A3%E9%99%A4%E7%BD%91%E9%A1%B5%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
-    <id>http://www.guinguo.top/2016/04/30/解除网页内容复制限制/</id>
-    <published>2016-04-30T10:44:23.000Z</published>
-    <updated>2016-04-30T11:26:45.520Z</updated>
-    
-    <content type="html">&lt;p&gt;首先呢，背景是自己要把某个页面的数据拿下来打印，好了，一般的话，我们会选中，然后按Ctrl+C复制，到Word或者其他地方Ctrl+V粘贴，然而发现并没有，&lt;del&gt; 我去&lt;/del&gt;。。。&lt;/p&gt;
-&lt;p&gt;好吧，进入主题，首先我百度了一下，发现不是禁用脚本，就是保存网页，然而并没有什么卵用，我找了几个Chrome的解禁插件，也没用。。。&lt;br&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;这就尴尬了&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;但是&lt;/strong&gt;,不要慌。H5有一个contenteditable 的属性，当其为true是，内容可编辑，这就好办了。&lt;br&gt;怎么用呢？&lt;/p&gt;
-&lt;p&gt;首先，你要找到你需要的内容的元素id，&lt;br&gt;按F12，第2步选中内容&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/getId.jpg&quot;&gt;&lt;br&gt;然后复制下来，换到下面代码中的page-body去&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;方法1：&lt;br&gt;在当前页面的浏览器地址栏输入：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     javascript:&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;page-body&#39;&lt;/span&gt;).setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;contentEditable&#39;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;方法2：&lt;br&gt;在当前页面按F12进入调试工具，切换到console窗口，键入&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;     &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;page-body&#39;&lt;/span&gt;).setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;contentEditable&#39;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;回车。两种方法结果一样~&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;&lt;h4&gt;那么神奇的事情即将发生&lt;/h4&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/contentEditable.gif&quot;&gt;&lt;p&gt;&lt;/p&gt;
-&lt;p&gt;###直接把内容拉倒编辑器或者Word即可&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      一行代码解除限制~
-    
-    </summary>
-    
-      <category term="小技巧" scheme="http://www.guinguo.top/categories/%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
-    
-    
-      <category term="网页复制内容" scheme="http://www.guinguo.top/tags/%E7%BD%91%E9%A1%B5%E5%A4%8D%E5%88%B6%E5%86%85%E5%AE%B9/"/>
-    
-      <category term="解除复制限制" scheme="http://www.guinguo.top/tags/%E8%A7%A3%E9%99%A4%E5%A4%8D%E5%88%B6%E9%99%90%E5%88%B6/"/>
     
   </entry>
   

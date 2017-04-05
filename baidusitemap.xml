@@ -3,6 +3,45 @@
 
 
     
+    
+  <url>
+    <loc>http://www.guinguo.top/2016/09/13/Kafka-Use/</loc>
+    <lastmod>2016-09-14T16:47:59.185Z</lastmod>
+    <data>
+        <display>
+        <title>Kafka Use</title>
+        <pubTime>2016-09-13T03:03:55.000Z</pubTime>
+        
+        <tag>kafka</tag>
+         
+         
+           
+             
+              <breadCrumb title="BigData" url="http://www.guinguo.top/categories/BigData/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.guinguo.top/2016/08/29/Flume-Use/</loc>
+    <lastmod>2016-09-12T05:02:06.576Z</lastmod>
+    <data>
+        <display>
+        <title>Flume Use</title>
+        <pubTime>2016-08-29T09:45:13.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="BigData" url="http://www.guinguo.top/categories/BigData/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
   <url>
     <loc>http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/</loc>
     <lastmod>2016-09-12T03:24:17.364Z</lastmod>
@@ -160,25 +199,6 @@
     </data>
     </url>
 
-    
-  <url>
-    <loc>http://www.guinguo.top/2016/08/29/Flume-Use/</loc>
-    <lastmod>2016-09-12T03:21:36.104Z</lastmod>
-    <data>
-        <display>
-        <title>Flume Use</title>
-        <pubTime>2016-08-29T09:45:13.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="BigData" url="http://www.guinguo.top/categories/BigData/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
     
   <url>
     <loc>http://www.guinguo.top/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/</loc>
@@ -352,9 +372,9 @@
         <title>hello hexo</title>
         <pubTime>2016-04-06T02:02:01.000Z</pubTime>
         
-        <tag>文章</tag>
-         
         <tag>hexo</tag>
+         
+        <tag>文章</tag>
          
          
            
