@@ -65,15 +65,15 @@
 <meta property="og:url" content="http://www.guinguo.top/2016/06/05/周总结-Hadoop-HA/index.html">
 <meta property="og:site_name" content="Guinguo's blog">
 <meta property="og:description" content="集群部署Hadoop HA">
-<meta property="og:image" content="http://www.linuxidc.com/upload/2012_09/120913111826701.png">
+<meta property="og:image" content="http://www.guinguo.top/uploads/hadoop-ha.png">
 <meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/ha1.jpeg">
 <meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/ha2.jpeg">
 <meta property="og:image" content="http://7xsve9.com1.z0.glb.clouddn.com/mr.jpeg">
-<meta property="og:updated_time" content="2016-06-07T10:46:05.890Z">
+<meta property="og:updated_time" content="2017-04-23T07:25:21.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="周总结--Hadoop HA">
 <meta name="twitter:description" content="集群部署Hadoop HA">
-<meta name="twitter:image" content="http://www.linuxidc.com/upload/2012_09/120913111826701.png">
+<meta name="twitter:image" content="http://www.guinguo.top/uploads/hadoop-ha.png">
 
 
 
@@ -338,7 +338,7 @@
       
         <p>又到一年高考季，我也要考汇编了2333</p>
 <p>　　这一周一直在搞这个Hadoop的集群部署，花了我好久。。。<br>一来是没有经验，二来是机子配置不行，跑四台虚拟机很卡。</p>
-<p>好了，什么是Hadoop HA呢？ HA–&gt;High Available 高可靠性。<br>简单的说就是之前的HDFS集群NameNode 存在单点故障（SPOF ），而Hadoop 2.0 提供了NameNode 跟SecondryNameNode，<br>一个处于Active状态，一个处于Sandby状态（准备），如果Active节点挂掉了，Sandby节点就会自动切换为Active节点，这种自动切换提供了可靠性，相对于Hadoop1.0来说。<br><img src="http://www.linuxidc.com/upload/2012_09/120913111826701.png" alt="HA"><br>因为网上教程够多了，而且很多网络环境都不同，所以具体的配置我就不详细讲，底部给出参考博客，要有的环境，需要先装好Zookeeper，我上一篇就有具体讲怎么安装。</p>
+<p>好了，什么是Hadoop HA呢？ HA–&gt;High Available 高可靠性。<br>简单的说就是之前的HDFS集群NameNode 存在单点故障（SPOF ），而Hadoop 2.0 提供了NameNode 跟SecondryNameNode，<br>一个处于Active状态，一个处于Sandby状态（准备），如果Active节点挂掉了，Sandby节点就会自动切换为Active节点，这种自动切换提供了可靠性，相对于Hadoop1.0来说。<br><img src="/uploads/hadoop-ha.png" alt="HA"><br>因为网上教程够多了，而且很多网络环境都不同，所以具体的配置我就不详细讲，底部给出参考博客，要有的环境，需要先装好Zookeeper，我上一篇就有具体讲怎么安装。</p>
 <ol>
 <li>解压(我是使用源码自己编译的tar包–编了很久233)</li>
 <li>改配置文件<pre><code>- core-site.xml

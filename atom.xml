@@ -1787,11 +1787,11 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
     <link href="http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/"/>
     <id>http://www.guinguo.top/2016/06/05/周总结-Hadoop-HA/</id>
     <published>2016-06-05T15:26:23.000Z</published>
-    <updated>2016-06-07T10:46:05.890Z</updated>
+    <updated>2017-04-23T07:25:21.510Z</updated>
     
     <content type="html">&lt;p&gt;又到一年高考季，我也要考汇编了2333&lt;/p&gt;
 &lt;p&gt;　　这一周一直在搞这个Hadoop的集群部署，花了我好久。。。&lt;br&gt;一来是没有经验，二来是机子配置不行，跑四台虚拟机很卡。&lt;/p&gt;
-&lt;p&gt;好了，什么是Hadoop HA呢？ HA–&amp;gt;High Available 高可靠性。&lt;br&gt;简单的说就是之前的HDFS集群NameNode 存在单点故障（SPOF ），而Hadoop 2.0 提供了NameNode 跟SecondryNameNode，&lt;br&gt;一个处于Active状态，一个处于Sandby状态（准备），如果Active节点挂掉了，Sandby节点就会自动切换为Active节点，这种自动切换提供了可靠性，相对于Hadoop1.0来说。&lt;br&gt;&lt;img src=&quot;http://www.linuxidc.com/upload/2012_09/120913111826701.png&quot; alt=&quot;HA&quot;&gt;&lt;br&gt;因为网上教程够多了，而且很多网络环境都不同，所以具体的配置我就不详细讲，底部给出参考博客，要有的环境，需要先装好Zookeeper，我上一篇就有具体讲怎么安装。&lt;/p&gt;
+&lt;p&gt;好了，什么是Hadoop HA呢？ HA–&amp;gt;High Available 高可靠性。&lt;br&gt;简单的说就是之前的HDFS集群NameNode 存在单点故障（SPOF ），而Hadoop 2.0 提供了NameNode 跟SecondryNameNode，&lt;br&gt;一个处于Active状态，一个处于Sandby状态（准备），如果Active节点挂掉了，Sandby节点就会自动切换为Active节点，这种自动切换提供了可靠性，相对于Hadoop1.0来说。&lt;br&gt;&lt;img src=&quot;/uploads/hadoop-ha.png&quot; alt=&quot;HA&quot;&gt;&lt;br&gt;因为网上教程够多了，而且很多网络环境都不同，所以具体的配置我就不详细讲，底部给出参考博客，要有的环境，需要先装好Zookeeper，我上一篇就有具体讲怎么安装。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;解压(我是使用源码自己编译的tar包–编了很久233)&lt;/li&gt;
 &lt;li&gt;改配置文件&lt;pre&gt;&lt;code&gt;- core-site.xml

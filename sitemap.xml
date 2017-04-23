@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/</loc>
+    
+    <lastmod>2017-04-23T07:25:21.510Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.guinguo.top/about/index.html</loc>
     
     <lastmod>2017-04-05T23:32:52.229Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>http://www.guinguo.top/2016/05/26/Zookeeper%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E4%BA%8E%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2016-06-07T10:47:03.679Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/</loc>
-    
-    <lastmod>2016-06-07T10:46:05.890Z</lastmod>
     
   </url>
   

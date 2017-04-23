@@ -3,6 +3,26 @@
 
 
     
+  <url>
+    <loc>http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/</loc>
+    <lastmod>2017-04-23T07:25:21.510Z</lastmod>
+    <data>
+        <display>
+        <title>周总结--Hadoop HA</title>
+        <pubTime>2016-06-05T15:26:23.000Z</pubTime>
+        
+        <tag>Hadoop</tag>
+         
+         
+           
+             
+              <breadCrumb title="周总结" url="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.guinguo.top/2016/09/13/Kafka-Use/</loc>
@@ -223,26 +243,6 @@
 
     
   <url>
-    <loc>http://www.guinguo.top/2016/06/05/%E5%91%A8%E6%80%BB%E7%BB%93-Hadoop-HA/</loc>
-    <lastmod>2016-06-07T10:46:05.890Z</lastmod>
-    <data>
-        <display>
-        <title>周总结--Hadoop HA</title>
-        <pubTime>2016-06-05T15:26:23.000Z</pubTime>
-        
-        <tag>Hadoop</tag>
-         
-         
-           
-             
-              <breadCrumb title="周总结" url="http://www.guinguo.top/categories/%E5%91%A8%E6%80%BB%E7%BB%93/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.guinguo.top/2016/06/06/VMware-%E5%A2%9E%E5%8A%A0%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F-Centos6/</loc>
     <lastmod>2016-06-05T16:16:44.120Z</lastmod>
     <data>
@@ -372,9 +372,9 @@
         <title>hello hexo</title>
         <pubTime>2016-04-06T02:02:01.000Z</pubTime>
         
-        <tag>hexo</tag>
-         
         <tag>文章</tag>
+         
+        <tag>hexo</tag>
          
          
            
