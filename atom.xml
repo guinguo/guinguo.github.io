@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.guinguo.top/"/>
-  <updated>2016-09-14T16:47:59.185Z</updated>
+  <updated>2017-08-07T16:28:39.752Z</updated>
   <id>http://www.guinguo.top/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CDH5 HBase 参数调优</title>
+    <link href="http://www.guinguo.top/2017/08/07/CDH5-HBase-%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/"/>
+    <id>http://www.guinguo.top/2017/08/07/CDH5-HBase-参数调优/</id>
+    <published>2017-08-07T15:44:22.000Z</published>
+    <updated>2017-08-07T16:28:39.752Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;在CDH中使用HBase是很方便的，直接添加服务就可以了。&lt;br&gt;下面记录一些日常遇到的问题以及参数的一些调整&lt;/p&gt;
+&lt;h3 id=&quot;1-日志记录等级&quot;&gt;&lt;a href=&quot;#1-日志记录等级&quot; class=&quot;headerlink&quot; title=&quot;1.日志记录等级&quot;&gt;&lt;/a&gt;1.日志记录等级&lt;/h3&gt;&lt;p&gt;在cdh中，每个服务都会有log记录的，默认是INFO级别，即什么信息都记录下来，这有有个优点就是&lt;br&gt;如果遇到什么问题，查log就可以很快定位到出错的地方，并解决它。&lt;br&gt;但是也有一个缺点，就是正常运行，不过log越来越大，占用着磁盘空间。（如果不在乎磁盘容量的可以忽略）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;调整&lt;/strong&gt;&lt;br&gt;把log文件减少数量到3（默认10），调节日志级别为WARN，调整单个日志大小为100M（默认是200M）&lt;br&gt;这样，log占用的磁盘容量最多也就300M，而且记录WARN级别以上的信息，忽略INFO的大量日志信息。&lt;/p&gt;
+&lt;p&gt;具体操作：在HBase界面的配置中查找log，把各个【记录阈值】切换为WARN，几个服务的【最大日志大小】跟【最大日志文件备份】相应改过来，保存重启即可。&lt;br&gt;&lt;del&gt;PS:这个调整适用于其他服务，如果需要的话&lt;/del&gt;&lt;/p&gt;
+&lt;h3 id=&quot;2-手动compact与spilt&quot;&gt;&lt;a href=&quot;#2-手动compact与spilt&quot; class=&quot;headerlink&quot; title=&quot;2.手动compact与spilt&quot;&gt;&lt;/a&gt;2.手动compact与spilt&lt;/h3&gt;&lt;p&gt;compact：&lt;br&gt;Hbase为了防止小文件（被刷到磁盘的menstore）过多，以保证保证查询效率，hbase需要在必要     的时候将这些小的store file合并成相对较大的store file，这个过程就称之为compaction，主要有：minor  compaction和major compaction&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;major_compact：是将所有的store file合并成一个&lt;/li&gt;
+&lt;li&gt;minor_compact:是合并一部分store file,具体有以下几个参数合作完成：&lt;pre&gt;&lt;code&gt;hbase.hstore.compaction.min :默认值为 3，表示至少需要三个满足条件的store file时，minor compaction才会启动
+hbase.hstore.compaction.max 默认值为10，表示一次minor compaction中最多选取10个store file
+hbase.hstore.compaction.min.size 表示文件大小小于该值的store file 一定会加入到minor compaction的store file中
+hbase.hstore.compaction.max.size 表示文件大小大于该值的store file 一定会被minor compaction排除
+hbase.hstore.compaction.ratio 将store file 按照文件年龄排序（older to younger），minor compaction总是从older store file开始选择，如果该文件的size 小于它后面hbase.hstore.compaction.max 个store file size 之和乘以 该ratio，则该store file 也将加入到minor compaction 中。
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常生产环境会关闭自动major_compact，因为当进行major_compact时，HBase的RegionServer暂时无法提供服务，造成region下线，无法写入数据的问题，我之前就遇到过，程序写入hbase写着就报错了，查log才发现。&lt;br&gt;可以选择一个空闲时间进行手动major_compact&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;调整&lt;/strong&gt;&lt;br&gt;搜索：hbase.hregion.majorcompaction 改成0 表示不进行最大化压缩，默认是7天一次&lt;br&gt;然后自己找个空闲时间执行major_compact,shell命令是 major_compact tablename&lt;/p&gt;
+&lt;p&gt;spilt:&lt;br&gt;HBase会在region量达到一定程度时，自己进行 split。什么时候自动进行split呢，这是根据Split Policy来决定的，0.94之前是一个定值 (ConstantSizeRegionSplitPolicy)，之后改成根据一个公式(IncreasingToUpperBoundRegionSplitPolicy) 来计算是否要split&lt;/p&gt;
+&lt;p&gt;一般我是在建表的时候预估数据量的大小，进行与分区，就不会造成自动spilt了&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hbase org.apache.hadoop.hbase.util.RegionSplitter -c 100 -f basic:other &amp;apos;user&amp;apos; HexStringSplit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;建立user表，预先创建100个分区，有两个columnfamily basic跟other，多的用|分隔加在后面，使用十六进制字符串分隔，如果是以十六进制字符串作为行键rowkey或者行键rowkey的前缀是十六进制字符串，用HexStringSplit就比较合适；UniformSplit会把行键均匀地分割多个部分，如果行将rowkey是随机的字节数组，用UniformSplit就比较合适；&lt;/p&gt;
+&lt;p&gt;手动spilt命令：split ‘regionName’, ‘splitKey’&lt;/p&gt;
+&lt;h3 id=&quot;3-JVM内存&quot;&gt;&lt;a href=&quot;#3-JVM内存&quot; class=&quot;headerlink&quot; title=&quot;3.JVM内存&quot;&gt;&lt;/a&gt;3.JVM内存&lt;/h3&gt;&lt;p&gt;搜索 【Java 堆栈大小】 根据自己的环境进行调节，我这边一开始没怎么用，所以给少了，后来发现regionserver挂了，查log才发现是OOM，所以给到1G的jvm内存，之前给256M的. &lt;/p&gt;
+&lt;p&gt;暂时先记这么多，之后遇到其他的再补充，如果有什么错误的地方，欢迎提出来一起讨论学习。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      CDH5中HBase的性能调优
+    
+    </summary>
+    
+      <category term="BigData" scheme="http://www.guinguo.top/categories/BigData/"/>
+    
+    
+      <category term="HBase调优" scheme="http://www.guinguo.top/tags/HBase%E8%B0%83%E4%BC%98/"/>
+    
+  </entry>
   
   <entry>
     <title>Kafka Use</title>
@@ -2254,76 +2299,6 @@ service iptables save
     
     
       <category term="CentOS开启端口" scheme="http://www.guinguo.top/tags/CentOS%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM学习之OpenJDK源码编译</title>
-    <link href="http://www.guinguo.top/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"/>
-    <id>http://www.guinguo.top/2016/05/03/JVM学习之OpenJDK源码编译/</id>
-    <published>2016-05-03T02:26:26.000Z</published>
-    <updated>2016-05-03T15:19:14.987Z</updated>
-    
-    <content type="html">&lt;p&gt;在centos7下进行编译&lt;br&gt;具体步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;获取openjdk源码&lt;/li&gt;
-&lt;li&gt;安装openjdk6–BoostrapJK&lt;/li&gt;
-&lt;li&gt;安装编译时的依赖&lt;/li&gt;
-&lt;li&gt;配置环境变量&lt;/li&gt;
-&lt;li&gt;编译&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;1. 获取openjdk源码&lt;/h3&gt;&lt;br&gt;可以到这里去下载，&lt;a href=&quot;https://jdk7.java.net/source.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OpenJDK Source Releases&lt;/a&gt;&lt;br&gt;我下载的是openjdk-7u40版本，openjdk7，update40，build43&lt;br&gt;&lt;h3&gt;2. 下载jdk6–BoostrapJDK&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;我使用jdk6来辅助编译。可以到oracle官网下载，&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase6-419409.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;jdk-6u45-linux-x64.bin&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;/p&gt;&lt;h3&gt;3.安装编译时的依赖&lt;/h3&gt;&lt;br&gt;可以使用以下命令一次安装完成&lt;p&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;yum -y install build-essential gawk m4
-openjkd-6-jkd libasound2-dev libcups2-dev 
-libxrender-dev xorg-dev xutils-dev
-xllproto-print-dev binutils libmotif3
-libmotif-dev ant
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;&lt;/p&gt;&lt;h3&gt;3.配置环境变量,编译&lt;/h3&gt;&lt;br&gt;OpenJKD在编译时读取的环境变量很多，但是大多数都有默认值，必须设置的只有两个：LANG和ALT_BOOTDIR。分别为C跟bootJDK的路径&lt;br&gt;所有的环境变量可以使用下面的脚本设置：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;export LANG=C&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#Bootstrap JDK 安装位置&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_BOOTDIR=/opt/openJDK/jdk1.6.0_45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#允许自动下载&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALLOW_DOWNLOADS=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#并行编译的线程数，和CPU内核数量一致即可&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export HOTSPOT_BUILD_JOBS=2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_PARALLEL_COMPILE_JOBS=2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#比较本次build出来的映像与先前版本的差异，对于我们没哟意义，&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#必须设置为false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export SKIP_COMPARE_IMAGES=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#使用预编译头文件，不加这个编译会更慢一些&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export USE_PRECOMPILED_HEADER=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#要编译的内容&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_LANGTOOLS=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_HOTSPOT=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export BUILD_JDK=true&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#把它设置为false，可以避开javaws和浏览器java插件的build&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;BUILD_DEPLOY=false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#把它设置为false就不会build出安装包。因为安装包里有些奇怪的依赖&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;BUILD_INSTALL=false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#编译结果所存放的路径&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export ALT_OUTPUTDIR=/opt/openJDK/openjdk/build&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#这两个变量必须去掉&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset CLASSPATH&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset JAVA_HOME&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;unset LD_LIBRARY_PATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
-&lt;p&gt;全部设置结束之后，可以输入 make sanity 检测是否正确，如果一切顺利，会输出：Sanity check passed.就可以编译了。&lt;br&gt;输入make(不加参数默认为make all)，我的虚拟机配置比较低，整个编译的过程用了一个多钟。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;结果如下：&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/build.jpg&quot;&gt;&lt;br&gt;我在虚拟机中编译的，而且配置不高，所以有点慢.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;那么问题来了，如何看结果ne？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;　　编译完成之后，进入OpenJDK源码下的build/j2sdk-image目录,(或者build-debug、build-fastdebug这两个目录)，这是整个JDK完整编译结果，内容为debug版jdk，将其复制到%JAVA_HOME%下，替换Oracle JDK。就可以作为一个完整的JDK使用，编译出来的虚拟机，在-version命令中带有用户的机器名。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[root@localhost ~]# java -version
-openjdk version &amp;quot;1.7.0-internal-debug&amp;quot;
-OpenJDK Runtime Environment (build 1.7.0-internal-debug-root_2016_04_25_20_00-b00)
-OpenJDK 64-Bit Server VM (build 24.0-b56-jvmg, mixed mode)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;　　大多数情况我们只关心Hotspot虚拟机，只想单独编译它的话，那么使用hotspot/make目录下的MakeFile进行替换即可，其他参数与前面一致，这时候虚拟机的输出结果存放在&lt;br&gt;    &lt;code&gt;build/hotspot/outputdir/linux_amd64_compiler2&lt;/code&gt; 中，里面对应了不同的优化级别的目录。&lt;/p&gt;
-&lt;p&gt;进入 目录jvmg，在运行虚拟机前，还要手工编辑目录下的env.sh文件，这个文件由编译脚本自动产生，用于设置虚拟机的环境变量，里面已经发布了”JAVA_HOME，CLASSPATH，HOTSPOT_BUILD_USER” 3个环境变量，还需要增加一个“LD_LIBRSRY_CLASSPATH”：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;LD_LIBRARY_PATH=.:$&amp;#123;JAVA_HOME&amp;#125;/jre/lib/amd64/native_threads:$&amp;#123;JAVA_HOME&amp;#125;/jre/lib/amd64:/opt/openJDK/openjdk/build/hotspot/outputdir/linux_amd64_compiler2/product&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export LD_LIBRARY_PATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;然后执行&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;. ./env.sh
-./gama -version   #有可能是test_gamma,这是自带的一段八皇后代码
-&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;结果如下&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://7xsve9.com1.z0.glb.clouddn.com/jvm.jpg&quot;&gt;&lt;/p&gt;
-&lt;p&gt;　　自己编译的虚拟机成功运行起来，哈哈哈~&lt;br&gt;&lt;img src=&quot;/images/acmusume/32.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;编译过程中有可能报错：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Error: time is more than 10 years from present: 1104530400000 when building java/openjdk* lists.freebsd.org&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;通过修改CurrencyData.properties文件, 把10年之前的时间修改为10年之内即可&lt;br&gt;Index: /usr/openjdk/jdk/src/share/classes/java/util/CurrencyData.properties&lt;br&gt;把2006改掉就可以&lt;del&gt;重新编译了&lt;/del&gt;&lt;img src=&quot;/images/acmusume/01.png&quot; height=&quot;50px&quot; ,=&quot;&quot; width=&quot;50px&quot; style=&quot;margin:0 0&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      自己编译JDK
-    
-    </summary>
-    
-      <category term="JVM学习" scheme="http://www.guinguo.top/categories/JVM%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="java虚拟机" scheme="http://www.guinguo.top/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-      <category term="编译openjdk" scheme="http://www.guinguo.top/tags/%E7%BC%96%E8%AF%91openjdk/"/>
     
   </entry>
   
