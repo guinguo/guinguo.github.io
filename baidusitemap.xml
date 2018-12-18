@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.guinguo.top/2018/12/18/2018%E5%B9%B412%E6%9C%88%E6%9D%82%E8%B0%88/</loc>
+    <lastmod>2018-12-18T15:48:13.505Z</lastmod>
+    <data>
+        <display>
+        <title>2018年12月杂谈</title>
+        <pubTime>2018-12-18T14:42:35.000Z</pubTime>
+        
+        <tag>blog</tag>
+         
+         
+           
+             
+              <breadCrumb title="blog" url="http://www.guinguo.top/categories/blog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.guinguo.top/2017/08/07/CDH5-HBase-%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/</loc>
     <lastmod>2017-08-07T16:28:39.752Z</lastmod>
     <data>
@@ -66,7 +86,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/29/Flume-Use/</loc>
-    <lastmod>2016-09-12T05:02:06.576Z</lastmod>
+    <lastmod>2016-09-12T05:02:06.577Z</lastmod>
     <data>
         <display>
         <title>Flume Use</title>
@@ -84,7 +104,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/24/Storm-BaseUsed-demon/</loc>
-    <lastmod>2016-09-12T03:24:17.364Z</lastmod>
+    <lastmod>2016-09-12T03:24:17.365Z</lastmod>
     <data>
         <display>
         <title>Storm Base Used demon</title>
@@ -124,7 +144,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/08/16/Hadoop-Cluster-Set-Up-P6-Sqoop/</loc>
-    <lastmod>2016-09-12T03:23:57.014Z</lastmod>
+    <lastmod>2016-09-12T03:23:57.015Z</lastmod>
     <data>
         <display>
         <title>Hadoop Cluster Set Up P6 Sqoop</title>
@@ -144,7 +164,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P4-HBase/</loc>
-    <lastmod>2016-09-12T03:23:43.590Z</lastmod>
+    <lastmod>2016-09-12T03:23:43.591Z</lastmod>
     <data>
         <display>
         <title>Hadoop Cluster Set Up P4 HBase</title>
@@ -164,7 +184,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/28/Hadoop-Cluster-Set-Up-P5-Hive/</loc>
-    <lastmod>2016-09-12T03:23:33.518Z</lastmod>
+    <lastmod>2016-09-12T03:23:33.519Z</lastmod>
     <data>
         <display>
         <title>Hadoop Cluster Set Up P5 Hive</title>
@@ -182,7 +202,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/25/Hbase-Shell_Base-Use/</loc>
-    <lastmod>2016-09-12T03:23:19.760Z</lastmod>
+    <lastmod>2016-09-12T03:23:19.761Z</lastmod>
     <data>
         <display>
         <title>Hbase Shell Base Use</title>
@@ -202,7 +222,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P3-Hadoop/</loc>
-    <lastmod>2016-09-12T03:23:10.374Z</lastmod>
+    <lastmod>2016-09-12T03:23:10.375Z</lastmod>
     <data>
         <display>
         <title>Hadoop Cluster Set Up P3_Hadoop</title>
@@ -222,7 +242,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/07/23/Hadoop-Cluster-Set-Up-P1-Prepare/</loc>
-    <lastmod>2016-09-12T03:23:01.981Z</lastmod>
+    <lastmod>2016-09-12T03:23:01.982Z</lastmod>
     <data>
         <display>
         <title>Hadoop Cluster Set Up P1_Prepare</title>
@@ -304,7 +324,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/05/18/VMware%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E6%97%A0%E6%B3%95ping%E9%80%9A%E7%BD%91%E5%85%B3/</loc>
-    <lastmod>2016-05-18T03:08:46.198Z</lastmod>
+    <lastmod>2016-05-18T03:08:46.199Z</lastmod>
     <data>
         <display>
         <title>VMware桥接模式下无法ping通网关</title>
@@ -346,7 +366,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/05/15/Java%E4%B8%AD%E7%9A%84%E6%9E%9A%E4%B8%BE%E7%B1%BBEnum/</loc>
-    <lastmod>2016-05-15T09:03:18.068Z</lastmod>
+    <lastmod>2016-05-15T09:03:18.069Z</lastmod>
     <data>
         <display>
         <title>Java中的枚举类Enum</title>
@@ -386,7 +406,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/04/06/hello-hexo/</loc>
-    <lastmod>2016-05-12T05:42:21.947Z</lastmod>
+    <lastmod>2016-05-12T05:42:21.948Z</lastmod>
     <data>
         <display>
         <title>hello hexo</title>
@@ -428,7 +448,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/05/03/JVM%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenJDK%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/</loc>
-    <lastmod>2016-05-03T15:19:14.987Z</lastmod>
+    <lastmod>2016-05-03T15:19:14.988Z</lastmod>
     <data>
         <display>
         <title>JVM学习之OpenJDK源码编译</title>
@@ -450,7 +470,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/04/17/%E7%AC%AC%E4%B8%83%E5%91%A8%E5%B0%8F%E7%BB%93/</loc>
-    <lastmod>2016-05-03T03:08:36.803Z</lastmod>
+    <lastmod>2016-05-03T03:08:36.804Z</lastmod>
     <data>
         <display>
         <title>第七周小结</title>
@@ -517,7 +537,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/04/11/%E7%AC%AC%E5%85%AD%E5%91%A8%E5%91%A8%E7%BB%93/</loc>
-    <lastmod>2016-04-13T04:19:48.235Z</lastmod>
+    <lastmod>2016-04-13T04:19:48.236Z</lastmod>
     <data>
         <display>
         <title>第六周周结</title>
@@ -541,7 +561,7 @@
     
   <url>
     <loc>http://www.guinguo.top/2016/04/07/github-hexo3-0-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2016-04-11T05:05:41.855Z</lastmod>
+    <lastmod>2016-04-11T05:05:41.856Z</lastmod>
     <data>
         <display>
         <title>github+hexo3.0 搭建个人博客</title>
